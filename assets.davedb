@@ -1,0 +1,22 @@
+DAVE DATABASE INITIAL TEST
+EXAMPLE
+
+$
+NAME=brickWall
+TAG=WALL
+HASH=238904CC
+$
+
+where NAME is a human readable name of the asset, TAG is DAVE's internal tag and HASH is an adler32 hash of NAME+TAG
+in .davedb files, hash, # denotes a comment section begin.
+the dollar sign $ when not in a comment section denotes the beginning of an asset in the database.
+.davedb files are read line by line by the tool, only picking up data within $ denoted sections.
+The beginning and end of .davedb files to be read by the script are denoted by exclamation marks
+
+!
+$
+NAME=exampleProp
+TAG=NONE
+HASH=309605BE
+$
+!
