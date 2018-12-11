@@ -11,25 +11,38 @@ It is of type              NONE
 Asset identified with hash ssIMDC28
 Human readable name:       churchWallTest
 It is of type              WALL
-
 !
-
 $
-NAME=mayaObject1
+NAME=pSphere1
+TAG=WALL
+HASH=9zjkSBpo
+$
+$
+NAME=pCylinder2
 TAG=NONE
-HASH=PaeGwvBn
+HASH=9lGrKSme
 $
-
+$
+NAME=pTorus1
+TAG=WALL
+HASH=tVg6BlR2
+$
 $
 NAME=pCylinder1
 TAG=NONE
 HASH=qv0IfUmX
 $
+!
 
+!
 $
-NAME=churchWallTest
+NAME=pDisc1
+TAG=NONE
+HASH=BVkkZ4xk
+$
+$
+NAME=testObj
 TAG=WALL
-HASH=ssIMDC28
+HASH=K0H-gdjJ
 $
-
 !

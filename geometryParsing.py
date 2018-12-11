@@ -25,19 +25,19 @@ def completeTagging(fields, radioButtons, tagWindow, objects):
 		objectHash = createHash(hashstring)
 		print objectHash
 		if cmds.listAttr(objects[i], st='DAVEHASH') == None:
-			cmds.addAttr(longName = "DAVEHASH", dataType = "string")
+			cmds.addAttr(longName = "DAVEHASH", dataType = "string", hidden = False)
 		cmds.setAttr(objects[i]+".DAVEHASH", objectHash, type = "string")
 		if cmds.listAttr(objects[i], st='DAVETAG') == None:
-			cmds.addAttr(longName = "DAVETAG", dataType = "string")
+			cmds.addAttr(longName = "DAVETAG", dataType = "string", hidden = False)
 		cmds.setAttr(objects[i]+".DAVETAG", tag, type = "string")
 		cmds.rename(objects[i], name)
 		if not checkAgainstDatabase(objectHash):
 			if not anyImported:
 				db.write("\n!\n")
 				anyImported = True
-			db.write("\n$\nNAME=%s\nTAG=%s\nHASH=%s\n$\n" % (name, tag, objectHash))
+			db.write("$\nNAME=%s\nTAG=%s\nHASH=%s\n$\n" % (name, tag, objectHash))
 	if anyImported:
-		db.write("\n!\n")
+		db.write("!\n")
 	db.close()
 	cmds.deleteUI(tagWindow)
 
