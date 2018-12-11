@@ -1,43 +1,35 @@
-NAME is a human readable name of the asset, TAG is DAVE's internal tag and HASH is an adler32 hash of NAME+TAG
-the dollar sign $ when not in a comment section denotes the beginning of an asset in the database.
-.davedb files are read line by line by the tool, only picking up data within $ denoted sections.
-The beginning and end of .davedb files to be read by the script are denoted by exclamation marks *at the begining
-of a line*, so ! here will be ignored by the script.
-
-!
-$
-NAME=exampleProp
-TAG=NONE
-HASH=309605be
-$
-
-$
-NAME=exampleProp2
-TAG=TABLE
-HASH=3c230628
-$
-!
-
-more comments could go here
-
-!
-$
-NAME=asset3
-TAG=SURFACE
-HASH=2170045d
-$
-!
-
 This file should output the following when databaseDemo.py is run:
 
-Asset identified with hash 309605be
-Human readable name:       exampleProp
+Asset identified with hash PaeGwvBn
+Human readable name:       mayaObject1
 It is of type              NONE
 
-Asset identified with hash 3c230628
-Human readable name:       exampleProp2
-It is of type              TABLE
+Asset identified with hash qv0IfUmX
+Human readable name:       pCylinder1
+It is of type              NONE
 
-Asset identified with hash 2170045d
-Human readable name:       asset3
-It is of type              SURFACE
+Asset identified with hash ssIMDC28
+Human readable name:       churchWallTest
+It is of type              WALL
+
+!
+
+$
+NAME=mayaObject1
+TAG=NONE
+HASH=PaeGwvBn
+$
+
+$
+NAME=pCylinder1
+TAG=NONE
+HASH=qv0IfUmX
+$
+
+$
+NAME=churchWallTest
+TAG=WALL
+HASH=ssIMDC28
+$
+
+!
