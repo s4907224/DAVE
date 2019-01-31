@@ -1,48 +1,16 @@
-This file should output the following when databaseDemo.py is run:
 
-Asset identified with hash PaeGwvBn
-Human readable name:       mayaObject1
-It is of type              NONE
-
-Asset identified with hash qv0IfUmX
-Human readable name:       pCylinder1
-It is of type              NONE
-
-Asset identified with hash ssIMDC28
-Human readable name:       churchWallTest
-It is of type              WALL
 !
 $
-NAME=pSphere1
-TAG=WALL
-HASH=9zjkSBpo
-$
-$
-NAME=pCylinder2
+NAME=pCube1
 TAG=NONE
-HASH=9lGrKSme
-$
-$
-NAME=pTorus1
-TAG=WALL
-HASH=tVg6BlR2
-$
-$
-NAME=pCylinder1
-TAG=NONE
-HASH=qv0IfUmX
+HASH=rAxPze95
 $
 !
 
 !
 $
-NAME=pDisc1
+NAME=pCube8
 TAG=NONE
-HASH=BVkkZ4xk
-$
-$
-NAME=testObj
-TAG=WALL
-HASH=K0H-gdjJ
+HASH=50fPzw2u
 $
 !
