@@ -54,6 +54,11 @@ def vectorLength(vector):
         c = vector[2]
     return math.sqrt(math.pow(a, 2) + math.pow(b, 2) + math.pow(c, 2))
 
+def selectAndViewObject(objectName):
+    cmds.select(objectName)
+    cmds.viewFit(objectName)
+    print objectName    
+
 class daveObject:
     def __init__(self, transform, id):
         print "Object added to current session"
@@ -65,6 +70,7 @@ class daveObject:
         self.topVertsIndex = []
         self.convexhull = None
         self.hash = 0
+        self.tag = None
         allVPos = []
         maxVPos = -sys.maxint
         minVPos = sys.maxint
@@ -135,8 +141,6 @@ class daveObject:
             while len(stack) >= 2 and ccw(points[stack[len(stack) - 2]], points[stack[len(stack) - 1]], points[pointsIndex[i]]) <= 0:
                 stack.pop()
             stack.append(pointsIndex[i])
-
-        print stack
         self.convexhull = stack
         cmds.select(d = True)
         facetList = []
@@ -144,6 +148,9 @@ class daveObject:
             cmds.select(self.transform+".vtx["+str(self.topVertsIndex[stack[i]])+"]", add = True)
             pos = self.topVerts[stack[i]]
             facetList.append((pos[0], self.hullHeight, pos[2]))
+        if len(facetList) <= 3:
+            self.convexhull = None
+            return
         cmds.polyCreateFacet(name = self.transform+"_cvxHull", p = facetList)
         sf = 100
         currentUnit = cmds.currentUnit(q = True, linear = True)
@@ -199,8 +206,15 @@ class daveManager:
         self.dbpath = path + "assets.davedb"
         self.parseDAVEDB()
         self.sessionObjects = []
-        self.UI()
         self.hash = None
+        self.walls = []
+        self.buildingStates = []
+        self.roomStates = []
+        for i in range(100):
+            self.buildingStates.append(False)
+            self.roomStates.append([])
+            for j in range(100):
+                self.roomStates[i].append(False)
 
     def parseDAVEDB(self):
         names = []
@@ -297,18 +311,20 @@ class daveManager:
 
     def scanSceneAndImport(self):
         geometry = cmds.ls(geometry=True)
-        transforms = cmds.listRelatives(geometry, p=True)
+        transforms = cmds.listRelatives(geometry, p=True, pa = True)
         cmds.select(transforms)
         self.importSelectedObjects()
 
     def importSelectedObjects(self):
         selection = cmds.ls(sl = True)
+        print selection
         toBeImported = []
         for i in range(len(selection)):
             currentIndex = len(self.sessionObjects)
             if not any(dObject.transform == selection[i] for dObject in self.sessionObjects):
                 self.sessionObjects.append(daveObject(selection[i], currentIndex))
-                print len(self.sessionObjects)
+                if cmds.listAttr(self.sessionObjects[currentIndex].transform, st='DAVEBUILDING') != None:
+                    self.walls.append(currentIndex)
             else:
                 continue
             compliantObject = self.checkDAVECompliance(currentIndex)
@@ -317,36 +333,46 @@ class daveManager:
                 toBeImported.append(currentIndex)
         if len(toBeImported) != 0:
             self.importSelection(toBeImported)
+        elif len(self.sessionObjects) != 0:
+            self.tagWalls()
 
     def importSelection(self, objects):
         self.tagWindow = cmds.window(title="DAVE: Set tags for objects")
-        cmds.columnLayout(width = 400)
-        fields = []
+        form = cmds.formLayout()
+        tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
+        cmds.formLayout(form, edit=True, attachForm=((tabs, 'top', 0), (tabs, 'left', 0), (tabs, 'bottom', 0), (tabs, 'right', 0)))
+        numTabs = math.ceil(float(len(objects)) / 5.0)
+        cols = []
         radioButtons = []
-        done = False
-        objDone = 0
-        while not done:
-            for i in range(objDone, objDone + 5):
-                cmds.rowLayout(nc = 4, width = 400)
-                cmds.text(label = "Set parameters for "+self.sessionObjects[objects[i]].transform+':', font = "boldLabelFont", width = 200)
-                cmds.separator(width = 20, style = "none")
-                cmds.button(label = "Focus on object", width = 180)
-                cmds.setParent("..")
-                cmds.columnLayout(width = 400)
-                radioButtons.append(cmds.radioButtonGrp(nrb = 2, la2 = ["NONE", "WALL"]))
-                cmds.radioButtonGrp(radioButtons[i], e = True, sl = 1)
-                cmds.text(label = "Set object name (optional)", font = "smallBoldLabelFont")
-                fields.append(cmds.textField(width = 400, text = self.sessionObjects[objects[i]].transform))
-                cmds.separator(height=10)
-                objDone += 1
-                if objDone == len(objects):
-                    done = True
-                    break
-            labelString = "Next"
-            if done:
-                labelString = "Done"
-            cmds.button(label=labelString,command=lambda x: self.completeTagging(fields, radioButtons, objects, done))
-            
+        fields = []
+        for i in range(int(numTabs)):
+            cols.append(cmds.columnLayout())
+            cmds.setParent(tabs)
+            cmds.tabLayout(tabs, e=True, tabLabel=((cols[i], str(i + 1))))
+        for i in range(len(objects)):
+            cmds.setParent(cols[i / 5])
+            cmds.text(label = "Set parameters for "+self.sessionObjects[objects[i]].transform+':', font = "boldLabelFont", width = 200)
+            cmds.separator(width = 20, style = "none")
+            cmds.button(label = "Focus on object", width = 180, command = lambda x: selectAndViewObject(self.sessionObjects[objects[i]].transform))
+            cmds.columnLayout(width = 400)
+            radioButtons.append(cmds.radioButtonGrp(nrb = 2, la2 = ["NONE", "WALL"]))
+            cmds.radioButtonGrp(radioButtons[i], e = True, sl = 1)
+            cmds.text(label = "Set object name (optional)", font = "smallBoldLabelFont")
+            fields.append(cmds.textField(width = 400, text = self.sessionObjects[objects[i]].transform))
+            cmds.separator(height=10)
+            if i == len(objects) - 1:
+                if i >= 5:
+                    label = "Previous"
+                    cmds.button(label=label,command=lambda x: cmds.tabLayout(tabs, e = True, st = cols[(i / 5) - 1]))
+                label = "Done"
+                cmds.button(label=label,command=lambda x: self.completeTagging(fields, radioButtons, objects))
+                continue
+            if i % 5 == 4:
+                if i >= 5:
+                    label = "Previous"
+                    cmds.button(label=label,command=lambda x: cmds.tabLayout(tabs, e = True, st = cols[(i / 5) - 1]))
+                label = "Next"
+                cmds.button(label=label,command=lambda x: cmds.tabLayout(tabs, e = True, st = cols[i / 5]))
         cmds.showWindow()
 
     def completeTagging(self, fields, radioButtons, objects):
@@ -356,16 +382,20 @@ class daveManager:
             name =  cmds.textField(fields[i], q = True, text = True)
             activeButton = cmds.radioButtonGrp(radioButtons[i], q = True, sl = True)
             tag = cmds.radioButtonGrp(radioButtons[i], q = True, la2 = True)[activeButton - 1]
+            self.sessionObjects[objects[i]].tag = tag
             hashstring = name + tag
             objectHash = self.createHash(hashstring)
-            if objectHash in self.db[0]:
-                continue
             if cmds.listAttr(self.sessionObjects[objects[i]].transform, st='DAVEHASH') == None:
                 cmds.addAttr(self.sessionObjects[objects[i]].transform, longName = "DAVEHASH", dataType = "string", hidden = False)
             cmds.setAttr(self.sessionObjects[objects[i]].transform+".DAVEHASH", objectHash, type = "string")
             if cmds.listAttr(self.sessionObjects[objects[i]].transform, st='DAVETAG') == None:
                 cmds.addAttr(self.sessionObjects[objects[i]].transform, longName = "DAVETAG", dataType = "string", hidden = False)
+            if objectHash in self.db[0]:
+                continue
             cmds.setAttr(self.sessionObjects[objects[i]].transform+".DAVETAG", tag, type = "string")
+            if self.sessionObjects[objects[i]].convexhull == None and tag != "WALL":
+                self.sessionObjects[objects[i]].genConvexHull()
+                self.sessionObjects[objects[i]].determineShape()
             cmds.rename(self.sessionObjects[objects[i]].transform, name)
             self.sessionObjects[objects[i]].transform = name
             if not self.checkAgainstDatabase(objects[i]):
@@ -374,19 +404,243 @@ class daveManager:
                     anyImported = True
                 db.write("$\nNAME=%s\nTAG=%s\nHASH=%s\n$\n" % (name, tag, objectHash))
             self.sessionObjects[objects[i]].imported = True
-            self.sessionObjects[objects[i]].genConvexHull()
-            self.sessionObjects[objects[i]].determineShape()
         if anyImported:
             db.write("!\n")
         db.close()
         cmds.deleteUI(self.tagWindow)
+        self.tagWalls()
 
+    def tagWalls(self):
+        localWalls = []
+        newWalls = False
+        for i in range(len(self.sessionObjects)):
+            if self.sessionObjects[i].tag == "WALL" and cmds.listAttr(self.sessionObjects[i].transform, st='DAVEBUILDING') == None:
+                self.walls.append(i)
+                localWalls.append(i)
+                newWalls = True
+        if newWalls:
+            print "New walls = " + str(localWalls)
+            numTabs = math.ceil(float(len(localWalls)) / 5.0)
+            self.wallWindow = cmds.window(title="DAVE: Set buildings")
+            form = cmds.formLayout()
+            tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
+            cmds.formLayout(form, edit=True, attachForm=((tabs, 'top', 0), (tabs, 'left', 0), (tabs, 'bottom', 0), (tabs, 'right', 0)))
+            cols = []
+            fields = []
+            for i in range(int(numTabs)):
+                cols.append(cmds.columnLayout())
+                cmds.setParent(tabs)
+                cmds.tabLayout(tabs, e=True, tabLabel=((cols[i], str(i + 1))))
+            for i in range(len(localWalls)):
+                cmds.setParent(cols[i / 5])
+                cmds.text(label = "Set building identifier for "+self.sessionObjects[localWalls[i]].transform+':', font = "boldLabelFont", width = 200)
+                cmds.separator(width = 20, style = "none")
+                cmds.button(label = "Focus on object", width = 180, command = lambda x: selectAndViewObject(self.sessionObjects[localWalls[i]].transform))
+                cmds.columnLayout(width = 400)
+                fields.append(cmds.optionMenu(label='Building Identifier'))
+                for j in range(100):
+                    cmds.menuItem(label=str(j + 1))
+                cmds.separator(height=10)
+                if i == len(localWalls) - 1:
+                    if i >= 5:
+                        label = "Previous"
+                        cmds.button(label=label,command=lambda x: cmds.tabLayout(tabs, e = True, st = cols[(i - 1) - 1]))
+                    label = "Done"
+                    cmds.button(label=label,command=lambda x: self.processWalls(fields, localWalls))
+                    continue
+                if i % 5 == 4:
+                    if i >= 5:
+                        label = "Previous"
+                        cmds.button(label=label,command=lambda x: cmds.tabLayout(tabs, e = True, st = cols[(i - 1) - 1]))
+                    label = "Next"
+                    cmds.button(label=label,command=lambda x: cmds.tabLayout(tabs, e = True, st = cols[i + 1]))
+            cmds.showWindow()
+        else:
+            self.processWalls([], [])
+
+    def processWalls(self, fields, localWalls):
+        self.wallCollections = []
+        for i in range(100):
+            self.wallCollections.append([])
+        if len(fields) != 0:
+            for i in range(len(fields)):
+                activeBuilding = int(cmds.optionMenu(fields[i], q = True, v = True)) - 1
+                wallNo = localWalls[i]
+                self.buildingStates[activeBuilding] = False
+                if cmds.listAttr(self.sessionObjects[wallNo].transform, st='DAVEBUILDING') == None:
+                    cmds.addAttr(self.sessionObjects[wallNo].transform, longName = "DAVEBUILDING", dataType = "string", hidden = False)
+                cmds.setAttr(self.sessionObjects[wallNo].transform+".DAVEBUILDING", activeBuilding, type = "string")
+            cmds.deleteUI(self.wallWindow)
+        for i in range(len(self.walls)):
+            activeBuilding = None
+            if cmds.listAttr(self.sessionObjects[self.walls[i]].transform, st = "DAVEBUILDING") != None:
+                activeBuilding = int(cmds.getAttr(self.sessionObjects[self.walls[i]].transform+".DAVEBUILDING"))
+            wallNo = self.walls[i]
+            self.wallCollections[activeBuilding].append(wallNo)
+        self.tagRooms()
+
+    def tagRooms(self):
+        numTabs = 0
+        buildingNos = []
+        localWalls = []
+        wallsPerRoom = []
+        for i in range(len(self.wallCollections)):
+            if len(self.wallCollections[i]) != 0:
+                tagCheck = False
+                counter = 0
+                for j in range(len(self.wallCollections[i])):
+                    if cmds.listAttr(self.sessionObjects[self.wallCollections[i][j]].transform, st = "DAVEROOM") == None:
+                        tagCheck = True
+                        counter += 1
+                if tagCheck:
+                    numTabs += 1
+                    buildingNos.append(i)
+                    wallsPerRoom.append(counter)
+                
+        if numTabs != 0:
+            self.wallWindow = cmds.window(title="DAVE: Set rooms")
+            form = cmds.formLayout()
+            tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
+            cmds.formLayout(form, edit=True, attachForm=((tabs, 'top', 0), (tabs, 'left', 0), (tabs, 'bottom', 0), (tabs, 'right', 0)))
+            cols = []
+            fields = []
+            for i in range(numTabs):
+                cols.append(cmds.scrollLayout(verticalScrollBarThickness=16, width = 450, height = 800))
+                cmds.setParent(tabs)
+                cmds.tabLayout(tabs, e=True, tabLabel=((cols[i], "Building "+str(buildingNos[i]))))
+            for i in range(numTabs):
+                for j in range(len(self.wallCollections[buildingNos[i]])):
+                    if cmds.listAttr(self.sessionObjects[self.wallCollections[buildingNos[i]][j]].transform, st = "DAVEROOM") != None:
+                        continue
+                    cmds.setParent(cols[i])
+                    cmds.text(label = "Set building identifier for "+self.sessionObjects[self.wallCollections[buildingNos[i]][j]].transform+':', font = "boldLabelFont", width = 200)
+                    cmds.separator(width = 20, style = "none")
+                    cmds.button(label = "Focus on object", width = 180, command = "selectAndViewObject('"+self.sessionObjects[self.wallCollections[buildingNos[i]][j]].transform+"')")
+                    cmds.columnLayout(width = 400)
+                    fields.append(cmds.optionMenu(label='Building Identifier'))
+                    localWalls.append(self.wallCollections[buildingNos[i]][j])
+                    for k in range(100):
+                        cmds.menuItem(label=str(k + 1))
+                    cmds.separator(height=10)
+                    if i == numTabs - 1 and j == wallsPerRoom[len(wallsPerRoom) - 1] - 1:
+                        if i >= 1:
+                            label = "Previous"
+                            cmds.button(label=label,command=lambda x: cmds.tabLayout(tabs, e = True, st = cols[(i / 5) - 1]))
+                        label = "Done"
+                        cmds.button(label=label,command=lambda x: self.processRooms(fields, localWalls))
+                        continue
+                    if j == wallsPerRoom[i] - 1:
+                        if i >= 1:
+                            label = "Previous"
+                            cmds.button(label=label,command=lambda x: cmds.tabLayout(tabs, e = True, st = cols[(i - 1) - 1]))
+                        label = "Next"
+                        cmds.button(label=label,command=lambda x: cmds.tabLayout(tabs, e = True, st = cols[i + 1]))
+            cmds.showWindow()
+        else:
+            self.processRooms([], [])
+
+    def processRooms(self, fields, localWalls):
+        self.roomCollections = []
+        for i in range(100):
+            self.roomCollections.append([])
+            for j in range(100):
+                self.roomCollections[i].append([])
+        if len(fields) != 0:
+            for i in range(len(fields)):
+                activeRoom = int(cmds.optionMenu(fields[i], q = True, v = True)) - 1
+                activeBuilding = int(cmds.getAttr(self.sessionObjects[localWalls[i]].transform+".DAVEBUILDING"))
+                wallNo = localWalls[i]
+                print "wallNo = "+str(wallNo)
+                self.roomStates[activeBuilding][activeRoom] = False
+                if cmds.listAttr(self.sessionObjects[wallNo].transform, st='DAVEROOM') == None:
+                    cmds.addAttr(self.sessionObjects[wallNo].transform, longName = "DAVEROOM", dataType = "string", hidden = False)
+                cmds.setAttr(self.sessionObjects[wallNo].transform+".DAVEROOM", activeRoom, type = "string")
+            cmds.deleteUI(self.wallWindow)
+        for i in range(len(self.walls)):
+            activeBuilding = None
+            print "transform = " + self.sessionObjects[self.walls[i]].transform
+            if cmds.listAttr(self.sessionObjects[self.walls[i]].transform, st = "DAVEBUILDING") != None:
+                activeBuilding = int(cmds.getAttr(self.sessionObjects[self.walls[i]].transform+".DAVEBUILDING"))
+            if cmds.listAttr(self.sessionObjects[self.walls[i]].transform, st = "DAVEROOM") != None:
+                activeRoom = int(cmds.getAttr(self.sessionObjects[self.walls[i]].transform+".DAVEROOM"))
+            wallNo = self.walls[i]
+            self.roomCollections[activeBuilding][activeRoom].append(wallNo)
+        self.checkBuildingHullStates()
+
+    def checkBuildingHullStates(self):
+        print len(self.walls)
+        print self.buildingStates
+        print len(self.roomCollections[0])
+        print len(self.roomStates[0])
+        for i in range(len(self.wallCollections)):
+            self.genBuildingHull(i)
+            self.buildingStates[i] = True
+        print self.buildingStates
+        print self.roomStates
+        
+    def genBuildingHull(self, buildingNo):
+        for j in range(len(self.roomCollections[buildingNo])):
+            self.genRoomHull(buildingNo, j)
+            self.roomStates[buildingNo][j] = True
+
+    def genRoomHull(self, buildingNo, roomNo):
+        xInfo = []
+        zInfo = []
+        if len(self.roomCollections[buildingNo][roomNo]) == 0:
+            return
+        firstInnerX = sys.maxint
+        lastInnerX = -sys.maxint
+        firstInnerZ = sys.maxint
+        lastInnerZ = -sys.maxint
+        bbs = []
+        for i in range(len(self.roomCollections[buildingNo][roomNo])):
+            bbs.append(cmds.exactWorldBoundingBox(self.sessionObjects[self.roomCollections[buildingNo][roomNo][i]].transform))
+            xInfo.extend((bbs[i][0], bbs[i][3]))
+            zInfo.extend((bbs[i][2], bbs[i][5]))
+            firstInnerX = min(bbs[i][3], firstInnerX)
+            lastInnerX = max(bbs[i][0], lastInnerX)
+            firstInnerZ = min(bbs[i][5], firstInnerZ)
+            lastInnerZ = max(bbs[i][2], lastInnerZ)
+
+        verts = []
+        for i in range(len(bbs)):
+            minXIn = False
+            maxXIn = False
+            minZIn = False
+            maxZIn = False
+            if bbs[i][0] > firstInnerX:
+                minXIn = True
+            if bbs[i][2] > firstInnerZ:
+                minZIn = True
+            if bbs[i][3] < lastInnerX:
+                maxXIn = True
+            if bbs[i][5] < lastInnerZ:
+                maxZIn = True
+            if minXIn and minZIn:
+                verts.append([bbs[i][0], 0, bbs[i][2]])
+            if minXIn and maxZIn:
+                verts.append([bbs[i][0], 0, bbs[i][5]])
+            if maxXIn and maxZIn:
+                verts.append([bbs[i][3], 0, bbs[i][5]])
+            if maxXIn and minZIn:
+                verts.append([bbs[i][3], 0, bbs[i][2]])
+
+        for i in range(len(verts)):
+            verts[i][0] = round(verts[i][0], 2)
+            verts[i][2] = round(verts[i][2], 2)
+        
+        vertSet = set(tuple(x) for x in verts)
+        vertSetList = [list(x) for x in set(tuple(y) for y in vertSet)]
+        print vertSetList
+        for i in range(len(vertSetList)):
+            cmds.polyCube(name = 'test', w = 0.1, d = 0.1, h = 0.1)
+            cmds.move(vertSetList[i][0], vertSetList[i][1], vertSetList[i][2], a = True)
 
 def main():
     dave = daveManager("D:/Python/DAVE/DAVE/")
     urllib.urlretrieve("https://www.glovefx.com/s/dave.png", dave.path+"header.png")
-
+    dave.UI()
+    
 if __name__== "__main__":
   main()
-
 
