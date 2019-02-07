@@ -1,0 +1,354 @@
+import maya.cmds as cmds
+import base64
+import hashlib
+import os
+import sys
+import math
+import time
+import random
+
+def vectorAngle(vector1, vector2):
+    magU = vectorLength(vector1)
+    magV = vectorLength(vector2)
+    uDotV = vectorDot(vector1, vector2)
+    cosTheta = uDotV / (magU * magV)
+    return math.acos(cosTheta)
+
+def vectorDot(vector1, vector2):
+    if len(vector1) != len(vector2):
+        print "Vectors given to function vectorDifference have differing number of dimensions!"
+        return None 
+    a1 = vector1[0]
+    b1 = vector1[1]
+    c1 = 0
+    a2 = vector2[0]
+    b2 = vector2[1]
+    c2 = 0
+    if len(vector1) == 3:
+        c1 = vector1[2]
+        c2 = vector2[2]
+    return a1 * a2 + b1 * b2 + c1 * c2
+
+def vectorDifference(vector1, vector2):
+    if len(vector1) != len(vector2):
+        print "Vectors given to function vectorDifference have differing number of dimensions!"
+        return None
+    a1 = vector1[0]
+    b1 = vector1[1]
+    c1 = 0
+    a2 = vector2[0]
+    b2 = vector2[1]
+    c2 = 0
+    if len(vector1) == 3:
+        c1 = vector1[2]
+        c2 = vector2[2]
+    return [a1 - a2, b1 - b2, c1 - c2]
+    
+
+def vectorLength(vector):
+    a = vector[0]
+    b = vector[1]
+    c = 0
+    if (len(vector) == 3):
+        c = vector[2]
+    return math.sqrt(math.pow(a, 2) + math.pow(b, 2) + math.pow(c, 2))
+
+class daveObject:
+    def __init__(self, transform, id):
+        print "Object added to current session"
+        self.transform = transform
+        self.index = id
+        self.imported = False
+        self.numVerts = cmds.polyEvaluate(v = True)
+        self.topVerts = []
+        self.topVertsIndex = []
+        allVPos = []
+        maxVPos = -sys.maxint
+        minVPos = sys.maxint
+        for i in range(self.numVerts):
+            allVPos.append(cmds.pointPosition(self.transform + ".vtx[" + str(i) + "]", w = True))
+            maxVPos = max(maxVPos, allVPos[i][1])
+            minVPos = min(minVPos, allVPos[i][1])
+        topMargin = maxVPos - ((maxVPos - minVPos) * 0.3)
+        self.hullHeight = maxVPos
+        upperVerts = []
+        upperVertsIndex = []
+        for i in range(self.numVerts):
+            if allVPos[i][1] >= topMargin:
+                upperVerts.append(allVPos[i])
+                upperVertsIndex.append(i)
+        delIndices = []
+        for i in range(len(self.topVerts)):
+            for j in range(len(self.topVerts)):
+                if i == j:
+                    continue
+                if upperVerts[i][0] == upperVerts[j][0] and upperVerts[i][2] == upperVerts[j][2]:
+                    if upperVerts[i][1] > upperVerts[j][1]:
+                        delIndices.append(j)
+                    else:
+                        delIndices.append(i)
+
+        for i in range(len(delIndices)):
+            del upperVerts[delIndices[i] - i]
+            del upperVertsIndex[delIndices[i] - i]
+        
+        self.topVerts = upperVerts
+        self.topVertsIndex = upperVertsIndex
+                
+        self.genConvexHull()
+        self.determineShape()
+
+    def genConvexHull(self):
+        def ccw(p1, p2, p3):
+            return (p2[0] - p1[0]) * (p3[2] - p1[2]) - (p2[2] - p1[2]) * (p3[0] - p1[0])
+        def polarAngle(a, b):
+            x = a[0] - b[0]
+            y = a[2] - b[2]
+            if (x > 0 and y > 0):
+                return math.atan(y / x)
+            elif (x < 0 and y > 0):
+                return math.atan(-x / y) + math.pi / 2.0
+            elif (x < 0 and y < 0):
+                return math.atan(y / x) + math.pi
+            elif (x > 0 and y < 0):
+                return math.atan(-x / y) + math.pi / 2.0 + math.pi
+            elif (x == 0 and y > 0):
+                return math.pi / 2.0
+            elif (x < 0 and y == 0):
+                return math.pi
+            elif (x == 0 and y < 0):
+                return math.pi / 2.0 + math.pi
+            else:
+                return 0
+        points = self.topVerts
+        pointsIndex =[]
+        for i in range(len(points)):
+            pointsIndex.append(i)
+        pointsIndex = [x for y, x in sorted(zip(self.topVerts, pointsIndex), key = lambda var: var[0][2])]
+        pointsIndex = sorted(pointsIndex, key = lambda var: polarAngle(self.topVerts[var], self.topVerts[pointsIndex[0]]))
+        stack = []
+        for i in range(2, len(points)):
+            while len(stack) >= 2 and ccw(points[stack[len(stack) - 2]], points[stack[len(stack) - 1]], points[pointsIndex[i]]) <= 0:
+                stack.pop()
+            stack.append(pointsIndex[i])
+
+        print stack
+        self.convexhull = stack
+        cmds.select(d = True)
+        facetList = []
+        for i in range(len(stack)):
+            cmds.select(self.transform+".vtx["+str(self.topVertsIndex[stack[i]])+"]", add = True)
+            pos = self.topVerts[stack[i]]
+            facetList.append((pos[0], 0, pos[2]))
+        #cmds.polyCreateFacet(p = facetList)
+        #cmds.scale(100, 100, 100)
+
+    def determineShape(self):
+        hullverts = len(self.convexhull)
+        edgeLengths = []
+        edgeVectors = []
+        for i in range(hullverts - 1):
+            edgeVectors.append(vectorDifference(self.topVerts[self.convexhull[i]], self.topVerts[self.convexhull[i + 1]]))
+            edgeLengths.append(vectorLength(edgeVectors[i]))
+        edgeVectors.append(vectorDifference(self.topVerts[self.convexhull[hullverts - 1]], self.topVerts[self.convexhull[0]]))
+        edgeLengths.append(vectorLength(edgeVectors[hullverts - 1]))
+
+        hullPerim = sum(edgeLengths)
+        edgeWeights = []
+        for i in range(hullverts):
+            edgeWeights.append(edgeLengths[i] / hullPerim)
+
+        maxWeight = max(edgeWeights)
+
+        numEdges = 0
+        pWeight = edgeLengths[hullverts - 1]
+        nWeight = edgeLengths[1]
+        diffWeight = abs(pWeight - nWeight)
+        if diffWeight <= 0.5 * maxWeight:
+            numEdges += 1
+        pWeight = edgeLengths[hullverts - 2]
+        nWeight = edgeLengths[0]
+        diffWeight = abs(pWeight - nWeight)
+        if diffWeight <= 0.5 * maxWeight:
+            numEdges += 1
+        for i in range(1, hullverts - 1):
+            pWeight = edgeLengths[i - 1]
+            nWeight = edgeLengths[i + 1]
+            diffWeight = abs(pWeight - nWeight)
+            if diffWeight <= 0.5 * maxWeight:
+                numEdges += 1
+        print numEdges
+
+class daveManager:
+    def __init__(self, path):
+        print "Dave is starting..."
+        self.dbpath = path
+        self.parseDAVEDB()
+        self.sessionObjects = []
+        self.UI()
+        self.hash = None
+
+    def parseDAVEDB(self):
+        names = []
+        hashes = []
+        tags = []
+        with open(self.dbpath) as p:
+            i = 0
+            assetCount = 0
+            shouldRead = False
+            line = p.readline()
+            while line:
+                if line[0] == '!':
+                    if not shouldRead:
+                        shouldRead = True
+                    else:
+                        shouldRead = False
+                elif shouldRead:
+                    if line[0] == "$":
+                        assetCount += 1
+                        line = p.readline()
+                        string = ''
+                        for j in range(len(line) - 5):
+                            if line[j + 5] != "\n" and line[j + 5] != "\r":
+                                string += line[j + 5]
+                        names.append(string)
+                        line = p.readline()
+                        string = ''
+                        for j in range(len(line) - 4):
+                            if line[j + 4] != "\n" and line[j + 4] != "\r":
+                                string += line[j + 4]
+                        tags.append(string)
+                        line = p.readline()
+                        string = ''
+                        for j in range(len(line) - 5):
+                            if line[j + 5] != "\n" and line[j + 5] != "\r":
+                                string += line[j + 5]
+                        hashes.append(string)
+                        line = p.readline()
+
+                line = p.readline()
+                i +=1
+        self.db = [hashes, names, tags]
+
+    def UI(self):
+        self.window = cmds.window(title='Test Window')
+        col = cmds.columnLayout()
+        cmds.rowLayout(nc=3)
+        cmds.button(label="Import Selection", width=100, c = lambda x : self.importSelectedObjects())
+        cmds.button(label="Scan Scene", width = 100, c = lambda x: self.scanSceneAndImport())
+        cmds.setParent(col)
+        cmds.rowLayout(nc = 1)
+        cmds.button(label="Helo", width = 200)
+        cmds.setParent(col)
+        cmds.showWindow()
+
+    def checkAgainstDatabase(self, objectHash):
+        print objectHash
+        if objectHash in self.db[0]:
+            return True
+        else:
+            return False
+
+    def checkDAVECompliance(self, obj):
+        if cmds.listAttr(self.sessionObjects[obj].transform, st = "DAVEHASH"):
+            print "has hash"
+            self.sessionObjects[obj].hash = cmds.getAttr(str(self.sessionObjects[obj].transform) + ".DAVEHASH")
+            return [True, self.sessionObjects[obj].hash]
+        elif (len(self.sessionObjects[obj].transform) < 9):
+            return [False, None]
+        endIndex = len(self.sessionObjects[obj].transform) - 1
+        if self.sessionObjects[obj].transform[0] == 'D' and self.sessionObjects[obj].transform[9] == '_':
+            cmds.addAttr(self.sessionObjects[obj].transform, longName = 'DAVEHASH', dataType = "string")
+            cmds.setAttr(self.sessionObjects[obj].transform+".DAVEHASH", self.sessionObjects[obj].transform[1:9], type = "string")
+            cmds.rename(self.sessionObjects[obj].transform, obj[10:])
+            self.sessionObjects[obj].hash = self.sessionObjects[obj].transform[1:9]
+            return [True, self.sessionObjects[obj].hash]
+        elif self.sessionObjects[obj].transform[endIndex - 8] == 'D' and self.sessionObjects[obj].transform[endIndex - 9] == '_':
+            cmds.addAttr(self.sessionObjects[obj].transform, longName = 'DAVEHASH', dataType = "string")
+            cmds.setAttr(self.sessionObjects[obj].transform+".DAVEHASH", self.sessionObjects[obj].transform[endIndex - 8:], type = "string")
+            cmds.rename(self.sessionObjects[obj].transform, self.sessionObjects[obj].transform[:endIndex - 8])
+            self.sessionObjects[obj].hash = self.sessionObjects[obj].transform[endIndex - 8:]
+            return [True, self.sessionObjects[obj].hash]
+        else:
+            return [False, None]
+
+    def createHash(self, string):
+        hasher = hashlib.sha1(string)
+        return base64.urlsafe_b64encode(hasher.digest()[:6])
+
+    def scanSceneAndImport(self):
+        geometry = cmds.ls(geometry=True)
+        transforms = cmds.listRelatives(geometry, p=True)
+        cmds.select(transforms)
+        self.importSelectedObjects()
+
+    def importSelectedObjects(self):
+        selection = cmds.ls(sl = True)
+        toBeImported = []
+        for i in range(len(selection)):
+            currentIndex = len(self.sessionObjects)
+            if not any(dObject.index == selection[i] for dObject in self.sessionObjects):
+                self.sessionObjects.append(daveObject(selection[i], currentIndex))
+            else:
+                continue
+            compliantObject = self.checkDAVECompliance(currentIndex)
+            if (not compliantObject[0]) or (not self.checkAgainstDatabase(self.sessionObjects[currentIndex].hash)):
+                toBeImported.append(currentIndex)
+        if len(toBeImported) != 0:
+            self.importSelection(toBeImported)
+
+    def importSelection(self, objects):
+        self.tagWindow = cmds.window(title="Set tags for objects")
+        cmds.columnLayout(width = 400)
+        fields = []
+        radioButtons = []
+        for i in range(len(objects)):
+            cmds.rowLayout(nc = 4, width = 400)
+            cmds.text(label = "Set parameters for "+self.sessionObjects[objects[i]].transform+':', font = "boldLabelFont", width = 200)
+            cmds.separator(width = 20, style = "none")
+            cmds.button(label = "Focus on object", width = 180)
+            cmds.setParent("..")
+            cmds.columnLayout(width = 400)
+            radioButtons.append(cmds.radioButtonGrp(nrb = 2, la2 = ["NONE", "WALL"]))
+            cmds.radioButtonGrp(radioButtons[i], e = True, sl = 1)
+            cmds.text(label = "Set object name (optional)", font = "smallBoldLabelFont")
+            fields.append(cmds.textField(width = 400, text = self.sessionObjects[objects[i]].transform))
+            cmds.separator(height=10)
+        cmds.button(label='Done',command=lambda x: self.completeTagging(fields, radioButtons, objects))
+        cmds.showWindow()
+
+    def completeTagging(self, fields, radioButtons, objects):
+        anyImported = False
+        db = open(self.dbpath, "a+")
+        for i in range(len(fields)):
+            name =  cmds.textField(fields[i], q = True, text = True)
+            activeButton = cmds.radioButtonGrp(radioButtons[i], q = True, sl = True)
+            tag = cmds.radioButtonGrp(radioButtons[i], q = True, la2 = True)[activeButton - 1]
+            hashstring = name + tag
+            objectHash = self.createHash(hashstring)
+            if cmds.listAttr(self.sessionObjects[objects[i]].transform, st='DAVEHASH') == None:
+                cmds.addAttr(longName = "DAVEHASH", dataType = "string", hidden = False)
+            cmds.setAttr(self.sessionObjects[objects[i]].transform+".DAVEHASH", objectHash, type = "string")
+            if cmds.listAttr(self.sessionObjects[objects[i]].transform, st='DAVETAG') == None:
+                cmds.addAttr(longName = "DAVETAG", dataType = "string", hidden = False)
+            cmds.setAttr(self.sessionObjects[objects[i]].transform+".DAVETAG", tag, type = "string")
+            cmds.rename(self.sessionObjects[objects[i]].transform, name)
+            if not self.checkAgainstDatabase(objectHash):
+                if not anyImported:
+                    db.write("\n!\n")
+                    anyImported = True
+                db.write("$\nNAME=%s\nTAG=%s\nHASH=%s\n$\n" % (name, tag, objectHash))
+            self.sessionObjects[objects[i]].imported = True
+        if anyImported:
+            db.write("!\n")
+        db.close()
+        cmds.deleteUI(self.tagWindow)
+
+
+def main():
+    dave = daveManager("D:/Python/DAVE/DAVE/assets.davedb")
+
+if __name__== "__main__":
+  main()
+
+

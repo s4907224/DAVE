@@ -203,7 +203,7 @@ class daveManager:
     def __init__(self, path):
         print "Dave is starting..."
         self.path = path
-        self.dbpath = path + "assets.davedb"
+        self.dbpath = path + "assets/assets.davedb"
         self.parseDAVEDB()
         self.sessionObjects = []
         self.hash = None
@@ -261,7 +261,7 @@ class daveManager:
     def UI(self):
         self.window = cmds.window(title='DAVE: Main Window')
         col = cmds.columnLayout()
-        cmds.image(image = self.path+"header.png")
+        cmds.image(image = self.path+"fetch/header.png")
         cmds.rowLayout(nc=3)
         cmds.button(label="Import Selection", width=150, c = lambda x : self.importSelectedObjects())
         cmds.button(label="Scan Scene", width = 150, c = lambda x: self.scanSceneAndImport())
@@ -638,7 +638,7 @@ class daveManager:
 
 def main():
     dave = daveManager("D:/Python/DAVE/DAVE/")
-    urllib.urlretrieve("https://www.glovefx.com/s/dave.png", dave.path+"header.png")
+    urllib.urlretrieve("https://www.glovefx.com/s/dave.png", dave.path+"fetch/header.png")
     dave.UI()
     
 if __name__== "__main__":
