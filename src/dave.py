@@ -264,9 +264,7 @@ class daveManager:
                 self.roomPlans[i].append([])
                 self.roomOuterPlans[i].append([])
         self.hullTool = cmds.polyCreateFacetCtx(i1 = self.dbpath+"fetch/hull.png")
-        self.deleteJob = cmds.scriptJob(ct = ["SomethingSelected",self.checkForDeletions])
-        self.window = None
-        self.secondaryWindow = None
+        self.delTransforms = []
         '''
         python is simple
         makes programming fast and slick
@@ -274,13 +272,12 @@ class daveManager:
         '''
 
     def cleanup(self):
-        cmds.scriptJob(kill = self.deleteJob, force = True)
-        if self.secondaryWindow != None:
+        if hasattr(self, "secondaryWindow"):
             if (cmds.window(self.secondaryWindow, exists=True)):
                 cmds.deleteUI(self.secondaryWindow)
+        cmds.scriptJob(kill = self.deleteJob, force = True)
         print "Exiting DAVE..."
         cmds.refresh()
-        del self
 
     def __del__(self):
         print "dtor called"
@@ -329,11 +326,18 @@ class daveManager:
 
     def UI(self):
         self.window = cmds.window(title='DAVE: Main Window')
+        self.deleteJob = cmds.scriptJob(ct = ["SomethingSelected",self.checkForDeletions])
         col = cmds.columnLayout()
         cmds.image(image = self.path+"fetch/header.png")
         cmds.rowLayout(nc=3)
         cmds.button(label="Import Selection", width=150, c = lambda x : self.importSelectedObjects())
-        cmds.button(label="Scan Scene", width = 150, c = lambda x: self.scanSceneAndImport())
+        def test(*args):
+            cmds.refresh()
+            print "Hello and welcome to the test function."
+            cmds.refresh()
+            self.scanSceneAndImport()
+        comm = partial(test)
+        cmds.button(label="Scan Scene", width = 150, c = comm)
         #cmds.button(label="Test hulls", c = lambda x: self.demoTest())
         cmds.setParent(col)
         cmds.showWindow()
@@ -342,8 +346,12 @@ class daveManager:
 
     def checkForDeletions(self, *args):
         node = pm.selected()[0]
+        if node in self.delTransforms:
+            print "Node already tagged."
+            return
         mObj = node.__apimobject__()
         event = om.MNodeMessage.addNodePreRemovalCallback(mObj, self.searchSessionForObject, node)
+        self.delTransforms.append(node)
 
     def searchSessionForObject(self, *args):
         transform = args[1]
@@ -360,6 +368,7 @@ class daveManager:
         else:
             print "Removing match"
             self.sessionObjects[matches[0]].enabled = False
+            self.delTransforms.remove(args[0])
 
     def checkAgainstDatabase(self, objIndex):
         if self.sessionObjects[objIndex].hash in self.db[0]:
@@ -403,9 +412,14 @@ class daveManager:
         return base64.urlsafe_b64encode(hasher.digest()[:6])
 
     def scanSceneAndImport(self):
+        print ""
+        print "scanSceneAndImport"
         geometry = cmds.ls(geometry=True)
+        print "Geometry = "+str(geometry)
         transforms = cmds.listRelatives(geometry, p=True, pa = True)
+        print "Transforms = "+str(transforms)
         cmds.select(transforms)
+        print "Going to import..."
         self.importSelectedObjects()
 
     def importSelectedObjects(self):
@@ -416,6 +430,7 @@ class daveManager:
         if cmds.objExists("*_flr"):
             cmds.select("*_flr", d = True)
         selection = cmds.ls(sl = True)
+        print "Selection = "+str(selection)
         if cmds.objExists("*_flr"):
             cmds.select("*_flr")
             for s in cmds.ls(sl = True):
@@ -461,6 +476,8 @@ class daveManager:
             self.tagWalls()
 
     def importSelection(self, objects):
+        print "IMPORT SELECTION"
+        print "Objects = "+str(objects)
         self.secondaryWindow = cmds.window(title="DAVE: Set tags for objects")
         form = cmds.formLayout()
         tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
@@ -548,7 +565,15 @@ class daveManager:
                 else:
                     cmds.separator(width = 295, style = "none")
                 label = "Done"
-                cmds.button(label = label,command = lambda x: self.completeTagging(nameFields, radioButtons, userHullTextFields, objects, False), width = 80)
+                def helpPlease(*args):
+                    print "Contratulations!  You got to the help function."
+                    print nameFields
+                    print radioButtons
+                    print userHullTextFields
+                    print objects
+                    self.completeTagging(nameFields, radioButtons, userHullTextFields, objects, False)
+                test = partial(helpPlease)
+                cmds.button(label = label,command = test, width = 80)
                 cmds.setParent(cols[i / 5])
                 continue
             if i % 5 == 4:
@@ -568,6 +593,7 @@ class daveManager:
         cmds.showWindow()
 
     def completeTagging(self, nameFields, radioButtons, userHullTextFields, objects, force):
+        print "COMPLETETAGGING"
         if not force:
             for hullText in userHullTextFields:
                 if cmds.textField(hullText, q = True, en = True):
