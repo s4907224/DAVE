@@ -1,4 +1,6 @@
 import maya.cmds as cmds
+import pymel.core as pm
+import maya.OpenMaya as om
 import base64
 import hashlib
 import os
@@ -74,6 +76,7 @@ class daveObject:
         self.hull = []
         self.hash = 0
         self.tag = None
+        self.enabled = False
         allVPos = []
         maxVPos = -sys.maxint
         minVPos = sys.maxint
@@ -107,7 +110,45 @@ class daveObject:
         self.topVerts = upperVerts
         self.topVertsIndex = upperVertsIndex
 
+        self.searchForHull()
+
+    def searchForHull(self):
+        if cmds.objExists("*_usrHull"):
+            cmds.select(d = True)
+            cmds.select("*_usrHull")
+            for s in cmds.ls(sl = True):
+                if cmds.listAttr(s, st='DAVEHULL') != None:
+                    if cmds.getAttr(s+".DAVEHULL") == self.transform:
+                        self.hullTransform = s
+                        self.outerHullVerts = []
+                        for v in range(cmds.polyEvaluate(s, v = True)):
+                            self.outerHullVerts.append(cmds.pointPosition(s+".vtx["+str(v)+"]", w = True))
+                        numFaces = cmds.getAttr(s+".face", size=1)
+                        for j in range(numFaces):
+                            cmds.select(s+".f["+str(j)+"]")
+                            verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
+                            self.hull.append(verts)
+                        return
+        elif cmds.objExists("*_cvxHull"):
+            cmds.select(d = True)
+            cmds.select("*_cvxHull")
+            for s in cmds.ls(sl = True):
+                if cmds.listAttr(s, st='DAVEHULL') != None:
+                    if cmds.getAttr(s+".DAVEHULL") == transform:
+                        self.hullTransform = s
+                        self.outerHullVerts = []
+                        for v in range(cmds.polyEvaluate(hullName, v = True)):
+                            self.outerHullVerts.append(cmds.pointPosition(s+".vtx["+str(v)+"]", w = True))
+                        numFaces = cmds.getAttr(s+".face", size=1)
+                        for j in range(numFaces):
+                            cmds.select(s+".f["+str(j)+"]")
+                            verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
+                            self.hull.append(verts)
+                        return
+
     def genConvexHull(self):
+        if self.hull != []:
+            return
         if len(self.topVerts) < 3:
             self.outerHullVerts = []
             print "Not enough verts to construct BBox"
@@ -223,6 +264,7 @@ class daveManager:
                 self.roomPlans[i].append([])
                 self.roomOuterPlans[i].append([])
         self.hullTool = cmds.polyCreateFacetCtx(i1 = self.dbpath+"fetch/hull.png")
+        self.deleteJob = cmds.scriptJob(ct = ["SomethingSelected",self.checkForDeletions])
         '''
         I plan to add a script job in here somewhere that checks for deleted objects and removes them from the session, as currently
         Dave confuses maya with objects that it doesn't know have been taken to pasture.
@@ -234,6 +276,7 @@ class daveManager:
         '''
     def __del__(self):
         print "dtor called"
+        cmds.scriptJob(kill = self.deleteJob, force = True)
         
     def parseDAVEDB(self):
         names = []
@@ -288,6 +331,27 @@ class daveManager:
         cmds.setParent(col)
         cmds.showWindow()
 
+    def checkForDeletions(self, *args):
+        node = pm.selected()[0]
+        mObj = node.__apimobject__()
+        event = om.MNodeMessage.addNodePreRemovalCallback(mObj, self.searchSessionForObject, node)
+
+    def searchSessionForObject(self, *args):
+        transform = args[1]
+        matches = []
+        for ob in self.sessionObjects:
+            if ob.enabled and ob.transform == transform:
+                matches.append(ob.index)
+        if len(matches) > 1:
+            print "Multiple matching objects were found, this isn't good."
+            return
+        if not len(matches):
+            print "No matching objects were found."
+            return
+        else:
+            print "Removing match"
+            self.sessionObjects[matches[0]].enabled = False
+
     def checkAgainstDatabase(self, objIndex):
         if self.sessionObjects[objIndex].hash in self.db[0]:
             index = self.db[0].index(self.sessionObjects[objIndex].hash)
@@ -340,14 +404,37 @@ class daveManager:
             cmds.select("*_usrHull", d = True)
         if cmds.objExists("*_cvxHull"):
             cmds.select("*_cvxHull", d = True)
+        if cmds.objExists("*_flr"):
+            cmds.select("*_flr", d = True)
         selection = cmds.ls(sl = True)
+        if cmds.objExists("*_flr"):
+            cmds.select("*_flr")
+            for s in cmds.ls(sl = True):
+                if cmds.listAttr(s, st = "DAVEPLANBUILDING") and cmds.listAttr(s, st = "DAVEPLANBUILDING"):
+                    building = int(cmds.getAttr(s+".DAVEPLANBUILDING"))
+                    room = int(cmds.getAttr(s+".DAVEPLANROOM"))
+                    cmds.select(s+".vtx[0:]")
+                    for v in range(cmds.polyEvaluate(s, v = True)):
+                        self.roomOuterPlans[building][room].append(cmds.pointPosition(s+".vtx["+str(v)+"]", w = True))
+                    cmds.polyTriangulate(s)
+                    cmds.select(s+".vtx[0:]")
+                    yNormals = cmds.polyNormalPerVertex( query=True, y=True )
+                    if (sum(yNormals)/float(len(yNormals))) < 0:
+                        cmds.polyNormal(nm = 0)
+                    numFaces = cmds.getAttr(s+".face", size=1)
+                    for j in range(numFaces):
+                        cmds.select(s+".f["+str(j)+"]")
+                        verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
+                        self.roomPlans[building][room].append(verts)
+                    self.roomStates[building][room] = True
+
         toBeImported = []
         self.newObjects = []
         for i in range(len(selection)):
             if cmds.listAttr(selection[i], st='DAVEHULL') != None:
                 continue
             currentIndex = len(self.sessionObjects)
-            if not any(dObject.transform == selection[i] for dObject in self.sessionObjects):
+            if not any(dObject.transform == selection[i] for dObject in self.sessionObjects if dObject.enabled):
                 self.sessionObjects.append(daveObject(selection[i], currentIndex))
                 self.newObjects.append(currentIndex)
                 if cmds.listAttr(self.sessionObjects[currentIndex].transform, st='DAVEBUILDING') != None:
@@ -487,6 +574,9 @@ class daveManager:
         db = open(self.dbpath, "a+")
         for i in range(len(nameFields)):
             if not cmds.textField(nameFields[i], q = True, en = True):
+                print self.newObjects
+                self.newObjects.remove(i)
+                print self.newObjects
                 continue
             name =  cmds.textField(nameFields[i], q = True, text = True)
             activeButton = cmds.radioButtonGrp(radioButtons[i], q = True, sl = True)
@@ -549,7 +639,7 @@ class daveManager:
     def tagWalls(self):
         newWalls = []
         for i in range(len(self.sessionObjects)):
-            if self.sessionObjects[i].tag == "WALL" and cmds.listAttr(self.sessionObjects[i].transform, st='DAVEBUILDING') == None:
+            if self.sessionObjects[i].tag == "WALL" and cmds.listAttr(self.sessionObjects[i].transform, st='DAVEBUILDING') == None and self.sessionObjects[i].enabled:
                 self.walls.append(i)
                 newWalls.append(i)
         if len(newWalls) != 0:
@@ -638,6 +728,8 @@ class daveManager:
         for i in range(100):
             buildingCollection.append([])
         for i in self.walls:
+            if not self.sessionObjects[i].enabled:
+                continue
             if cmds.listAttr(self.sessionObjects[i].transform, st = "DAVEBUILDING") != None:
                 if cmds.listAttr(self.sessionObjects[i].transform, st = "DAVEROOM") == None:
                     bNo = int(cmds.getAttr(self.sessionObjects[i].transform+".DAVEBUILDING"))
@@ -709,6 +801,9 @@ class daveManager:
             self.processRooms([], [], [])
 
     def processRooms(self, fields, newWalls, transforms):
+        for i in self.newObjects:
+            self.sessionObjects[i].enabled = True
+        #This is the final step of import so we can assume all objects are now present
         self.roomCollections = []
         for i in range(100):
             self.roomCollections.append([])
@@ -726,6 +821,8 @@ class daveManager:
             cmds.deleteUI(self.wallWindow)
         for i in range(len(self.walls)):
             activeBuilding = None
+            if not self.sessionObjects[self.walls[i]].enabled:
+                continue
             if cmds.listAttr(self.sessionObjects[self.walls[i]].transform, st = "DAVEBUILDING") != None:
                 activeBuilding = int(cmds.getAttr(self.sessionObjects[self.walls[i]].transform+".DAVEBUILDING"))
             if cmds.listAttr(self.sessionObjects[self.walls[i]].transform, st = "DAVEROOM") != None:
@@ -733,6 +830,8 @@ class daveManager:
             wallNo = self.walls[i]
             self.roomCollections[activeBuilding][activeRoom].append(wallNo)
         self.checkBuildingHullStates()
+
+
 
     def checkBuildingHullStates(self):
         roomsNeeded = []
@@ -767,13 +866,15 @@ class daveManager:
                 selectAndViewObject(args[1])
                 def checkNewHulls(*args):
                     if [s for s in cmds.ls(sl = True)][0][:11] == "polySurface":
-                        hullName = args[0]+"_flr"
+                        hullName = "building"+str(args[0] + 1)+"Room"+str(args[1] + 1)+"_flr"
                         cmds.rename([s for s in cmds.ls(sl = True)][0], hullName)
-                        cmds.textField(fields[args[1]], e = True, text = hullName)
-                        cmds.addAttr(hullName, longName = "DAVEPLAN", dataType = "string", hidden = False)
-                        cmds.setAttr(hullName+".DAVEPLAN", args[0], type = "string")
+                        cmds.textField(fields[args[2]], e = True, text = hullName)
+                        cmds.addAttr(hullName, longName = "DAVEPLANBUILDING", dataType = "string", hidden = False)
+                        cmds.setAttr(hullName+".DAVEPLANBUILDING", args[0], type = "string")
+                        cmds.addAttr(hullName, longName = "DAVEPLANROOM", dataType = "string", hidden = False)
+                        cmds.setAttr(hullName+".DAVEPLANROOM", args[1], type = "string")
                 cmds.setToolTo(self.hullTool)
-                comm = partial(checkNewHulls, args[2], args[0])
+                comm = partial(checkNewHulls, args[2], args[3], args[0])
                 self.hullJob = cmds.scriptJob(runOnce = True, event = ["ToolChanged", comm])
 
             for i in range(numRooms):
@@ -786,7 +887,7 @@ class daveManager:
                 cmds.button(label = "Focus on room", width = 160, command = focus)
                 cmds.setParent(cols[i])
                 cmds.columnLayout(width = 400)
-                giveHull = partial(attachUserHull, i, roomTransforms[i], "building"+str(roomsNeeded[i][0] + 1)+"Room"+str(roomsNeeded[i][1] + 1))
+                giveHull = partial(attachUserHull, i, roomTransforms[i], roomsNeeded[i][0], roomsNeeded[i][1])
                 row = cmds.rowLayout(nc = 2)
                 cmds.setParent(row)
                 cmds.button(label='Create Hull', command = giveHull, width = 80)
@@ -835,12 +936,10 @@ class daveManager:
                             if hasattr(self, "hullJob"):
                                 cmds.scriptJob(kill = self.hullJob)
                         return
-        print force
         for room in rooms:
             self.roomStates[room[0]][room[1]] = True
         for i in range(len(fields)):
             hullName = cmds.textField(fields[i], q = True, text = True)
-            print hullName
             cmds.select(hullName+".vtx[0:]")
             for v in range(cmds.polyEvaluate(hullName, v = True)):
                 self.roomOuterPlans[rooms[i][0]][rooms[i][1]].append(cmds.pointPosition(hullName+".vtx["+str(v)+"]", w = True))
@@ -854,12 +953,6 @@ class daveManager:
                 cmds.select(hullName+".f["+str(j)+"]")
                 verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
                 self.roomPlans[rooms[i][0]][rooms[i][1]].append(verts)
-            print self.roomOuterPlans[rooms[i][0]][rooms[i][1]]
-            print self.roomPlans[rooms[i][0]][rooms[i][1]]
-            for h in self.roomPlans[rooms[i][0]][rooms[i][1]]:
-                cmds.select(d = True)
-                cmds.select(h)
-        print len(self.roomPlans)
         cmds.deleteUI(self.wallWindow)
 
     def pointTriangleTest(self, point, triVerts):
@@ -916,6 +1009,8 @@ class daveManager:
     def demoTest(self):
         failed = []
         for ob in self.sessionObjects:
+            if not ob.enabled:
+                continue
             bbox = cmds.exactWorldBoundingBox(ob.hullTransform)
             hull = []
             if hasattr(ob, "hull"):
@@ -929,6 +1024,7 @@ class daveManager:
                     point = [random.uniform(bbox[0], bbox[3]), random.uniform(bbox[2], bbox[5])]
                 cmds.polyCube(w = 0.05, d = 0.05, h = 0.05)
                 cmds.move(point[0], 0, point[1])
+
 def main():
     dave = daveManager("D:/Python/DAVE/DAVE/")
     urllib.urlretrieve("https://www.glovefx.com/s/dave.png", dave.path+"fetch/header.png")
