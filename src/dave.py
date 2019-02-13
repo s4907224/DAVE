@@ -243,7 +243,7 @@ class daveObject:
 
 class daveManager:
     def __init__(self, path):
-        print "Dave is starting..."
+        print "DAVE is starting..."
         self.path = path
         self.dbpath = path + "assets/assets.davedb"
         self.parseDAVEDB()
@@ -265,18 +265,25 @@ class daveManager:
                 self.roomOuterPlans[i].append([])
         self.hullTool = cmds.polyCreateFacetCtx(i1 = self.dbpath+"fetch/hull.png")
         self.deleteJob = cmds.scriptJob(ct = ["SomethingSelected",self.checkForDeletions])
+        self.window = None
+        self.secondaryWindow = None
         '''
-        I plan to add a script job in here somewhere that checks for deleted objects and removes them from the session, as currently
-        Dave confuses maya with objects that it doesn't know have been taken to pasture.
-        The problem is that most of the tool works with index numbers in dave's variable 'sessionObjects', and as such if one is removed,
-        all lists that rely on sessionObjects must be modified to match the new structure of the list.  If this was C based, it would be easy.
         python is simple
         makes programming fast and slick
         but no pointer type
         '''
+
+    def cleanup(self):
+        cmds.scriptJob(kill = self.deleteJob, force = True)
+        if self.secondaryWindow != None:
+            if (cmds.window(self.secondaryWindow, exists=True)):
+                cmds.deleteUI(self.secondaryWindow)
+        print "Exiting DAVE..."
+        cmds.refresh()
+        del self
+
     def __del__(self):
         print "dtor called"
-        cmds.scriptJob(kill = self.deleteJob, force = True)
         
     def parseDAVEDB(self):
         names = []
@@ -327,9 +334,11 @@ class daveManager:
         cmds.rowLayout(nc=3)
         cmds.button(label="Import Selection", width=150, c = lambda x : self.importSelectedObjects())
         cmds.button(label="Scan Scene", width = 150, c = lambda x: self.scanSceneAndImport())
-        cmds.button(label="Test hulls", c = lambda x: self.demoTest())
+        #cmds.button(label="Test hulls", c = lambda x: self.demoTest())
         cmds.setParent(col)
         cmds.showWindow()
+        #self.mainWindowCloseJob = cmds.scriptJob(uiDeleted = [self.window, "cmds.scriptJob(kill = "+str(self.deleteJob)+", force = True)"], ro = True)
+        self.mainWindowCloseJob = cmds.scriptJob(uiDeleted = [self.window, self.cleanup], ro = True)
 
     def checkForDeletions(self, *args):
         node = pm.selected()[0]
@@ -452,7 +461,7 @@ class daveManager:
             self.tagWalls()
 
     def importSelection(self, objects):
-        self.tagWindow = cmds.window(title="DAVE: Set tags for objects")
+        self.secondaryWindow = cmds.window(title="DAVE: Set tags for objects")
         form = cmds.formLayout()
         tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
         cmds.formLayout(form, edit=True, attachForm=((tabs, 'top', 0), (tabs, 'left', 0), (tabs, 'bottom', 0), (tabs, 'right', 0)))
@@ -633,7 +642,7 @@ class daveManager:
             db.write("!\n")
         db.close()
         cmds.select(d = True)
-        cmds.deleteUI(self.tagWindow)
+        cmds.deleteUI(self.secondaryWindow)
         self.tagWalls()
 
     def tagWalls(self):
@@ -644,7 +653,7 @@ class daveManager:
                 newWalls.append(i)
         if len(newWalls) != 0:
             numTabs = math.ceil(float(len(newWalls)) / 5.0)
-            self.wallWindow = cmds.window(title="DAVE: Set buildings")
+            self.secondaryWindow = cmds.window(title="DAVE: Set buildings")
             form = cmds.formLayout()
             tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
             cmds.formLayout(form, edit=True, attachForm=((tabs, 'top', 0), (tabs, 'left', 0), (tabs, 'bottom', 0), (tabs, 'right', 0)))
@@ -712,7 +721,7 @@ class daveManager:
                 if cmds.listAttr(self.sessionObjects[wallNo].transform, st='DAVEBUILDING') == None:
                     cmds.addAttr(self.sessionObjects[wallNo].transform, longName = "DAVEBUILDING", dataType = "string", hidden = False)
                 cmds.setAttr(self.sessionObjects[wallNo].transform+".DAVEBUILDING", activeBuilding, type = "string")
-            cmds.deleteUI(self.wallWindow)
+            cmds.deleteUI(self.secondaryWindow)
         for i in range(len(self.walls)):
             activeBuilding = None
             if cmds.listAttr(self.sessionObjects[self.walls[i]].transform, st = "DAVEBUILDING") != None:
@@ -740,7 +749,7 @@ class daveManager:
         if len(buildingSet):
             buildings = list(buildingSet)
         numBuildings = len(buildings)
-        self.wallWindow = cmds.window(title="DAVE: Set rooms")
+        self.secondaryWindow = cmds.window(title="DAVE: Set rooms")
         form = cmds.formLayout()
         tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
         cmds.formLayout(form, edit=True, attachForm=((tabs, 'top', 0), (tabs, 'left', 0), (tabs, 'bottom', 0), (tabs, 'right', 0)))
@@ -818,7 +827,7 @@ class daveManager:
                 if cmds.listAttr(transforms[i], st='DAVEROOM') == None:
                     cmds.addAttr(transforms[i], longName = "DAVEROOM", dataType = "string", hidden = False)
                 cmds.setAttr(transforms[i]+".DAVEROOM", activeRoom, type = "string")
-            cmds.deleteUI(self.wallWindow)
+            cmds.deleteUI(self.secondaryWindow)
         for i in range(len(self.walls)):
             activeBuilding = None
             if not self.sessionObjects[self.walls[i]].enabled:
@@ -845,7 +854,7 @@ class daveManager:
                         roomTransforms[len(roomTransforms) - 1].append(self.sessionObjects[wall].transform)
 
         numRooms = len(roomsNeeded)
-        self.wallWindow = cmds.window(title="DAVE: Set room floorplans")
+        self.secondaryWindow = cmds.window(title="DAVE: Set room floorplans")
         form = cmds.formLayout()
         tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
         cmds.formLayout(form, edit=True, attachForm=((tabs, 'top', 0), (tabs, 'left', 0), (tabs, 'bottom', 0), (tabs, 'right', 0)))
@@ -953,7 +962,7 @@ class daveManager:
                 cmds.select(hullName+".f["+str(j)+"]")
                 verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
                 self.roomPlans[rooms[i][0]][rooms[i][1]].append(verts)
-        cmds.deleteUI(self.wallWindow)
+        cmds.deleteUI(self.secondaryWindow)
 
     def pointTriangleTest(self, point, triVerts):
         def lineSegmentTest(s1, s2):
