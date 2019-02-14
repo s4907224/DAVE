@@ -14,6 +14,13 @@ from functools import partial
 def navTab(*args):
     cmds.tabLayout(args[0], e = True, st = args[1])
 
+def vectorUnitize(vector1):
+    l = vectorLength(vector1)
+    if len(vector1) == 2:
+        return vectorDivide(vector1, [l, l])
+    else:
+        return vectorDivide(vector1, [l, l, l])
+
 def vectorAngle(vector1, vector2):
     magU = vectorLength(vector1)
     magV = vectorLength(vector2)
@@ -23,7 +30,7 @@ def vectorAngle(vector1, vector2):
 
 def vectorDot(vector1, vector2):
     if len(vector1) != len(vector2):
-        print "Vectors given to function vectorDifference have differing number of dimensions!"
+        print "Vectors given to function vectorDot have differing number of dimensions!"
         return None 
     a1 = vector1[0]
     b1 = vector1[1]
@@ -38,7 +45,7 @@ def vectorDot(vector1, vector2):
 
 def vectorSum(vector1, vector2):
     if len(vector1) != len(vector2):
-        print "Vectors given to function vectorDifference have differing number of dimensions!"
+        print "Vectors given to function vectorSum have differing number of dimensions!"
         return None
     a1 = vector1[0]
     b1 = vector1[1]
@@ -68,7 +75,7 @@ def vectorDifference(vector1, vector2):
     
 def vectorDivide(numerator, denominator):
     if len(numerator) != len(denominator):
-        print "Vectors given to function vectorDifference have differing number of dimensions!"
+        print "Vectors given to function vectorDivide have differing number of dimensions!"
         return None
     a1 = numerator[0]
     b1 = numerator[1]
@@ -79,11 +86,13 @@ def vectorDivide(numerator, denominator):
     if len(numerator) == 3:
         c1 = numerator[2]
         c2 = denominator[2]
-    return [a1 / a2, b1 / b2, c1 / c2]
+        return [a1 / a2, b1 / b2, c1 / c2]
+    else:
+        return [a1 / a2, b1 / b2]
 
 def vectorProduct(vector1, vector2):
     if len(vector1) != len(vector2):
-        print "Vectors given to function vectorDifference have differing number of dimensions!"
+        print "Vectors given to function vectorProduct have differing number of dimensions!"
         return None
     a1 = vector1[0]
     b1 = vector1[1]
@@ -114,8 +123,6 @@ class daveObject:
         self.transform = transform
         self.index = id
         self.imported = False
-        self.numVerts = cmds.polyEvaluate(self.transform, v = True)
-        self.topVerts = []
         self.hull = {
             "tris": [],
             "outer": [],
@@ -126,10 +133,15 @@ class daveObject:
         self.hash = 0
         self.tag = None
         self.enabled = False
+        self.searchForHull()
+
+    def grabVerts(self):
+        self.topVerts = []
         allVPos = []
         maxVPos = -sys.maxint
         minVPos = sys.maxint
-        for i in range(self.numVerts):
+        numVerts = cmds.polyEvaluate(self.transform, v = True)
+        for i in range(numVerts):
             allVPos.append(cmds.pointPosition(self.transform + ".vtx[" + str(i) + "]", w = True))
             maxVPos = max(maxVPos, allVPos[i][1])
             minVPos = min(minVPos, allVPos[i][1])
@@ -137,7 +149,7 @@ class daveObject:
         self.hull["height"] = maxVPos
         upperVerts = []
         upperVertsIndex = []
-        for i in range(self.numVerts):
+        for i in range(numVerts):
             if round(allVPos[i][1], 2) >= round(topMargin, 2):
                 upperVerts.append(allVPos[i])
                 upperVertsIndex.append(i)
@@ -156,9 +168,8 @@ class daveObject:
             del upperVertsIndex[delIndices[i] - i]
         self.topVerts = upperVerts
 
-        self.searchForHull()
-
     def searchForHull(self):
+        self.grabVerts()
         if cmds.objExists("*_usrHull"):
             cmds.select(d = True)
             cmds.select("*_usrHull")
@@ -197,6 +208,7 @@ class daveObject:
         return False
 
     def genConvexHull(self):
+        self.grabVerts()
         print "GEN CONVEX HULL"
         print self.hull
         if self.hull["tris"] != [] and cmds.objExists(self.hull["transform"]):
@@ -819,6 +831,8 @@ class daveManager:
                 cmds.setAttr(self.sessionObjects[wallNo].transform+".DAVEBUILDING", activeBuilding, type = "string")
             cmds.deleteUI(self.secondaryWindow)
         for i in range(len(self.walls)):
+            if not (self.walls[i] in self.newObjects) or not (self.sessionObjects[self.walls[i]].enabled):
+                continue
             activeBuilding = None
             if cmds.listAttr(self.sessionObjects[self.walls[i]].transform, st = "DAVEBUILDING") != None:
                 activeBuilding = int(cmds.getAttr(self.sessionObjects[self.walls[i]].transform+".DAVEBUILDING"))
@@ -1128,12 +1142,10 @@ class daveManager:
         for ob in self.sessionObjects:
             if not ob.enabled:
                 continue
-            bbox = cmds.exactWorldBoundingBox(ob.hullTransform)
+            bbox = cmds.exactWorldBoundingBox(ob.hull["transform"])
             hull = []
             if hasattr(ob, "hull"):
-                hull = ob.hull
-                print ob.hull
-                print ob.outerHullVerts
+                hull = ob.hull["tris"]
             else:
                 continue
             for i in range(1000):
@@ -1259,20 +1271,21 @@ class daveManager:
                 numV = len(oVerts)
                 avgPos = vectorDivide(sigPos, [numV, numV, numV])
 
-                for p in range(len(oVerts)):
-                    p1 = cmds.pointPosition(ob.hull["outer"][oVerts[p - 1]])
-                    p2 = cmds.pointPosition(ob.hull["outer"][oVerts[p]])
-                    pos = vectorProduct(vectorSum(p1, p2), [0.5, 0.5, 0.5])
-                    pos = vectorProduct(vectorDifference(pos, avgPos), [0.8, 0.8, 0.8])
-                    pos = vectorSum(pos, avgPos)
-                    print pos
-                    cmds.polyCube(w = 0.1, d = 0.1, h = 0.1)
-                    cmds.move(pos[0], pos[1], pos[2])
-                print "avgPos = "+str(avgPos)
-                print "Hull has "+str(numV)+" edges"
+                for i in range(1000):
+                    for p in range(len(oVerts)):
+                        p1 = cmds.pointPosition(ob.hull["outer"][oVerts[p - 1]])
+                        p2 = cmds.pointPosition(ob.hull["outer"][oVerts[p]])
+                        pos = vectorProduct(vectorSum(p1, p2), [0.5, 0.5, 0.5])
+                        rX = random.uniform(vectorLength(vectorDifference(pos, avgPos)) * 0.1, vectorLength(vectorDifference(pos, avgPos)) * 0.35)
+                        offsetIn = vectorProduct(vectorUnitize([pos[0], pos[2]]), [-rX, -rX])
+                        pos = vectorSum(pos, [offsetIn[0], 0.0, offsetIn[1]])
+                        cmds.polySphere(name = ob.transform+"_HULLTEST_1")
+                        cmds.scale(0.01, 0.01, 0.01)
+                        cmds.move(pos[0], pos[1], pos[2])
 
 def main():
-    dave = daveManager("D:/Python/DAVE/DAVE/")
+    #dave = daveManager("D:/Python/DAVE/DAVE/")
+    dave = daveManager("/home/s4907224/Documents/DAVE/")
     urllib.urlretrieve("https://www.glovefx.com/s/dave.png", dave.path+"fetch/header.png")
     urllib.urlretrieve("https://www.glovefx.com/s/hull.png", dave.path+"fetch/hull.png")
     dave.UI()
