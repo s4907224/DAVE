@@ -36,6 +36,21 @@ def vectorDot(vector1, vector2):
         c2 = vector2[2]
     return a1 * a2 + b1 * b2 + c1 * c2
 
+def vectorSum(vector1, vector2):
+    if len(vector1) != len(vector2):
+        print "Vectors given to function vectorDifference have differing number of dimensions!"
+        return None
+    a1 = vector1[0]
+    b1 = vector1[1]
+    c1 = 0
+    a2 = vector2[0]
+    b2 = vector2[1]
+    c2 = 0
+    if len(vector1) == 3:
+        c1 = vector1[2]
+        c2 = vector2[2]
+    return [a1 + a2, b1 + b2, c1 + c2]
+
 def vectorDifference(vector1, vector2):
     if len(vector1) != len(vector2):
         print "Vectors given to function vectorDifference have differing number of dimensions!"
@@ -51,6 +66,35 @@ def vectorDifference(vector1, vector2):
         c2 = vector2[2]
     return [a1 - a2, b1 - b2, c1 - c2]
     
+def vectorDivide(numerator, denominator):
+    if len(numerator) != len(denominator):
+        print "Vectors given to function vectorDifference have differing number of dimensions!"
+        return None
+    a1 = numerator[0]
+    b1 = numerator[1]
+    c1 = 0
+    a2 = denominator[0]
+    b2 = denominator[1]
+    c2 = 0
+    if len(numerator) == 3:
+        c1 = numerator[2]
+        c2 = denominator[2]
+    return [a1 / a2, b1 / b2, c1 / c2]
+
+def vectorProduct(vector1, vector2):
+    if len(vector1) != len(vector2):
+        print "Vectors given to function vectorDifference have differing number of dimensions!"
+        return None
+    a1 = vector1[0]
+    b1 = vector1[1]
+    c1 = 0
+    a2 = vector2[0]
+    b2 = vector2[1]
+    c2 = 0
+    if len(vector1) == 3:
+        c1 = vector1[2]
+        c2 = vector2[2]
+    return [a1 * a2, b1 * b2, c1 * c2]
 
 def vectorLength(vector):
     a = vector[0]
@@ -72,8 +116,13 @@ class daveObject:
         self.imported = False
         self.numVerts = cmds.polyEvaluate(self.transform, v = True)
         self.topVerts = []
-        self.topVertsIndex = []
-        self.hull = []
+        self.hull = {
+            "tris": [],
+            "outer": [],
+            "height": 0,
+            "transform": ""
+        }
+        self.wrongBox = False
         self.hash = 0
         self.tag = None
         self.enabled = False
@@ -85,7 +134,7 @@ class daveObject:
             maxVPos = max(maxVPos, allVPos[i][1])
             minVPos = min(minVPos, allVPos[i][1])
         topMargin = maxVPos - ((maxVPos - minVPos) * 0.3)
-        self.hullHeight = maxVPos
+        self.hull["height"] = maxVPos
         upperVerts = []
         upperVertsIndex = []
         for i in range(self.numVerts):
@@ -102,13 +151,10 @@ class daveObject:
                         delIndices.append(j)
                     else:
                         delIndices.append(i)
-
         for i in range(len(delIndices)):
             del upperVerts[delIndices[i] - i]
             del upperVertsIndex[delIndices[i] - i]
-        
         self.topVerts = upperVerts
-        self.topVertsIndex = upperVertsIndex
 
         self.searchForHull()
 
@@ -119,38 +165,45 @@ class daveObject:
             for s in cmds.ls(sl = True):
                 if cmds.listAttr(s, st='DAVEHULL') != None:
                     if cmds.getAttr(s+".DAVEHULL") == self.transform:
-                        self.hullTransform = s
-                        self.outerHullVerts = []
+                        self.hull["transform"] = s
+                        self.hull["outer"] = []
                         for v in range(cmds.polyEvaluate(s, v = True)):
-                            self.outerHullVerts.append(cmds.pointPosition(s+".vtx["+str(v)+"]", w = True))
+                            self.hull["outer"].append(s+".vtx["+str(v)+"]")
                         numFaces = cmds.getAttr(s+".face", size=1)
                         for j in range(numFaces):
                             cmds.select(s+".f["+str(j)+"]")
                             verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
-                            self.hull.append(verts)
-                        return
+                            self.hull["tris"].append(verts)
+                        return True
         elif cmds.objExists("*_cvxHull"):
+            print "CVX HULL FOUND"
             cmds.select(d = True)
             cmds.select("*_cvxHull")
             for s in cmds.ls(sl = True):
                 if cmds.listAttr(s, st='DAVEHULL') != None:
-                    if cmds.getAttr(s+".DAVEHULL") == transform:
-                        self.hullTransform = s
-                        self.outerHullVerts = []
-                        for v in range(cmds.polyEvaluate(hullName, v = True)):
-                            self.outerHullVerts.append(cmds.pointPosition(s+".vtx["+str(v)+"]", w = True))
+                    if cmds.getAttr(s+".DAVEHULL") == self.transform:
+                        self.hull["transform"] = s
+                        self.hull["outer"] = []
+                        for v in range(cmds.polyEvaluate(s, v = True)):
+                            self.hull["outer"].append(s+".vtx["+str(v)+"]")
                         numFaces = cmds.getAttr(s+".face", size=1)
                         for j in range(numFaces):
                             cmds.select(s+".f["+str(j)+"]")
                             verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
-                            self.hull.append(verts)
-                        return
+                            self.hull["tris"].append(verts)
+                        print "Hull was found and given this:"
+                        print self.hull
+                        return True
+        return False
 
     def genConvexHull(self):
-        if self.hull != []:
+        print "GEN CONVEX HULL"
+        print self.hull
+        if self.hull["tris"] != [] and cmds.objExists(self.hull["transform"]):
+            print "Aleady has hull"
             return
         if len(self.topVerts) < 3:
-            self.outerHullVerts = []
+            self.hull["outer"] = []
             print "Not enough verts to construct BBox"
             self.wrongBox = True
             return
@@ -194,19 +247,16 @@ class daveObject:
             while len(stack) >= 2 and ccw(points[stack[len(stack) - 2]], points[stack[len(stack) - 1]], points[pointsIndex[i]]) <= 0:
                 stack.pop()
             stack.append(pointsIndex[i])
-        cmds.select(d = True)
         facetList = []
         self.cvxHVerts = stack
         for i in range(len(stack)):
-            cmds.select(self.transform+".vtx["+str(self.topVertsIndex[stack[i]])+"]", add = True)
             pos = self.topVerts[stack[i]]
-            facetList.append((pos[0], self.hullHeight, pos[2]))
+            facetList.append((pos[0], self.hull["height"], pos[2]))
         if len(facetList) < 3:
-            self.outerHullVerts = []
+            self.hull["outer"] = []
+            self.wrongBox = True
             return
-        else:
-            self.outerHullVerts = facetList
-        cmds.polyCreateFacet(name = self.transform+"_cvxHull", p = self.outerHullVerts)
+        cmds.polyCreateFacet(name = self.transform+"_cvxHull", p = facetList)
         sf = 100
         currentUnit = cmds.currentUnit(q = True, linear = True)
         if currentUnit == "cm" or currentUnit == "centimeter":
@@ -217,29 +267,32 @@ class daveObject:
         cmds.polyNormal(nm = 0)
         cmds.polyTriangulate(self.transform+"_cvxHull")
         cmds.select(self.transform+"_cvxHull.vtx[0:]")
+        self.hull["outer"] = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
         numFaces = cmds.getAttr(self.transform+"_cvxHull.face", size=1)
-        self.hull = []
+        self.hull["tris"] = []
         for j in range(numFaces):
             cmds.select(self.transform+"_cvxHull.f["+str(j)+"]")
             verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
-            self.hull.append(verts)
-        if len(self.outerHullVerts) == 3:
+            self.hull["tris"].append(verts)
+        if len(facetList) == 3:
             print "Hull has only 3 verts, may be incorrect."
             self.wrongBox = True
-        elif (max(self.outerHullVerts, key = lambda x: x[0])[0] > max(self.topVerts, key = lambda x: x[0])[0] or
-            max(self.outerHullVerts, key = lambda x: x[2])[2] > max(self.topVerts, key = lambda x: x[2])[2] or
-            min(self.outerHullVerts, key = lambda x: x[0])[0] < min(self.topVerts, key = lambda x: x[0])[0] or
-            max(self.outerHullVerts, key = lambda x: x[2])[2] < min(self.topVerts, key = lambda x: x[2])[2]):
+        elif (max(facetList, key = lambda x: x[0])[0] > max(self.topVerts, key = lambda x: x[0])[0] or
+            max(facetList, key = lambda x: x[2])[2] > max(self.topVerts, key = lambda x: x[2])[2] or
+            min(facetList, key = lambda x: x[0])[0] < min(self.topVerts, key = lambda x: x[0])[0] or
+            max(facetList, key = lambda x: x[2])[2] < min(self.topVerts, key = lambda x: x[2])[2]):
             print "BBOX ERROR!"
             self.wrongBox = True
         else:
             self.wrongBox = False
-        self.hullTransform = self.transform+"_cvxHull"
+        self.hull["transform"] = self.transform+"_cvxHull"
+        cmds.addAttr(self.hull["transform"], longName = "DAVEHULL", dataType = "string", hidden = False)
+        cmds.setAttr(self.hull["transform"]+".DAVEHULL", self.transform, type = "string")
 
     def determineShape(self):
-        print "Hull has " + str(len(self.outerHullVerts)) + " edges."
+        print "Hull has " + str(len(self.hull["outer"])) + " edges."
         nE = 0
-        print "Hull is made up of " + str(len(self.hull)) + " convex hulls."
+        print "Hull is made up of " + str(len(self.hull["tris"])) + " convex hulls."
 
 class daveManager:
     def __init__(self, path):
@@ -252,19 +305,23 @@ class daveManager:
         self.walls = []
         self.buildingStates = []
         self.roomStates = []
-        self.roomPlans = []
-        self.roomOuterPlans = []
+        self.roomData = []
         for i in range(100):
             self.buildingStates.append(False)
             self.roomStates.append([])
-            self.roomPlans.append([])
-            self.roomOuterPlans.append([])
+            self.roomData.append([])
             for j in range(100):
+                dictStructure = {
+                    "transform": "",
+                    "outer": [],
+                    "verts": []
+                }
                 self.roomStates[i].append(False)
-                self.roomPlans[i].append([])
-                self.roomOuterPlans[i].append([])
+                self.roomData[i].append(dictStructure)
         self.hullTool = cmds.polyCreateFacetCtx(i1 = self.dbpath+"fetch/hull.png")
         self.delTransforms = []
+        self.omDeleteChecks = []
+
         '''
         python is simple
         makes programming fast and slick
@@ -275,9 +332,10 @@ class daveManager:
         if hasattr(self, "secondaryWindow"):
             if (cmds.window(self.secondaryWindow, exists=True)):
                 cmds.deleteUI(self.secondaryWindow)
-        cmds.scriptJob(kill = self.deleteJob, force = True)
+        for event in self.omDeleteChecks:
+            om.MNodeMessage.removeCallback(event)
         print "Exiting DAVE..."
-        cmds.refresh()
+        del self
 
     def __del__(self):
         print "dtor called"
@@ -326,32 +384,31 @@ class daveManager:
 
     def UI(self):
         self.window = cmds.window(title='DAVE: Main Window')
-        self.deleteJob = cmds.scriptJob(ct = ["SomethingSelected",self.checkForDeletions])
+        #self.deleteJob = cmds.scriptJob(ct = ["SomethingSelected",self.checkForDeletions])
         col = cmds.columnLayout()
         cmds.image(image = self.path+"fetch/header.png")
         cmds.rowLayout(nc=3)
-        cmds.button(label="Import Selection", width=150, c = lambda x : self.importSelectedObjects())
-        def test(*args):
-            cmds.refresh()
-            print "Hello and welcome to the test function."
-            cmds.refresh()
-            self.scanSceneAndImport()
-        comm = partial(test)
-        cmds.button(label="Scan Scene", width = 150, c = comm)
-        #cmds.button(label="Test hulls", c = lambda x: self.demoTest())
+        cmds.button(label="Import Selection", width=150, c = lambda x: self.importSelectedObjects())
+        cmds.button(label="Scan Scene", width = 150, c = lambda x: self.scanSceneAndImport())
+        cmds.button(label="Test Func", c = lambda x: self.demoTest())
         cmds.setParent(col)
         cmds.showWindow()
         #self.mainWindowCloseJob = cmds.scriptJob(uiDeleted = [self.window, "cmds.scriptJob(kill = "+str(self.deleteJob)+", force = True)"], ro = True)
         self.mainWindowCloseJob = cmds.scriptJob(uiDeleted = [self.window, self.cleanup], ro = True)
 
-    def checkForDeletions(self, *args):
-        node = pm.selected()[0]
-        if node in self.delTransforms:
-            print "Node already tagged."
+    def checkForDeletions(self, transform):
+        if str(cmds.ls(sl = True)) == "[]":
             return
-        mObj = node.__apimobject__()
-        event = om.MNodeMessage.addNodePreRemovalCallback(mObj, self.searchSessionForObject, node)
-        self.delTransforms.append(node)
+        if cmds.objExists(transform):
+            #node = pm.selected()[0]
+            cmds.select(transform)
+            node = pm.selected()[0]
+            if node in self.delTransforms:
+                print "Node already tagged."
+                return
+            mObj = node.__apimobject__()
+            self.omDeleteChecks.append(om.MNodeMessage.addNodePreRemovalCallback(mObj, self.searchSessionForObject, node))
+            self.delTransforms.append(node)
 
     def searchSessionForObject(self, *args):
         transform = args[1]
@@ -369,6 +426,11 @@ class daveManager:
             print "Removing match"
             self.sessionObjects[matches[0]].enabled = False
             self.delTransforms.remove(args[0])
+            if cmds.objExists(args[1]+"_*Hull"):
+                cmds.select(args[1]+"_*Hull")
+            if cmds.objExists(args[1]+"*flr"):
+                cmds.select(args[1]+"*flr", add = True)
+            cmds.delete()
 
     def checkAgainstDatabase(self, objIndex):
         if self.sessionObjects[objIndex].hash in self.db[0]:
@@ -438,8 +500,10 @@ class daveManager:
                     building = int(cmds.getAttr(s+".DAVEPLANBUILDING"))
                     room = int(cmds.getAttr(s+".DAVEPLANROOM"))
                     cmds.select(s+".vtx[0:]")
+                    self.roomData[building][room]["outer"] = []
                     for v in range(cmds.polyEvaluate(s, v = True)):
-                        self.roomOuterPlans[building][room].append(cmds.pointPosition(s+".vtx["+str(v)+"]", w = True))
+                        self.roomData[building][room]["outer"].append(s+".vtx["+str(v)+"]")
+                    self.roomData[building][room]["transform"] = s
                     cmds.polyTriangulate(s)
                     cmds.select(s+".vtx[0:]")
                     yNormals = cmds.polyNormalPerVertex( query=True, y=True )
@@ -449,8 +513,14 @@ class daveManager:
                     for j in range(numFaces):
                         cmds.select(s+".f["+str(j)+"]")
                         verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
-                        self.roomPlans[building][room].append(verts)
+                        self.roomData[building][room]["verts"].append(verts)
                     self.roomStates[building][room] = True
+
+        for ob in self.sessionObjects:
+            if len(ob.hull["outer"]) and not ob.wrongBox and not cmds.objExists(ob.hull["transform"]) and ob.enabled:
+                if not ob.searchForHull():
+                    ob.genConvexHull()
+
 
         toBeImported = []
         self.newObjects = []
@@ -461,6 +531,7 @@ class daveManager:
             if not any(dObject.transform == selection[i] for dObject in self.sessionObjects if dObject.enabled):
                 self.sessionObjects.append(daveObject(selection[i], currentIndex))
                 self.newObjects.append(currentIndex)
+                self.checkForDeletions(self.sessionObjects[currentIndex].transform)
                 if cmds.listAttr(self.sessionObjects[currentIndex].transform, st='DAVEBUILDING') != None:
                     self.walls.append(currentIndex)
             else:
@@ -470,6 +541,7 @@ class daveManager:
             if (not compliantObject) or (not inDB):
                 toBeImported.append(currentIndex)
         cmds.select(d = True)
+        print self.newObjects
         if len(toBeImported) != 0:
             self.importSelection(toBeImported)
         elif len(self.sessionObjects) != 0:
@@ -478,6 +550,9 @@ class daveManager:
     def importSelection(self, objects):
         print "IMPORT SELECTION"
         print "Objects = "+str(objects)
+        if hasattr(self, "secondaryWindow"):
+            if (cmds.window(self.secondaryWindow, exists=True)):
+                cmds.deleteUI(self.secondaryWindow)
         self.secondaryWindow = cmds.window(title="DAVE: Set tags for objects")
         form = cmds.formLayout()
         tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
@@ -565,15 +640,7 @@ class daveManager:
                 else:
                     cmds.separator(width = 295, style = "none")
                 label = "Done"
-                def helpPlease(*args):
-                    print "Contratulations!  You got to the help function."
-                    print nameFields
-                    print radioButtons
-                    print userHullTextFields
-                    print objects
-                    self.completeTagging(nameFields, radioButtons, userHullTextFields, objects, False)
-                test = partial(helpPlease)
-                cmds.button(label = label,command = test, width = 80)
+                cmds.button(label = label,command = lambda x: self.completeTagging(nameFields, radioButtons, userHullTextFields, objects, False), width = 80)
                 cmds.setParent(cols[i / 5])
                 continue
             if i % 5 == 4:
@@ -632,16 +699,16 @@ class daveManager:
                 cmds.addAttr(self.sessionObjects[objects[i]].transform, longName = "DAVETAG", dataType = "string", hidden = False)
             cmds.setAttr(self.sessionObjects[objects[i]].transform+".DAVETAG", tag, type = "string")
             cmds.setAttr(self.sessionObjects[objects[i]].transform+".DAVETAG", tag, type = "string")
-            if self.sessionObjects[objects[i]].hull == [] and tag != "WALL":
+            if self.sessionObjects[objects[i]].hull["outer"] == [] and tag != "WALL":
                 if userSpecifiedHull == '':
                     self.sessionObjects[objects[i]].genConvexHull()
                 else:
                     hullName = userSpecifiedHull
                     self.sessionObjects[objects[i]].hullTransform = hullName
                     cmds.select(hullName+".vtx[0:]")
-                    self.sessionObjects[objects[i]].outerHullVerts = []
-                    for v in range(cmds.polyEvaluate(hullName, v = True)):
-                        self.sessionObjects[objects[i]].outerHullVerts.append(cmds.pointPosition(hullName+".vtx["+str(v)+"]", w = True))
+                    self.sessionObjects[objects[i]].hull["outer"] = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
+                    #for v in range(cmds.polyEvaluate(hullName, v = True)):
+                        #self.sessionObjects[objects[i]].outerHullVerts.append(cmds.pointPosition(hullName+".vtx["+str(v)+"]", w = True))
                     cmds.polyTriangulate(hullName)
                     cmds.select(hullName+".vtx[0:]")
                     yNormals = cmds.polyNormalPerVertex( query=True, y=True )
@@ -651,7 +718,7 @@ class daveManager:
                     for j in range(numFaces):
                         cmds.select(hullName+".f["+str(j)+"]")
                         verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
-                        self.sessionObjects[objects[i]].hull.append(verts)
+                        self.sessionObjects[objects[i]].hull["tris"].append(verts)
                 self.sessionObjects[objects[i]].determineShape()
             if objectHash in self.db[0]:
                 continue
@@ -673,12 +740,15 @@ class daveManager:
 
     def tagWalls(self):
         newWalls = []
-        for i in range(len(self.sessionObjects)):
-            if self.sessionObjects[i].tag == "WALL" and cmds.listAttr(self.sessionObjects[i].transform, st='DAVEBUILDING') == None and self.sessionObjects[i].enabled:
+        for i in self.newObjects:
+            if self.sessionObjects[i].tag == "WALL" and cmds.listAttr(self.sessionObjects[i].transform, st='DAVEBUILDING') == None:
                 self.walls.append(i)
                 newWalls.append(i)
         if len(newWalls) != 0:
             numTabs = math.ceil(float(len(newWalls)) / 5.0)
+            if hasattr(self, "secondaryWindow"):
+                if (cmds.window(self.secondaryWindow, exists=True)):
+                    cmds.deleteUI(self.secondaryWindow)
             self.secondaryWindow = cmds.window(title="DAVE: Set buildings")
             form = cmds.formLayout()
             tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
@@ -757,13 +827,14 @@ class daveManager:
         self.tagRooms()
 
     def tagRooms(self):
+        print "TAG ROOMS"
         buildingSet = set()
         newWalls = []
         buildingCollection = []
         for i in range(100):
             buildingCollection.append([])
         for i in self.walls:
-            if not self.sessionObjects[i].enabled:
+            if i not in self.newObjects:
                 continue
             if cmds.listAttr(self.sessionObjects[i].transform, st = "DAVEBUILDING") != None:
                 if cmds.listAttr(self.sessionObjects[i].transform, st = "DAVEROOM") == None:
@@ -772,9 +843,13 @@ class daveManager:
                     buildingCollection[bNo].append(i)
                     newWalls.append(i)
         buildings = []
+        print buildingSet
         if len(buildingSet):
             buildings = list(buildingSet)
         numBuildings = len(buildings)
+        if hasattr(self, "secondaryWindow"):
+            if (cmds.window(self.secondaryWindow, exists=True)):
+                cmds.deleteUI(self.secondaryWindow)
         self.secondaryWindow = cmds.window(title="DAVE: Set rooms")
         form = cmds.formLayout()
         tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
@@ -838,6 +913,8 @@ class daveManager:
     def processRooms(self, fields, newWalls, transforms):
         for i in self.newObjects:
             self.sessionObjects[i].enabled = True
+            if not len(self.sessionObjects[i].hull["outer"]) and not self.sessionObjects[i].wrongBox and self.sessionObjects[i].tag != "WALL":
+                self.sessionObjects[i].genConvexHull()
         #This is the final step of import so we can assume all objects are now present
         self.roomCollections = []
         for i in range(100):
@@ -856,6 +933,7 @@ class daveManager:
             cmds.deleteUI(self.secondaryWindow)
         for i in range(len(self.walls)):
             activeBuilding = None
+            activeRoom = None
             if not self.sessionObjects[self.walls[i]].enabled:
                 continue
             if cmds.listAttr(self.sessionObjects[self.walls[i]].transform, st = "DAVEBUILDING") != None:
@@ -878,8 +956,10 @@ class daveManager:
                     roomTransforms.append([])
                     for wall in self.roomCollections[building][room]:
                         roomTransforms[len(roomTransforms) - 1].append(self.sessionObjects[wall].transform)
-
         numRooms = len(roomsNeeded)
+        if hasattr(self, "secondaryWindow"):
+            if (cmds.window(self.secondaryWindow, exists=True)):
+                cmds.deleteUI(self.secondaryWindow)
         self.secondaryWindow = cmds.window(title="DAVE: Set room floorplans")
         form = cmds.formLayout()
         tabs = cmds.tabLayout(innerMarginWidth=5, innerMarginHeight=5)
@@ -965,9 +1045,9 @@ class daveManager:
                 if cmds.textField(hullText, q = True, en = True):
                     hullName = cmds.textField(hullText, q = True, text = True)
                     if hullName == "" or not cmds.objExists(hullName):
-                        errorString = "One or more room hulls have not been provided, or the wrong name was given, continue with *REALLY BAD* AABB's?"
-                        if (cmds.confirmDialog(title = "Floorplan not provided", message = errorString, button=['Yes','No'], defaultButton='Yes', cancelButton='No', dismissString='No' )) == "Yes":
-                            self.genBuildingHulls(fields, rooms, True)
+                        errorString = "One or more room hulls have not been provided, or the wrong name was given, please ensure a hull is given."
+                        if (cmds.confirmDialog(title = "Floorplan not provided", message = errorString, button=['Ok'], defaultButton='Ok', cancelButton='Ok', dismissString='Ok' )) == "Ok":
+                            return
                             if hasattr(self, "hullJob"):
                                 cmds.scriptJob(kill = self.hullJob)
                         return
@@ -976,8 +1056,10 @@ class daveManager:
         for i in range(len(fields)):
             hullName = cmds.textField(fields[i], q = True, text = True)
             cmds.select(hullName+".vtx[0:]")
+            self.roomData[rooms[i][0]][rooms[i][1]]["outer"] = []
             for v in range(cmds.polyEvaluate(hullName, v = True)):
-                self.roomOuterPlans[rooms[i][0]][rooms[i][1]].append(cmds.pointPosition(hullName+".vtx["+str(v)+"]", w = True))
+                self.roomData[rooms[i][0]][rooms[i][1]]["outer"].append(hullName+".vtx["+str(v)+"]")
+            self.roomData[rooms[i][0]][rooms[i][1]]["transform"] = hullName
             cmds.polyTriangulate(hullName)
             cmds.select(hullName+".vtx[0:]")
             yNormals = cmds.polyNormalPerVertex( query=True, y=True )
@@ -987,7 +1069,7 @@ class daveManager:
             for j in range(numFaces):
                 cmds.select(hullName+".f["+str(j)+"]")
                 verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
-                self.roomPlans[rooms[i][0]][rooms[i][1]].append(verts)
+                self.roomData[rooms[i][0]][rooms[i][1]]["verts"].append(verts)
         cmds.deleteUI(self.secondaryWindow)
 
     def pointTriangleTest(self, point, triVerts):
@@ -1015,12 +1097,11 @@ class daveManager:
                 return False
             else:
                 return True
-
         mX = 2 * random.randint(0, 1) - 1
         mY = 2 * random.randint(0, 1) - 1
-        bx = max(triVerts, key = lambda x: x[0])[0]
-        by = max(triVerts, key = lambda x: x[1])[1]
-        pointSeg = [point[0], point[1], bx * 2, by * 2]
+        bx = max(triVerts, key = lambda x: math.fabs(x[0]))[0]
+        by = max(triVerts, key = lambda x: math.fabs(x[1]))[1]
+        pointSeg = [point[0], point[1], mX * bx * 2, mY * by * 2]
         intersections = 0
         for i in range(3):
             v1 = triVerts[i - 1]
@@ -1042,6 +1123,7 @@ class daveManager:
         return False
 
     def demoTest(self):
+        '''
         failed = []
         for ob in self.sessionObjects:
             if not ob.enabled:
@@ -1050,6 +1132,8 @@ class daveManager:
             hull = []
             if hasattr(ob, "hull"):
                 hull = ob.hull
+                print ob.hull
+                print ob.outerHullVerts
             else:
                 continue
             for i in range(1000):
@@ -1059,6 +1143,133 @@ class daveManager:
                     point = [random.uniform(bbox[0], bbox[3]), random.uniform(bbox[2], bbox[5])]
                 cmds.polyCube(w = 0.05, d = 0.05, h = 0.05)
                 cmds.move(point[0], 0, point[1])
+        '''
+        #self.findRoomShapes()
+        #self.eject()
+        self.findHullShapes()
+
+    def eject(self):
+        errorString = "You selected DAVE's HR meeting, this will clear all dave attributes, continue?"
+        if (cmds.confirmDialog(title = "DAVE's HR Meeting", message = errorString, button=['Yes','No'], defaultButton='Yes', cancelButton='No', dismissString='No' )) == "Yes":
+            execfile(self.path+"src/ejectorSeat.py")
+            cmds.deleteUI(self.window)
+
+    def findRoomShapes(self):
+        for building in self.roomData:
+            if len(building):
+                for room in building:
+                    if len(room["outer"]):
+                        print "Room has "+str(len(room["outer"]))+" logical edges"
+                        oVerts = []
+                        oDist = sys.maxint
+                        for i in range(len(room["outer"])):
+                            iList = []
+                            iVerts = [i]
+                            iDist = 0
+                            for p in room["outer"][i:]:
+                                iList.append(p)
+                            for p in room["outer"][:i]:
+                                iList.append(p)
+                            done = False
+                            p = i
+                            while not done:
+                                cPos = cmds.pointPosition(iList[p])
+                                foundP = False
+                                t = p
+                                while not foundP:
+                                    t += 1
+                                    if t == len(room["outer"]):
+                                        t = 0
+                                    if t == i:
+                                        foundP = True
+                                        done = True
+                                        sPos = cmds.pointPosition(iList[i])
+                                        iDist += vectorLength(vectorDifference(sPos, cPos))
+                                        p = len(iList)
+                                        break
+                                    tPos = cmds.pointPosition(iList[t])
+                                    d = vectorLength(vectorDifference(tPos, cPos))
+                                    if d > 0.5:
+                                        iVerts.append(t)
+                                        iDist += d
+                                        foundP = True
+                                        p = t
+                                        break
+                                if p >= len(room["outer"]):
+                                    p = 0
+                                if p == i:
+                                    done = True
+                            if len(oVerts) < len(iVerts) and oDist > iDist:
+                                oVerts = iVerts
+                                oDist = iDist
+                        print "Room has "+str(len(oVerts))+" edges"
+
+    def findHullShapes(self):
+        for ob in self.sessionObjects:
+            if not ob.enabled:
+                continue
+            if len(ob.hull["outer"]):
+                print "Hull has "+str(len(ob.hull["outer"]))+" logical edges"
+                oVerts = []
+                oDist = sys.maxint
+                for i in range(len(ob.hull["outer"])):
+                    iList = []
+                    iVerts = [i]
+                    iDist = 0
+                    for p in ob.hull["outer"][i:]:
+                        iList.append(p)
+                    for p in ob.hull["outer"][:i]:
+                        iList.append(p)
+                    done = False
+                    p = i
+                    while not done:
+                        cPos = cmds.pointPosition(iList[p])
+                        foundP = False
+                        t = p
+                        while not foundP:
+                            t += 1
+                            if t == len(ob.hull["outer"]):
+                                t = 0
+                            if t == i:
+                                foundP = True
+                                done = True
+                                sPos = cmds.pointPosition(iList[i])
+                                iDist += vectorLength(vectorDifference(sPos, cPos))
+                                p = len(iList)
+                                break
+                            tPos = cmds.pointPosition(iList[t])
+                            d = vectorLength(vectorDifference(tPos, cPos))
+                            if d > 0.6096:
+                                iVerts.append(t)
+                                iDist += d
+                                foundP = True
+                                p = t
+                                break
+                        if p >= len(ob.hull["outer"]):
+                            p = 0
+                        if p == i:
+                            done = True
+                    if len(oVerts) < len(iVerts) and oDist > iDist:
+                        oVerts = iVerts
+                        oDist = iDist
+
+                sigPos = [0, 0, 0]
+                for p in oVerts:
+                    sigPos = vectorSum(sigPos, cmds.pointPosition(ob.hull["outer"][p]))
+                numV = len(oVerts)
+                avgPos = vectorDivide(sigPos, [numV, numV, numV])
+
+                for p in range(len(oVerts)):
+                    p1 = cmds.pointPosition(ob.hull["outer"][oVerts[p - 1]])
+                    p2 = cmds.pointPosition(ob.hull["outer"][oVerts[p]])
+                    pos = vectorProduct(vectorSum(p1, p2), [0.5, 0.5, 0.5])
+                    pos = vectorProduct(vectorDifference(pos, avgPos), [0.8, 0.8, 0.8])
+                    pos = vectorSum(pos, avgPos)
+                    print pos
+                    cmds.polyCube(w = 0.1, d = 0.1, h = 0.1)
+                    cmds.move(pos[0], pos[1], pos[2])
+                print "avgPos = "+str(avgPos)
+                print "Hull has "+str(numV)+" edges"
 
 def main():
     dave = daveManager("D:/Python/DAVE/DAVE/")
@@ -1067,5 +1278,5 @@ def main():
     dave.UI()
     
 if __name__== "__main__":
-  main()
+    main()
 
