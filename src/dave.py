@@ -9,10 +9,27 @@ import math
 import time
 import random
 import urllib
+import time
 from functools import partial
 
 def navTab(*args):
     cmds.tabLayout(args[0], e = True, st = args[1])
+
+def vectorMix(vector1, vector2, mix):
+    if len(vector1) != len(vector2):
+        print "Vectors given to function vectorMix have differing number of dimensions!"
+        return None 
+    a1 = vector1[0]
+    b1 = vector1[1]
+    c1 = 0
+    a2 = vector2[0]
+    b2 = vector2[1]
+    c2 = 0
+    if len(vector1) == 3:
+        c1 = vector1[2]
+        c2 = vector2[2]
+    mComp = 1.0 - mix
+    return [mComp * a1 + mix * a2, mComp * b1 + mix * b2, mComp * c1 + mix * c2]
 
 def vectorUnitize(vector1):
     l = vectorLength(vector1)
@@ -187,7 +204,6 @@ class daveObject:
                             self.hull["tris"].append(verts)
                         return True
         elif cmds.objExists("*_cvxHull"):
-            print "CVX HULL FOUND"
             cmds.select(d = True)
             cmds.select("*_cvxHull")
             for s in cmds.ls(sl = True):
@@ -202,17 +218,12 @@ class daveObject:
                             cmds.select(s+".f["+str(j)+"]")
                             verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
                             self.hull["tris"].append(verts)
-                        print "Hull was found and given this:"
-                        print self.hull
                         return True
         return False
 
     def genConvexHull(self):
         self.grabVerts()
-        print "GEN CONVEX HULL"
-        print self.hull
         if self.hull["tris"] != [] and cmds.objExists(self.hull["transform"]):
-            print "Aleady has hull"
             return
         if len(self.topVerts) < 3:
             self.hull["outer"] = []
@@ -301,11 +312,6 @@ class daveObject:
         cmds.addAttr(self.hull["transform"], longName = "DAVEHULL", dataType = "string", hidden = False)
         cmds.setAttr(self.hull["transform"]+".DAVEHULL", self.transform, type = "string")
 
-    def determineShape(self):
-        print "Hull has " + str(len(self.hull["outer"])) + " edges."
-        nE = 0
-        print "Hull is made up of " + str(len(self.hull["tris"])) + " convex hulls."
-
 class daveManager:
     def __init__(self, path):
         print "DAVE is starting..."
@@ -326,19 +332,32 @@ class daveManager:
                 dictStructure = {
                     "transform": "",
                     "outer": [],
-                    "verts": []
+                    "tris": [],
+                    "centre": [],
+                    "id": [i, j],
+                    "upperBound": -sys.maxint
                 }
                 self.roomStates[i].append(False)
                 self.roomData[i].append(dictStructure)
         self.hullTool = cmds.polyCreateFacetCtx(i1 = self.dbpath+"fetch/hull.png")
         self.delTransforms = []
         self.omDeleteChecks = []
-
+        self.cleanImport()
         '''
         python is simple
         makes programming fast and slick
         but no pointer type
         '''
+
+    def cleanImport(self):
+        self.importQueue = {
+            "models": [],
+            "modelTransforms": {},
+            "positions": [],
+            "rotations": [],
+            "attributes": [],
+            "roomIDs": []
+        }
 
     def cleanup(self):
         if hasattr(self, "secondaryWindow"):
@@ -396,7 +415,6 @@ class daveManager:
 
     def UI(self):
         self.window = cmds.window(title='DAVE: Main Window')
-        #self.deleteJob = cmds.scriptJob(ct = ["SomethingSelected",self.checkForDeletions])
         col = cmds.columnLayout()
         cmds.image(image = self.path+"fetch/header.png")
         cmds.rowLayout(nc=3)
@@ -405,18 +423,15 @@ class daveManager:
         cmds.button(label="Test Func", c = lambda x: self.demoTest())
         cmds.setParent(col)
         cmds.showWindow()
-        #self.mainWindowCloseJob = cmds.scriptJob(uiDeleted = [self.window, "cmds.scriptJob(kill = "+str(self.deleteJob)+", force = True)"], ro = True)
         self.mainWindowCloseJob = cmds.scriptJob(uiDeleted = [self.window, self.cleanup], ro = True)
 
     def checkForDeletions(self, transform):
         if str(cmds.ls(sl = True)) == "[]":
             return
         if cmds.objExists(transform):
-            #node = pm.selected()[0]
             cmds.select(transform)
             node = pm.selected()[0]
             if node in self.delTransforms:
-                print "Node already tagged."
                 return
             mObj = node.__apimobject__()
             self.omDeleteChecks.append(om.MNodeMessage.addNodePreRemovalCallback(mObj, self.searchSessionForObject, node))
@@ -486,14 +501,9 @@ class daveManager:
         return base64.urlsafe_b64encode(hasher.digest()[:6])
 
     def scanSceneAndImport(self):
-        print ""
-        print "scanSceneAndImport"
         geometry = cmds.ls(geometry=True)
-        print "Geometry = "+str(geometry)
         transforms = cmds.listRelatives(geometry, p=True, pa = True)
-        print "Transforms = "+str(transforms)
         cmds.select(transforms)
-        print "Going to import..."
         self.importSelectedObjects()
 
     def importSelectedObjects(self):
@@ -504,7 +514,6 @@ class daveManager:
         if cmds.objExists("*_flr"):
             cmds.select("*_flr", d = True)
         selection = cmds.ls(sl = True)
-        print "Selection = "+str(selection)
         if cmds.objExists("*_flr"):
             cmds.select("*_flr")
             for s in cmds.ls(sl = True):
@@ -516,6 +525,11 @@ class daveManager:
                     for v in range(cmds.polyEvaluate(s, v = True)):
                         self.roomData[building][room]["outer"].append(s+".vtx["+str(v)+"]")
                     self.roomData[building][room]["transform"] = s
+                    sigPos = [0, 0, 0]
+                    for v in self.roomData[building][room]["outer"]:
+                        sigPos = vectorSum(sigPos, cmds.pointPosition(v))
+                    numVerts = len(self.roomData[building][room]["outer"])
+                    self.roomData[building][room]["centre"] = vectorDivide(sigPos, [numVerts, numVerts, numVerts])
                     cmds.polyTriangulate(s)
                     cmds.select(s+".vtx[0:]")
                     yNormals = cmds.polyNormalPerVertex( query=True, y=True )
@@ -525,7 +539,7 @@ class daveManager:
                     for j in range(numFaces):
                         cmds.select(s+".f["+str(j)+"]")
                         verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
-                        self.roomData[building][room]["verts"].append(verts)
+                        self.roomData[building][room]["tris"].append(verts)
                     self.roomStates[building][room] = True
 
         for ob in self.sessionObjects:
@@ -553,15 +567,12 @@ class daveManager:
             if (not compliantObject) or (not inDB):
                 toBeImported.append(currentIndex)
         cmds.select(d = True)
-        print self.newObjects
         if len(toBeImported) != 0:
             self.importSelection(toBeImported)
         elif len(self.sessionObjects) != 0:
             self.tagWalls()
 
     def importSelection(self, objects):
-        print "IMPORT SELECTION"
-        print "Objects = "+str(objects)
         if hasattr(self, "secondaryWindow"):
             if (cmds.window(self.secondaryWindow, exists=True)):
                 cmds.deleteUI(self.secondaryWindow)
@@ -672,7 +683,6 @@ class daveManager:
         cmds.showWindow()
 
     def completeTagging(self, nameFields, radioButtons, userHullTextFields, objects, force):
-        print "COMPLETETAGGING"
         if not force:
             for hullText in userHullTextFields:
                 if cmds.textField(hullText, q = True, en = True):
@@ -688,9 +698,7 @@ class daveManager:
         db = open(self.dbpath, "a+")
         for i in range(len(nameFields)):
             if not cmds.textField(nameFields[i], q = True, en = True):
-                print self.newObjects
-                self.newObjects.remove(i)
-                print self.newObjects
+                del self.newObjects[i]
                 continue
             name =  cmds.textField(nameFields[i], q = True, text = True)
             activeButton = cmds.radioButtonGrp(radioButtons[i], q = True, sl = True)
@@ -719,8 +727,6 @@ class daveManager:
                     self.sessionObjects[objects[i]].hullTransform = hullName
                     cmds.select(hullName+".vtx[0:]")
                     self.sessionObjects[objects[i]].hull["outer"] = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
-                    #for v in range(cmds.polyEvaluate(hullName, v = True)):
-                        #self.sessionObjects[objects[i]].outerHullVerts.append(cmds.pointPosition(hullName+".vtx["+str(v)+"]", w = True))
                     cmds.polyTriangulate(hullName)
                     cmds.select(hullName+".vtx[0:]")
                     yNormals = cmds.polyNormalPerVertex( query=True, y=True )
@@ -731,7 +737,6 @@ class daveManager:
                         cmds.select(hullName+".f["+str(j)+"]")
                         verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
                         self.sessionObjects[objects[i]].hull["tris"].append(verts)
-                self.sessionObjects[objects[i]].determineShape()
             if objectHash in self.db[0]:
                 continue
             if not self.checkAgainstDatabase(objects[i]):
@@ -740,9 +745,6 @@ class daveManager:
                     anyImported = True
                 db.write("$\nNAME=%s\nTAG=%s\nHASH=%s\n$\n" % (name, tag, objectHash))
             self.sessionObjects[objects[i]].imported = True
-            if hasattr(self.sessionObjects[objects[i]], "wrongBox"):
-                if self.sessionObjects[objects[i]].wrongBox:
-                    print "An object has a bad hull"
         if anyImported:
             db.write("!\n")
         db.close()
@@ -841,7 +843,6 @@ class daveManager:
         self.tagRooms()
 
     def tagRooms(self):
-        print "TAG ROOMS"
         buildingSet = set()
         newWalls = []
         buildingCollection = []
@@ -857,7 +858,6 @@ class daveManager:
                     buildingCollection[bNo].append(i)
                     newWalls.append(i)
         buildings = []
-        print buildingSet
         if len(buildingSet):
             buildings = list(buildingSet)
         numBuildings = len(buildings)
@@ -954,6 +954,9 @@ class daveManager:
                 activeBuilding = int(cmds.getAttr(self.sessionObjects[self.walls[i]].transform+".DAVEBUILDING"))
             if cmds.listAttr(self.sessionObjects[self.walls[i]].transform, st = "DAVEROOM") != None:
                 activeRoom = int(cmds.getAttr(self.sessionObjects[self.walls[i]].transform+".DAVEROOM"))
+            wallTop = cmds.exactWorldBoundingBox(self.sessionObjects[self.walls[i]].transform)[4]
+            if wallTop > self.roomData[activeBuilding][activeRoom]["upperBound"]:
+                self.roomData[activeBuilding][activeRoom]["upperBound"] = wallTop
             wallNo = self.walls[i]
             self.roomCollections[activeBuilding][activeRoom].append(wallNo)
         self.checkBuildingHullStates()
@@ -1074,6 +1077,11 @@ class daveManager:
             for v in range(cmds.polyEvaluate(hullName, v = True)):
                 self.roomData[rooms[i][0]][rooms[i][1]]["outer"].append(hullName+".vtx["+str(v)+"]")
             self.roomData[rooms[i][0]][rooms[i][1]]["transform"] = hullName
+            sigPos = [0, 0, 0]
+            for v in self.roomData[rooms[i][0]][rooms[i][1]]["outer"]:
+                sigPos = vectorSum(sigPos, cmds.pointPosition(v))
+            numVerts = len(self.roomData[rooms[i][0]][rooms[i][1]]["outer"])
+            self.roomData[rooms[i][0]][rooms[i][1]]["centre"] = vectorDivide(sigPos, [numVerts, numVerts, numVerts])
             cmds.polyTriangulate(hullName)
             cmds.select(hullName+".vtx[0:]")
             yNormals = cmds.polyNormalPerVertex( query=True, y=True )
@@ -1083,7 +1091,7 @@ class daveManager:
             for j in range(numFaces):
                 cmds.select(hullName+".f["+str(j)+"]")
                 verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
-                self.roomData[rooms[i][0]][rooms[i][1]]["verts"].append(verts)
+                self.roomData[rooms[i][0]][rooms[i][1]]["tris"].append(verts)
         cmds.deleteUI(self.secondaryWindow)
 
     def pointTriangleTest(self, point, triVerts):
@@ -1137,27 +1145,9 @@ class daveManager:
         return False
 
     def demoTest(self):
-        '''
-        failed = []
-        for ob in self.sessionObjects:
-            if not ob.enabled:
-                continue
-            bbox = cmds.exactWorldBoundingBox(ob.hull["transform"])
-            hull = []
-            if hasattr(ob, "hull"):
-                hull = ob.hull["tris"]
-            else:
-                continue
-            for i in range(1000):
-                point = [random.uniform(bbox[0], bbox[3]), random.uniform(bbox[2], bbox[5])]
-                tests = 0
-                while not self.pointCmplxHullTest(point, hull):
-                    point = [random.uniform(bbox[0], bbox[3]), random.uniform(bbox[2], bbox[5])]
-                cmds.polyCube(w = 0.05, d = 0.05, h = 0.05)
-                cmds.move(point[0], 0, point[1])
-        '''
         #self.findRoomShapes()
         #self.eject()
+        self.determineRooms()
         self.findHullShapes()
 
     def eject(self):
@@ -1171,7 +1161,6 @@ class daveManager:
             if len(building):
                 for room in building:
                     if len(room["outer"]):
-                        print "Room has "+str(len(room["outer"]))+" logical edges"
                         oVerts = []
                         oDist = sys.maxint
                         for i in range(len(room["outer"])):
@@ -1214,14 +1203,13 @@ class daveManager:
                             if len(oVerts) < len(iVerts) and oDist > iDist:
                                 oVerts = iVerts
                                 oDist = iDist
-                        print "Room has "+str(len(oVerts))+" edges"
 
     def findHullShapes(self):
+        sTime = time.time()
         for ob in self.sessionObjects:
             if not ob.enabled:
                 continue
             if len(ob.hull["outer"]):
-                print "Hull has "+str(len(ob.hull["outer"]))+" logical edges"
                 oVerts = []
                 oDist = sys.maxint
                 for i in range(len(ob.hull["outer"])):
@@ -1271,21 +1259,128 @@ class daveManager:
                 numV = len(oVerts)
                 avgPos = vectorDivide(sigPos, [numV, numV, numV])
 
-                for i in range(1000):
-                    for p in range(len(oVerts)):
+                bbox = cmds.exactWorldBoundingBox(ob.transform)
+                building = int(cmds.getAttr(ob.transform+".DAVENEARBUILDING"))
+                room = int(cmds.getAttr(ob.transform+".DAVENEARROOM"))
+                for p in range(len(oVerts)):
+                    def plate(*args):
                         p1 = cmds.pointPosition(ob.hull["outer"][oVerts[p - 1]])
                         p2 = cmds.pointPosition(ob.hull["outer"][oVerts[p]])
-                        pos = vectorProduct(vectorSum(p1, p2), [0.5, 0.5, 0.5])
-                        rX = random.uniform(vectorLength(vectorDifference(pos, avgPos)) * 0.1, vectorLength(vectorDifference(pos, avgPos)) * 0.35)
-                        offsetIn = vectorProduct(vectorUnitize([pos[0], pos[2]]), [-rX, -rX])
-                        pos = vectorSum(pos, [offsetIn[0], 0.0, offsetIn[1]])
-                        cmds.polySphere(name = ob.transform+"_HULLTEST_1")
-                        cmds.scale(0.01, 0.01, 0.01)
-                        cmds.move(pos[0], pos[1], pos[2])
+                        variance = 0.1 / vectorLength(vectorDifference(p1, p2))
+                        if variance > 1.0:
+                            variance = 1.0
+                        mix = random.uniform(0.5 - (variance * 0.5), 0.5 + (variance * 0.5))
+                        pos = vectorMix(p1, p2, mix)
+                        varianceL = 0.05 / vectorLength(vectorDifference(pos, avgPos))
+                        if varianceL > 1.0:
+                            varianceL = 1.0
+                        varianceH = 0.2 / vectorLength(vectorDifference(pos, avgPos))
+                        if varianceH > 1.0:
+                            varianceH = 1.0
+                        mix = random.uniform(varianceL, varianceH)
+                        pos = vectorMix(pos, avgPos, mix)
+                        relPos = vectorDifference(p1, p2)
+                        ax = [0.0, 0.0, 1.0]
+                        rot = math.degrees(vectorAngle(relPos, ax))
+                        if relPos[0] < 0:
+                            rot = 360.0 - rot
+                        if self.pointCmplxHullTest([pos[0], pos[2]], self.roomData[building][room]["tris"]):
+                            self.importQueue["models"].append("plate")
+                            self.importQueue["rotations"].append([0, rot, 0])
+                            self.importQueue["positions"].append([pos[0], pos[1], pos[2]])
+                    if random.randint(0, 1):
+                        plate()
+
+                    def chair(*args):
+                        p1 = cmds.pointPosition(ob.hull["outer"][oVerts[p - 1]])
+                        p2 = cmds.pointPosition(ob.hull["outer"][oVerts[p]])
+                        variance = 0.25 / vectorLength(vectorDifference(p1, p2))
+                        if variance > 1.0:
+                            variance = 1.0
+                        mix = random.uniform(0.5 - (variance * 0.5), 0.5 + (variance * 0.5))
+                        pos = vectorMix(p1, p2, mix)
+                        varianceL = 0.05 / vectorLength(vectorDifference(pos, avgPos))
+                        if varianceL > 1.0:
+                            varianceL = 1.0
+                        varianceH = 0.35 / vectorLength(vectorDifference(pos, avgPos))
+                        if varianceH > 1.0:
+                            varianceH = 1.0
+                        mix = random.uniform(-varianceH, -varianceL)
+                        pos = vectorMix(pos, avgPos, mix)
+                        relPos = vectorDifference(p1, p2)
+                        ax = [0.0, 0.0, 1.0]
+                        rot = math.degrees(vectorAngle(relPos, ax))
+                        if relPos[0] < 0:
+                            rot = 360.0 - rot
+                        if self.pointCmplxHullTest([pos[0], pos[2]], self.roomData[building][room]["tris"]):
+                            self.importQueue["models"].append("chair")
+                            self.importQueue["rotations"].append([0, rot, 0])
+                            self.importQueue["positions"].append([pos[0], bbox[1], pos[2]])
+                    if random.randint(0, 1):
+                        chair()
+
+                def spice(*args):
+                    rp = [random.uniform(bbox[0], bbox[3]), random.uniform(bbox[2], bbox[5])]
+                    while not self.pointCmplxHullTest(rp, ob.hull["tris"]):
+                        rp = [random.uniform(bbox[0], bbox[3]), random.uniform(bbox[2], bbox[5])]
+                    if self.pointCmplxHullTest(rp, self.roomData[building][room]["tris"]):
+                        self.importQueue["models"].append("spice")
+                        self.importQueue["rotations"].append([0, 0, 0])
+                        self.importQueue["positions"].append([rp[0], ob.hull["height"], rp[1]])
+                for r in range(100):
+                    if (random.randint(0, 100) / 100):
+                        spice()
+                cmds.select(d = True)
+
+        files = set(self.importQueue["models"])
+        for f in set(self.importQueue["models"]):
+            new = cmds.file(self.path+"models/"+f+".obj", rnn = True, i=True)
+            cmds.select(new)
+            self.importQueue["modelTransforms"][f] = cmds.ls(sl = True, transforms = True)
+
+        for f in range(len(self.importQueue["positions"])):
+            imMod = self.importQueue["models"][f]
+            model = self.importQueue["modelTransforms"][imMod]
+            cmds.select(model)
+            pos = self.importQueue["positions"][f]
+            rot = self.importQueue["rotations"][f]
+            cmds.move(pos[0], pos[1], pos[2])
+            cmds.rotate(rot[0], rot[1], rot[2])
+            cmds.duplicate(model, name = imMod)
+
+        for f in set(self.importQueue["models"]):
+            cmds.select(self.importQueue["modelTransforms"][f])
+            cmds.delete()
+        self.cleanImport()
+
+    def determineRooms(self):
+        for ob in self.sessionObjects:
+            nearestRoom = [101, 101]
+            smallestDist = sys.maxint
+            smallestYDiff = sys.maxint
+            if not ob.enabled or ob.tag == "WALL":
+                continue
+            bbox = cmds.exactWorldBoundingBox(ob.transform)
+            centre = vectorDivide(vectorSum([bbox[0], bbox[1], bbox[2]], [bbox[3], bbox[4], bbox[5]]), [2.0, 2.0, 2.0])
+            obHeight = bbox[4] - bbox[1]
+            for building in self.roomData:
+                for room in building:
+                    if len(room["outer"]):
+                        dist = vectorLength(vectorDifference(centre, room["centre"]))
+                        yDiff = math.fabs(bbox[1] - room["centre"][1])
+                        if (dist < smallestDist and self.pointCmplxHullTest([centre[0], centre[2]], room["tris"]) and yDiff < smallestYDiff) and (bbox[1] < room["upperBound"] + 0.5 * obHeight):
+                            smallestYDiff = yDiff
+                            smallestDist = dist
+                            nearestRoom = room["id"]
+            if cmds.listAttr(ob.transform, st = "DAVENEARBUILDING") == None:
+                cmds.addAttr(ob.transform, longName = "DAVENEARBUILDING", dataType = "string", hidden = False)
+                cmds.addAttr(ob.transform, longName = "DAVENEARROOM", dataType = "string", hidden = False)
+            cmds.setAttr(ob.transform+".DAVENEARBUILDING", nearestRoom[0], type = "string")
+            cmds.setAttr(ob.transform+".DAVENEARROOM", nearestRoom[1], type = "string")
 
 def main():
-    #dave = daveManager("D:/Python/DAVE/DAVE/")
-    dave = daveManager("/home/s4907224/Documents/DAVE/")
+    dave = daveManager("D:/Python/DAVE/DAVE/")
+    #dave = daveManager("/home/s4907224/Documents/DAVE/")
     urllib.urlretrieve("https://www.glovefx.com/s/dave.png", dave.path+"fetch/header.png")
     urllib.urlretrieve("https://www.glovefx.com/s/hull.png", dave.path+"fetch/hull.png")
     dave.UI()
