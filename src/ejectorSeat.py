@@ -1,4 +1,5 @@
 import maya.cmds as cmds
+import sys
 
 def main():
     cmds.select(all = True)
@@ -20,10 +21,6 @@ def main():
         for match in cmds.ls(sl = True):
             if match[0] == "D" and match[9] == "_":
                 cmds.rename(match, match[10:])
-    dave = daveManager("D:/Python/DAVE/DAVE/")
-    urllib.urlretrieve("https://www.glovefx.com/s/dave.png", dave.path+"fetch/header.png")
-    urllib.urlretrieve("https://www.glovefx.com/s/hull.png", dave.path+"fetch/hull.png")
-    dave.UI()
     
 if __name__== "__main__":
     main()
