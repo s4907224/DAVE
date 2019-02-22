@@ -1098,8 +1098,8 @@ class daveManager:
             self.processWalls([], [])
 
     '''
-        processWalls:
-
+    processWalls:
+        Any walls/doors the user added in the previous step should now be added to their respective locations in the tool's data structures
     '''
     def processWalls(self, fields, newWalls):
         self.wallCollections = []
@@ -1123,6 +1123,10 @@ class daveManager:
             self.wallCollections[activeBuilding].append(wallNo)
         self.tagRooms()
 
+    '''
+    tagRooms:
+        in a similar manner to 'tagWalls' a UI is created for the user to give each wall or door a room identifier
+    '''
     def tagRooms(self):
         buildingSet = set()
         newWalls = []
@@ -1203,14 +1207,21 @@ class daveManager:
                         cmds.setParent(cols[i])
             cmds.showWindow()
         else:
+            #Once again add a passthrough
             self.processRooms([], [], [])
 
+    '''
+    processRooms:
+        The room counterpart to processWalls.  This is the last step of the import process, and as such we must make sure any remaining objects in 'newObjects' are now tagged as 
+        imported into the session.  Any objects without hulls that should have some at this stage should also be prompted to generate hulls.
+    '''
     def processRooms(self, fields, newWalls, transforms):
         for i in self.newObjects:
             self.sessionObjects[i].enabled = True
             if not len(self.sessionObjects[i].hull["outer"]) and not self.sessionObjects[i].wrongBox and self.sessionObjects[i].tag != "WALL" and self.sessionObjects[i].tag != "DOOR":
                 self.sessionObjects[i].genConvexHull()
         #This is the final step of import so we can assume all objects are now present
+        #Each time we need to re-process the rooms we should reset 'roomCollections' to ensure there is no doubling of walls
         self.roomCollections = []
         for i in range(100):
             self.roomCollections.append([])
@@ -1235,6 +1246,7 @@ class daveManager:
                 activeBuilding = int(cmds.getAttr(self.sessionObjects[self.walls[i]].transform+".DAVEBUILDING"))
             if cmds.listAttr(self.sessionObjects[self.walls[i]].transform, st = "DAVEROOM") != None:
                 activeRoom = int(cmds.getAttr(self.sessionObjects[self.walls[i]].transform+".DAVEROOM"))
+            #As we're going through all walls here, we should look for the top bound of each room for later use.
             wallTop = cmds.exactWorldBoundingBox(self.sessionObjects[self.walls[i]].transform)[4]
             if wallTop > self.roomData[activeBuilding][activeRoom]["upperBound"]:
                 self.roomData[activeBuilding][activeRoom]["upperBound"] = wallTop
@@ -1242,8 +1254,10 @@ class daveManager:
             self.roomCollections[activeBuilding][activeRoom].append(wallNo)
         self.checkBuildingHullStates()
 
-
-
+    '''
+    checkBuildingHullStates:
+        Filters through all rooms and checks which have incorrect/non-existant hulls (and walls/doors to go with) and prompts the user to supply any of these.
+    '''
     def checkBuildingHullStates(self):
         roomsNeeded = []
         roomTransforms = []
@@ -1271,14 +1285,17 @@ class daveManager:
                 cmds.setParent(tabs)
                 cmds.tabLayout(tabs, e=True, tabLabel=((cols[i], "Building "+str(roomsNeeded[i][0] + 1)+", room "+str(roomsNeeded[i][1] + 1))))  
 
+            #Local version of 'selectAndViewObject' to allow for whole rooms to be selected
             def selectRoom(*args):
                 cmds.select(d = True)
                 cmds.select(args[0])
                 cmds.viewFit(args[0])  
             
+            #Selects the tool's polygonal surface context as the active tool and adds a scriptjob to check for when the user completes the surface
             def attachUserHull(*args):
                 selectAndViewObject(args[1])
                 def checkNewHulls(*args):
+                    #Any created surfaces will be initally named "polySurface*" by Maya
                     if [s for s in cmds.ls(sl = True)][0][:11] == "polySurface":
                         hullName = "building"+str(args[0] + 1)+"Room"+str(args[1] + 1)+"_flr"
                         cmds.rename([s for s in cmds.ls(sl = True)][0], hullName)
@@ -1291,6 +1308,7 @@ class daveManager:
                 comm = partial(checkNewHulls, args[2], args[3], args[0])
                 self.hullJob = cmds.scriptJob(runOnce = True, event = ["ToolChanged", comm])
 
+            #UI Setup
             for i in range(numRooms):
                 cmds.setParent(cols[i])
                 row = cmds.rowLayout(nc = 3)
@@ -1343,7 +1361,12 @@ class daveManager:
                 cmds.button(label = label, command = nxt, width = 80)
                 cmds.setParent(cols[i])
             cmds.showWindow()
-        
+    
+    '''
+    genBuildingHulls:
+        Takes the user generated hulls and performs all needed operations on them, such as tringulation, and sends the relevant data to the data structures.
+        Has as of yet unused flag 'force' that could be used to override the error message at the start.  Could be used if an automatic method was implemented for room plan generation.
+    '''
     def genBuildingHulls(self, fields, rooms, opMenus, force):
         if not force:
             for hullText in fields:
@@ -1357,6 +1380,7 @@ class daveManager:
                                 cmds.scriptJob(kill = self.hullJob)
                         return
         for room in rooms:
+            #This function will make all rooms from the last UI 'correct'
             self.roomStates[room[0]][room[1]] = True
         for i in range(len(fields)):
             hullName = cmds.textField(fields[i], q = True, text = True)
@@ -1370,6 +1394,7 @@ class daveManager:
             for v in range(cmds.polyEvaluate(hullName, v = True)):
                 self.roomData[rooms[i][0]][rooms[i][1]]["outer"].append(hullName+".vtx["+str(v)+"]")
             self.roomData[rooms[i][0]][rooms[i][1]]["transform"] = hullName
+            #We want the central point of the room later so we should do this now
             sigPos = [0, 0, 0]
             for v in self.roomData[rooms[i][0]][rooms[i][1]]["outer"]:
                 sigPos = vectorSum(sigPos, cmds.pointPosition(v))
@@ -1381,6 +1406,7 @@ class daveManager:
             yNormals = cmds.polyNormalPerVertex( query=True, y=True )
             if cmds.listAttr(hullName, st = "DAVEHULLFLIPPED") == None:
                 cmds.addAttr(hullName, longName = "DAVEHULLFLIPPED", dataType = "string", hidden = False)
+                #Initialise the flag to False and then change if neccesary.  False indicates that angles used later must be incremented by pi rads to ensure objects face the correct way
                 cmds.setAttr(hullName+".DAVEHULLFLIPPED", "False", type = "string")
             if (sum(yNormals)/float(len(yNormals))) < 0:
                 cmds.polyNormal(nm = 0)
@@ -1388,11 +1414,17 @@ class daveManager:
             numFaces = cmds.getAttr(hullName+".face", size=1)
             for j in range(numFaces):
                 cmds.select(hullName+".f["+str(j)+"]")
+                #Get the vertices for each triangle that makes up the mesh.  We want the name of each vertex just in case the user moves the hull, and so we can query the location each time.
                 verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
                 self.roomData[rooms[i][0]][rooms[i][1]]["tris"].append(verts)
         cmds.deleteUI(self.secondaryWindow)
 
+    '''
+    pointTriangelTest:
+        Tests if a point lies within a given triangle in the XZ plane.
+    '''
     def pointTriangleTest(self, point, triVerts):
+        #Local function for testing an intersection of two line segments.  Adapted from https://stackoverflow.com/a/3838357
         def lineSegmentTest(s1, s2):
             if max(s1[0], s1[2]) < min(s2[0], s2[2]):
                 return False
@@ -1417,6 +1449,9 @@ class daveManager:
                 return False
             else:
                 return True
+
+        #A semi-infinite line is not needed, just one that would definitely lie outside of the triangle we're testing.
+        #Randomise which of the 4 cardinal directions it roughly points so that even if there are errors for certain axis allignments at random, we should reduce error by random chance.
         mX = 2 * random.randint(0, 1) - 1
         mY = 2 * random.randint(0, 1) - 1
         bx = max(triVerts, key = lambda x: math.fabs(x[0]))[0]
@@ -1424,14 +1459,20 @@ class daveManager:
         pointSeg = [point[0], point[1], mX * bx * 2, mY * by * 2]
         intersections = 0
         for i in range(3):
+            #Luckily in python a negative index will just wrap back around to the back of the list
             v1 = triVerts[i - 1]
             v2 = triVerts[i]
             triSeg = [v1[0], v1[1], v2[0], v2[1]]
             if lineSegmentTest(pointSeg, triSeg):
                 intersections += 1
+        #An odd number of intersections indicates the point is inside.
         if intersections % 2 == 1:
             return True
 
+    '''
+    pointCmplxHullTest:
+        For a given 3D point, take it's X and Z components and check if it against any triangle that makes up 'cmplxHull'.  If it is, in ANY triangle, the point is inside the mesh.
+    '''
     def pointCmplxHullTest(self, point, cmplxHull):
         for triangle in cmplxHull:
             triVPos = []
@@ -1442,29 +1483,72 @@ class daveManager:
                 return True
         return False
             
+    '''
+    runAllDecor:
+        The tool's process for when the 'decorate scene' button is pressed.
+    '''
     def runAllDecor(self):
+        #First we need to know where walls are in the scene
         self.findRoomShapes()
+        #Then we can process each wall
         self.decorateRooms()
+        #Now anything to be imported should be so they can be decorated later
         self.processDAVEQ()
+        #Figure out in which rooms any props lie
         self.determineRooms()
+        #Find the placable edges of each of these props
         self.findHullShapes()
+        #Decorate them
         self.decorateObjects()
+        #And import any resulting props
         self.processDAVEQ()
 
+    '''
+    eject:
+        Trawls the scene for any objects set up for DAVE, and removes any indicators they are used by/for DAVE.  Useful for if any errors occur at any stage in the process
+        and the scene should be treated as new.  Closes DAVE.
+    '''
     def eject(self):
         errorString = "This will clear all dave attributes, continue?"
         if (cmds.confirmDialog(title = "Clear all DAVE data", message = errorString, button=['Yes','No'], defaultButton='Yes', cancelButton='No', dismissString='No' )) == "Yes":
-            execfile(self.path+"src/ejectorSeat.py")
+            cmds.select(all = True)
+            for s in cmds.ls(sl = True):
+                if cmds.listAttr(s, st = "*DAVE*") != None:
+                    for a in cmds.listAttr(s, st = "*DAVE*"):
+                        cmds.deleteAttr(s+"."+a)
+            if cmds.objExists("*_D*"):
+                cmds.select("*_D*")
+                transforms = cmds.listRelatives(cmds.ls(sl = True, geometry=True), p=True, pa = True)
+                cmds.select(transforms)
+                for match in cmds.ls(sl = True):
+                    #This would indicate a 9 character DAVEHash, technically an 8 character hash following a 'D' and followed by an underscore
+                    if match[len(match) - 9] == "D" and match[len(match) - 10] == "_":
+                        cmds.rename(match, match[:len(match) - 10])
+            if cmds.objExists("*D*_*"):
+                cmds.select("*D*_*")
+                transforms = cmds.listRelatives(cmds.ls(sl = True, geometry=True), p=True, pa = True)
+                cmds.select(transforms)
+                for match in cmds.ls(sl = True):
+                    #This would indicate a 9 character DAVEHash, technically an 8 character hash following a 'D' and followed by an underscore
+                    if match[0] == "D" and match[9] == "_":
+                        cmds.rename(match, match[10:])
             cmds.deleteUI(self.window)
 
+    '''
+    findRoomShapes:
+        For each room in each building, this function scans for where walls could be deemed to be 'logical' by finding the corresponding vertex pairs that create edges of at least
+        a certain length (defined in masterSpacingDict).
+    '''
     def findRoomShapes(self):
         for building in self.roomData:
             if len(building):
                 for room in building:
+                    #o Prefix stands for out, as it's essentially the output for the function.
                     oVerts = []
                     if len(room["outer"]):
                         oDist = sys.maxint
                         for i in range(len(room["outer"])):
+                            #i doesn't stand for input as the 'o' may lead you to belive, but iteration.
                             iList = []
                             iVerts = [i]
                             iDist = 0
@@ -1501,11 +1585,16 @@ class daveManager:
                                     p = 0
                                 if p == i:
                                     done = True
-                            if len(oVerts) < len(iVerts) and oDist > iDist:
+                            if len(oVerts) <= len(iVerts) and oDist > iDist:
+                                #This gives us the most amound of walls in the most efficient layout.
                                 oVerts = iVerts
                                 oDist = iDist
                     room["wallVerts"] = oVerts
 
+    '''
+    findHullShapes:
+        Essentially identical to 'findRoomShapes', however modified to act on a DAVEObject rather than room.
+    '''
     def findHullShapes(self):
         sTime = time.time()
         for ob in self.sessionObjects:
@@ -1554,11 +1643,15 @@ class daveManager:
                             p = 0
                         if p == i:
                             done = True
-                    if len(oVerts) < len(iVerts) and oDist > iDist:
+                    if len(oVerts) <= len(iVerts) and oDist > iDist:
                         oVerts = iVerts
                         oDist = iDist
                 ob.hull["placementVerts"] = oVerts
 
+    '''
+    processDAVEQ:
+        Iterates through the import queue, imports any needed models, and transforms them into place.
+    '''
     def processDAVEQ(self):
         files = set(self.importQueue["models"])
         for f in set(self.importQueue["models"]):
@@ -1567,7 +1660,9 @@ class daveManager:
             self.importQueue["modelTransforms"][f] = cmds.ls(sl = True, transforms = True)
 
         for f in range(len(self.importQueue["positions"])):
+            #imMod is the name of the file, so is a somewhat descriptive name for the object
             imMod = self.importQueue["models"][f]
+            #model is the name of the imported mesh
             model = self.importQueue["modelTransforms"][imMod]
             cmds.select(model)
             pos = self.importQueue["positions"][f]
@@ -1584,20 +1679,28 @@ class daveManager:
                     self.sessionObjects[index].tag = self.importQueue["tags"][f]
                     self.sessionObjects[index].genConvexHull()
                     self.checkForDeletions(self.sessionObjects[index].transform)
+            #Set a flag stopping us from importing this object (can me overridden by the user by deleting the attribute and restarting DAVE)
             cmds.setAttr(''.join(newOb)+".DAVEIMPORTED", "True", type = "string")
         for f in set(self.importQueue["models"]):
             cmds.select(self.importQueue["modelTransforms"][f])
+            #Clear the 'master' props from the scene
             cmds.delete()
+        #Clear the import queue
         self.cleanImport()
 
+    '''
+    determineRooms:
+        Iterates through all objects (that aren't tagged with rooms by the user, i.e. not walls or doors) and determines the rooms in which they lie.
+    '''
     def determineRooms(self):
         for ob in self.sessionObjects:
+            if not ob.enabled or ob.tag == "WALL" or ob.tag == "DOOR":
+                continue
+            #There are only 100 of each, so 101 acts as a flag to DAVE that this object has no room
             nearestRoom = [101, 101]
             smallestYDiff = sys.maxint
             backup = [x for x in nearestRoom]
             smallestDist = sys.maxint
-            if not ob.enabled or ob.tag == "WALL" or ob.tag == "DOOR":
-                continue
             bbox = cmds.exactWorldBoundingBox(ob.transform)
             centre = vectorDivide(vectorSum([bbox[0], bbox[1], bbox[2]], [bbox[3], bbox[4], bbox[5]]), [2.0, 2.0, 2.0])
             obHeight = bbox[4] - bbox[1]
@@ -1606,14 +1709,16 @@ class daveManager:
                     if len(room["outer"]):
                         dist = vectorLength(vectorDifference(centre, room["centre"]))
                         if dist < smallestDist:
+                            #Just in case the object fails all tests but should lie within a room, we should grab the ID of the closest room
                             smallestDist = dist
                             backup = room["id"]
                         yDiff = math.fabs(bbox[1] - room["centre"][1])
                         if dist > room["radius"]:
-                            if dist < room["radius"] * 1.1:
+                            #Double check it's not just slightly outside the room and we currently haven't assigned a room
+                            if dist < room["radius"] * 1.1 and nearestRoom[0] == 101:
                                 nearestRoom = backup
-                                print "USING BACKUP"
                             continue
+                        #Otherwise it's likely inside the nearest room, so check it lies in the hull in the XZ plane and then that it lies within the room's height bounds.
                         if (self.pointCmplxHullTest([centre[0], centre[2]], room["tris"]) and yDiff < smallestYDiff) and (bbox[1] < room["upperBound"] + 0.5 * obHeight):
                             smallestYDiff = yDiff
                             nearestRoom = room["id"]
@@ -1625,6 +1730,10 @@ class daveManager:
             cmds.setAttr(ob.transform+".DAVENEARBUILDING", nearestRoom[0], type = "string")
             cmds.setAttr(ob.transform+".DAVENEARROOM", nearestRoom[1], type = "string")
 
+    '''
+    sendWallsToRooms:
+        Clears and reinitialises the wall lists for all rooms, ensuring they are correct.
+    '''
     def sendWallsToRooms(self):
         for building in self.roomData:
             for room in building:
@@ -1638,6 +1747,10 @@ class daveManager:
                     if cmds.listAttr(ob.transform, st = "DAVEBUILDING") != None and cmds.listAttr(ob.transform, st = "DAVEROOM") != None:
                         self.roomData[int(cmds.getAttr(ob.transform+".DAVEBUILDING"))][int(cmds.getAttr(ob.transform+".DAVEROOM"))]["doors"].append(ob.index)
                 
+    '''
+    findRoomArea:
+        Used by (or at least will be) all room functions to determine the area of the floorplan for a given room in a given building.
+    '''
     def findRoomArea(self, building, room):
         area = 0.0
         for tri in self.roomData[building][room]["tris"]:
@@ -1647,6 +1760,10 @@ class daveManager:
             area += 0.5 * math.fabs(a[0] * (b[2] - c[2]) + b[0] * (c[2] - a[2]) + c[0] * (a[2] - b[2]))
         return area
 
+    '''
+    decorateKitchen:
+        Decorates the room identified by 'index' as a kitchen.
+    '''
     def decorateKitchen(self, index):
         print "Decorating Kitchen"
         area = self.findRoomArea(index[0], index[1])
@@ -1654,6 +1771,7 @@ class daveManager:
             print "Kitchen (B"+str(index[0])+"-R"+str(index[1])+") too small ("+str(area)+"m^2), skipping..."
             return
         room = self.roomData[index[0]][index[1]]
+        #Spawnkeys is a dependancy graph of sorts that attempts to make sure each kitchen has the things that would be needed in a kitchen.
         spawnKeys = {}
         spawnKeys["diningTable"] = True if area > 20.0 else False
         spawnKeys["fridge"] = True
@@ -1665,8 +1783,10 @@ class daveManager:
         spawnKeys["sink"] = True
         spawnKeys["bin"] = True if random.randint(0, 2) else False
         room["spawnKeys"] = spawnKeys
+        #'Spice' is a term used to define an object used as a stylistic accent in the room.
         room["spice"] = []
         lockedVerts = []
+        #Find which edge(s) of the room lie closest to any door(s) and 'lock' them from being used, as a way of stopping doorways from being blocked.
         for door in room["doors"]:
             dName = self.sessionObjects[door].transform
             dBBox = cmds.exactWorldBoundingBox(dName)
@@ -1675,14 +1795,18 @@ class daveManager:
             for vert in room["wallVerts"]:
                 vPos = cmds.pointPosition(room["outer"][vert])
                 dists.append(vectorLength(vectorDifference(dPos, vPos)))
+            #x for x used to prevent referencing and editing "wallVerts"
             localWV = [x for x in room["wallVerts"]]
+            #The closest vert
             mD1 = min(dists)
             n1 = localWV[dists.index(mD1)]
             dists.remove(mD1)
             localWV.remove(n1)
+            #The second closest vert (the closest of the remaining verts)
             mD2 = min(dists)
             n2 = localWV[dists.index(mD2)]
             lockedVerts.append([room["outer"][n1], room["outer"][n2]])
+        #Setup the edges to be placed upon, as kitchens typically consist of appliances along walls
         usableEdges = []
         usableLengths = []
         usableVectors = []
@@ -1703,18 +1827,26 @@ class daveManager:
             if str(cmds.getAttr(room["transform"]+".DAVEHULLFLIPPED")) == "False":
                 rot += 180.0
             usableRots.append(rot)
+            #intoEdges is used later to check we're not placing outside of an edge.
             intoEdges.append(0.0)
+        #For each edge
+        atLeastOne = False
         for i in range(len(usableEdges)):
-            if (not random.randint(0, 1)) and i != len(usableEdges) - 1:
+            #Possibly not for this edge, so long as it isn't the last edge and no other edges have been decorated.
+            if (not random.randint(0, 1)) and (i != len(usableEdges) - 1 and not atLeastOne):
                 continue
+            atLeastOne = True
+            #Find the vector for the edge and unitize it
             vP1 = cmds.pointPosition(usableEdges[i][0])
             vP2 = cmds.pointPosition(usableEdges[i][1])
             vUT = vectorUnitize(vectorProduct(usableVectors[i], [-1.0, -1.0, -1.0]))
             vPS = [x for x in vP1]
-            f1 = random.uniform(0.1, 1.0)
+            #Add some random offset to the first object
+            f1 = random.uniform(0.0, 1.0)
             vPS = vectorSum(vPS, vectorProduct(vUT, [f1, f1, f1]))
             intoEdges[i] += f1
             done = False
+            #Keep placing object determined earlier until the edge is full but not overflowing.
             while not done:
                 width = 1.0
                 intoEdges[i] += width
@@ -1760,6 +1892,7 @@ class daveManager:
                 self.importQueue["positions"].append([vPS[0], vPS[1], vPS[2]])
                 self.importQueue["tags"].append("COUNTERTOP" if model == "counter1" else "NONE")
                 vPS = vectorSum(vPS, vectorProduct(vUT, [0.5 * width, 0.5 * width, 0.5 * width]))
+        #If a dining table is to be placed, place one in the centre of the room with a slight rotation
         if room["spawnKeys"]["diningTable"]:
             randRot = random.uniform(80.0, 100.0) if random.randint(0, 1) else random.uniform(-10, 10)
             randRot += 180.0 if random.randint(0, 1) else 0
@@ -1768,8 +1901,10 @@ class daveManager:
             self.importQueue["rotations"].append([0, randRot, 0])
             self.importQueue["positions"].append(room["centre"])
 
-
-
+    '''
+    decorateLounge, decorateBedroom, decorateHallway, decorateGeneric:
+        Currently unused functions that can expand DAVE's utility.
+    '''
     def decorateLounge(self, index):
         print "Decorating Lounge"
         building = index[0]
@@ -1787,9 +1922,29 @@ class daveManager:
         if area < 6.0:
             print "Bedroom (B"+str(building)+"-R"+str(room)+") too small ("+str(area)+"m^2), skipping..."
             return
+    
+    def decorateHallway(self, index):
+        print "Decorating Hallway"
+        building = index[0]
+        room = index[1]
+        area = self.findRoomArea(building, room)
+        if area < 1.0:
+            print "Hallway (B"+str(building)+"-R"+str(room)+") too small ("+str(area)+"m^2), skipping..."
+            return
 
+    def decorateGeneric(self, index):
+        print "Decorating Generic"
+        building = index[0]
+        room = index[1]
+        area = self.findRoomArea(building, room)
+        if area < 1.0:
+            print "Generic (B"+str(building)+"-R"+str(room)+") too small ("+str(area)+"m^2), skipping..."
+            return
 
-
+    '''
+    decorateRooms:
+        Cycles through all rooms processing (decorating) all undecorated rooms.
+    '''
     def decorateRooms(self):
         self.sendWallsToRooms()
         self.findRoomShapes()
@@ -1810,6 +1965,11 @@ class daveManager:
                     self.decorateGeneric(room["id"])
                 room["processed"] = True
 
+    '''
+    d_counterTop:
+        Decorates a countertop with a given index.
+        Randomly places 'spice' objects (e.g, kettles, toasters, and so on) around the surface.  Maximum of two per counter, with a 25% chance of 1 each time.
+    '''
     def d_counterTop(self, index):
         ob = self.sessionObjects[index]
         sigPos = [0, 0, 0]
@@ -1833,13 +1993,17 @@ class daveManager:
             while not self.pointCmplxHullTest(rp, ob.hull["tris"]):
                 rp = [random.uniform(bbox[0], bbox[3]), random.uniform(bbox[2], bbox[5])]
             canImport = True
+            #If the counter is inside a room, check all placed objects lie inside the room.
             if building != 101 and room != 101:
                 if not self.pointCmplxHullTest(rp, self.roomData[building][room]["tris"]):
                     canImport = False
             if canImport:
+                #Randomly select a prop
                 spNum = random.randint(0, len(self.kitchenSpiceProps) - 1)
-                if spNum in self.roomData[building][room]["spice"]:
-                    spNum = random.randint(0, len(self.kitchenSpiceProps) - 1)
+                #If it's already in this room, randomly select again (allows for doubling of props but prevents excessive doubling)
+                if building != 101 and room != 101:
+                    if spNum in self.roomData[building][room]["spice"]:
+                        spNum = random.randint(0, len(self.kitchenSpiceProps) - 1)
                 self.roomData[building][room]["spice"].append(spNum)
                 self.importQueue["models"].append(self.kitchenSpiceProps[spNum].lower())
                 self.importQueue["tags"].append("NONE")
@@ -1849,6 +2013,11 @@ class daveManager:
             if random.randint(0, 2) / 2:
                 spice()
 
+    '''
+    d_diningTable:
+        Dining table counterpart to 'd_counterTop'.
+        Randomly places plates, chairs, mugs, peppermills, jugs and salt shakers around the dining table.
+    '''
     def d_diningTable(self, index):
         ob = self.sessionObjects[index]
         sigPos = [0, 0, 0]
@@ -1867,12 +2036,15 @@ class daveManager:
             stNumA = self.roomData[building][room]["styleNumA"]
             stNumB = self.roomData[building][room]["styleNumB"]
         for p in range(len(ob.hull["placementVerts"])):
+            #Plates should lie along an edge, rotated to be perpendicular to that edge.  This function allows for places to be offset from the central point of each edge by an amount.
             def plate(*args):
                 p1 = cmds.pointPosition(ob.hull["outer"][ob.hull["placementVerts"][p - 1]])
                 p2 = cmds.pointPosition(ob.hull["outer"][ob.hull["placementVerts"][p]])
                 denom = vectorLength(vectorDifference(p1, p2))
                 variance = 0.0
                 if denom != 0.0:
+                    #These variance/denom statements throughout ensure that the random offsets for plates are consitent across tables regardless of their size (e.g any plate in the scene
+                    # will always be moved between -x cm and x cm, regardless if the table is 100m or 1m long)
                     variance = 0.1 / denom
                 if variance > 1.0:
                     variance = 1.0
@@ -1897,19 +2069,25 @@ class daveManager:
                 rot = math.degrees(vectorAngle(relPos, ax))
                 if relPos[0] < 0:
                     rot = 360.0 - rot
+                #Rotations are assumed that the hull was defined in a clockwise manner, so we need to add 180 degrees if that was not the case.
                 if str(cmds.getAttr(ob.transform+".DAVEHULLFLIPPED")) == "False":
                     rot += 180.0
+                #Assume the prop is in the hull
                 canImport = True
                 if building != 101 and room != 101:
+                    #If it's not do not import it
                     if not self.pointCmplxHullTest([pos[0], pos[2]], self.roomData[building][room]["tris"]):
                         canImport = False
                 if canImport:
                     self.importQueue["models"].append("plate"+str(stNumA))
-                    self.importQueue["rotations"].append([0, rot, 0])
-                    self.importQueue["positions"].append([pos[0], pos[1], pos[2]])
+                    #"NONE" is a catch-all tag for props that are not dining tables, countertops, walls or rooms (essentially a tag for objects known by DAVE but it shouldn't process)
                     self.importQueue["tags"].append("NONE")
+                    self.importQueue["rotations"].append([0, rot + random.uniform(-10, 10), 0])
+                    self.importQueue["positions"].append([pos[0], pos[1], pos[2]])
+            #50% chance each time for a plate
             if random.randint(0, 1):
                 plate()
+            #Very similar setup for chairs to plates.
             def chair(*args):
                 p1 = cmds.pointPosition(ob.hull["outer"][ob.hull["placementVerts"][p - 1]])
                 p2 = cmds.pointPosition(ob.hull["outer"][ob.hull["placementVerts"][p]])
@@ -1949,10 +2127,11 @@ class daveManager:
                 if canImport:
                     self.importQueue["models"].append("chair"+str(stNumB))
                     self.importQueue["tags"].append("NONE")
-                    self.importQueue["rotations"].append([0, rot, 0])
+                    self.importQueue["rotations"].append([0, rot + random.uniform(-10, 10), 0])
                     self.importQueue["positions"].append([pos[0], bbox[1], pos[2]])
             if random.randint(0, 1):
                 chair()
+        #Randomly sprinkle some more decorative props around the table
         def spice(*args):
             rp = [random.uniform(bbox[0] + bbX10, bbox[3] - bbX10), random.uniform(bbox[2] + bbZ10, bbox[5] - bbZ10)]
             while not self.pointCmplxHullTest(rp, ob.hull["tris"]):
@@ -1965,14 +2144,19 @@ class daveManager:
                 spNum = random.randint(1, 4)
                 self.importQueue["models"].append("spice"+str(spNum))
                 self.importQueue["tags"].append("NONE")
-                self.importQueue["rotations"].append([0, 0, 0])
+                self.importQueue["rotations"].append([0, random.uniform(0.0, 360.0), 0])
                 self.importQueue["positions"].append([rp[0], ob.hull["height"], rp[1]])
         spiceChance = int(20.0 / (len(ob.hull["placementVerts"]) / 4.0))
+        #In short this loop attempts to place one spice object per 4 edges along the table, but can place many more for visual variance.
         for r in range(spiceChance * 3):
             if (random.randint(0, spiceChance) / spiceChance):
                 spice()
         cmds.select(d = True)
 
+    '''
+    decorateObjects:
+        Cycles through all objects and cheecks which are either dining tables or countertops and decorates them if so.
+    '''
     def decorateObjects(self):
         for ob in self.sessionObjects:
             if (not ob.enabled) or ob.processed or (not ob.processable) or (ob.tag == "WALL") or (ob.tag == "DOOR"):
@@ -1983,6 +2167,10 @@ class daveManager:
                 self.d_counterTop(ob.index)
             ob.processed = True
 
+    '''
+    switchProps:
+        Somewhat non useful function that attempts to switch the position of two props.  Has bugs, but included as it featured in the 'how to' video and continuity would be good.
+    '''
     def switchProps(self):
         sel = cmds.ls(sl = True, transforms = True)
         if len(sel) < 2 or len(sel) > 2:
@@ -2001,8 +2189,13 @@ class daveManager:
         cmds.move(transform2[0], transform2[1], transform2[2], prop2, a = True, ws = True)
 
 def main():
-    dave = daveManager("D:/Python/DAVE/DAVE/")
-    #dave = daveManager("/home/s4907224/Documents/DAVE/")
+    #IMPORTANT!
+    #In the how to video I mentioned the directory of DAVE would need to be added down here.
+    #IT DOESN'T! There's a file dialog that prompts you to select the root directory instead (for example, if "/home/s4907224/Documents/DAVE/" contains src/, assets/ etc, it is the root)
+    d = cmds.fileDialog2(dialogStyle=1, fm = 3, cap = "Select DAVE root folder")
+    while d == None:
+        d = cmds.fileDialog2(dialogStyle=1, fm = 3, cap = "Select DAVE root folder")
+    dave = daveManager(d[0]+'/')
     urllib.urlretrieve("https://www.glovefx.com/s/dave.png", dave.path+"fetch/header.png")
     urllib.urlretrieve("https://www.glovefx.com/s/hull.png", dave.path+"fetch/hull.png")
     dave.UI()

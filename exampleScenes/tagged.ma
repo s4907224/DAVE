@@ -1,6 +1,6 @@
 //Maya ASCII 2018 scene
-//Name: testScene.ma
-//Last modified: Thu, Feb 21, 2019 08:12:33 PM
+//Name: sceneUsedInDemo.0001.ma
+//Last modified: Fri, Feb 22, 2019 10:53:27 AM
 //Codeset: 1252
 requires maya "2018";
 currentUnit -l meter -a degree -t film;
@@ -11,30 +11,30 @@ fileInfo "cutIdentifier" "201706261615-f9658c4cfc";
 fileInfo "osv" "Microsoft Windows 8 Business Edition, 64-bit  (Build 9200)\n";
 fileInfo "license" "student";
 createNode transform -s -n "persp";
-	rename -uid "8B78C96F-467B-C6AF-EDB5-0AA3C2AEE981";
+	rename -uid "251FB3C3-4074-3D46-3464-5FA1C7D79365";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 3.4753409720079431 3.352818030915258 6.1531018943684233 ;
-	setAttr ".r" -type "double3" -28.538352728610185 -1472.5999999989544 3.7753524029671935e-15 ;
+	setAttr ".t" -type "double3" 5.3765991136823139 24.142223489672102 4.3507380791623973 ;
+	setAttr ".r" -type "double3" -65.138352734697463 -3172.9999999998827 -1.6280016868766991e-14 ;
 createNode camera -s -n "perspShape" -p "persp";
-	rename -uid "95E824C4-4B5A-E0D7-FF65-7089DF003FF6";
+	rename -uid "79C02B7D-42B8-EFEB-D102-8B8BAC7AC513";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
 	setAttr ".ncp" 0.01;
 	setAttr ".fcp" 1000;
-	setAttr ".coi" 3.1685275162003719;
+	setAttr ".coi" 24.954903042083785;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
-	setAttr ".tp" -type "double3" -779.73033876640773 149.99999999999997 417.51106407233908 ;
+	setAttr ".tp" -type "double3" -428.11113332781736 149.99999999999989 25.128321220674138 ;
 	setAttr ".hc" -type "string" "viewSet -p %camera";
 	setAttr ".ai_translator" -type "string" "perspective";
 createNode transform -s -n "top";
-	rename -uid "5F26DFB9-404E-A2BE-2269-EE83A82B84A3";
+	rename -uid "072F71CA-4A8B-D344-4625-EDB3DB46E585";
 	setAttr ".v" no;
 	setAttr ".t" -type "double3" 0 1000.1 0 ;
 	setAttr ".r" -type "double3" -89.999999999999986 0 0 ;
 createNode camera -s -n "topShape" -p "top";
-	rename -uid "5FC329C3-4D0C-0DAF-CAD8-84A49C46CF62";
+	rename -uid "1EE7DB06-4979-36BC-E340-8A98540ED6AC";
 	setAttr -k off ".v" no;
 	setAttr ".rnd" no;
 	setAttr ".ncp" 0.01;
@@ -48,11 +48,11 @@ createNode camera -s -n "topShape" -p "top";
 	setAttr ".o" yes;
 	setAttr ".ai_translator" -type "string" "orthographic";
 createNode transform -s -n "front";
-	rename -uid "A75B9586-467D-421B-4CEE-E9B3515C265A";
+	rename -uid "96B13C6B-48CF-CE93-2C76-B690666E8BBB";
 	setAttr ".v" no;
 	setAttr ".t" -type "double3" 0 0 1000.1 ;
 createNode camera -s -n "frontShape" -p "front";
-	rename -uid "41E1AA1F-4E3F-62EE-C32A-E89F10A56AA9";
+	rename -uid "F8FB4667-4C99-081D-7281-8F882AA580EF";
 	setAttr -k off ".v" no;
 	setAttr ".rnd" no;
 	setAttr ".ncp" 0.01;
@@ -66,12 +66,12 @@ createNode camera -s -n "frontShape" -p "front";
 	setAttr ".o" yes;
 	setAttr ".ai_translator" -type "string" "orthographic";
 createNode transform -s -n "side";
-	rename -uid "A07EC3D4-4665-AB0D-A00E-9092EC2F13AE";
+	rename -uid "3E31E2AC-4E34-6E23-3B04-5B99E47D6E6E";
 	setAttr ".v" no;
 	setAttr ".t" -type "double3" 1000.1 0 0 ;
 	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
 createNode camera -s -n "sideShape" -p "side";
-	rename -uid "D0855E9F-4711-C7EA-55D3-61A886116C34";
+	rename -uid "03D82F13-4637-1522-5D77-CA852FF09E31";
 	setAttr -k off ".v" no;
 	setAttr ".rnd" no;
 	setAttr ".ncp" 0.01;
@@ -84,32 +84,29 @@ createNode camera -s -n "sideShape" -p "side";
 	setAttr ".hc" -type "string" "viewSet -s %camera";
 	setAttr ".o" yes;
 	setAttr ".ai_translator" -type "string" "orthographic";
-createNode transform -n "group1";
-	rename -uid "77C87B9C-4E21-9AD5-66EB-B482371DECAD";
-	setAttr ".t" -type "double3" -2.8567832005269684 0 3.4061761308392851 ;
-	setAttr ".r" -type "double3" 0 -134.28365502539961 0 ;
-createNode transform -n "group5" -p "group1";
-	rename -uid "BC08BE5B-41EC-41C4-35BB-D484DA1995E9";
-createNode transform -n "q" -p "group5";
-	rename -uid "CA306BA6-45ED-43B6-38C3-049BE23EE009";
+createNode transform -n "building1";
+	rename -uid "4E42C560-41BD-0696-702B-D8AAEC8D3AF2";
+createNode transform -n "room1" -p "building1";
+	rename -uid "9ABAEFE3-466B-B919-D59B-68BFAB6CD6E2";
+createNode transform -n "b1r1d1" -p "|building1|room1";
+	rename -uid "78E26377-4395-CCA9-437D-4995E7B52323";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
 	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
 	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
 	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 3.8688763393318379 4.5 2.054751705844668 ;
-	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
-	setAttr ".s" -type "double3" 0.025000000000000008 3 2 ;
+	setAttr ".t" -type "double3" 4.1688833837411314 1.4999999999999982 7.7704706239381611 ;
+	setAttr ".s" -type "double3" 0.025000000000000015 3 1 ;
 	setAttr ".rp" -type "double3" 0 -1.5 0 ;
 	setAttr ".sp" -type "double3" 0 -0.5 0 ;
 	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "CuyJTam4";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "0";
 	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "qShape" -p "q";
-	rename -uid "EAACBA2F-4EC6-49CC-EC9E-67BC52072CAC";
+	setAttr ".DAVEHASH" -type "string" "xSiVB7QJ";
+	setAttr ".DAVETAG" -type "string" "DOOR";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b1r1dShape1" -p "b1r1d1";
+	rename -uid "E4522630-4D27-7BF7-2BAD-9CBA27997760";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -143,26 +140,25 @@ createNode mesh -n "qShape" -p "q";
 	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
 	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "q1" -p "group5";
-	rename -uid "F9194BF1-4EAC-9ED4-CAE6-89A934FA3189";
+createNode transform -n "b1r1w5" -p "|building1|room1";
+	rename -uid "E38FA9EF-4A40-1D5F-4B64-5FAFA58913A0";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
 	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
 	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
 	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 5.8688763393318384 4.5 2.0547517058446694 ;
-	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
-	setAttr ".s" -type "double3" 0.025000000000000008 3 2 ;
+	setAttr ".t" -type "double3" 4.1688833837411323 1.4999999999999982 6.2704706239381585 ;
+	setAttr ".s" -type "double3" 0.025000000000000015 3 2 ;
 	setAttr ".rp" -type "double3" 0 -1.5 0 ;
 	setAttr ".sp" -type "double3" 0 -0.5 0 ;
 	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "N4MS82Gv";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "0";
 	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "qShape1" -p "q1";
-	rename -uid "3BD881AC-4292-2F55-D8F8-CD94FD32FA9B";
+	setAttr ".DAVEHASH" -type "string" "eZUkQyEC";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b1r1wShape5" -p "b1r1w5";
+	rename -uid "E7FA42AD-44EC-F755-4825-C6B0E34A1083";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -196,25 +192,509 @@ createNode mesh -n "qShape1" -p "q1";
 	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
 	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "q2" -p "group5";
-	rename -uid "46546C25-4DA8-DDE0-2429-A791DC9D0C70";
+createNode transform -n "b1r1w4" -p "|building1|room1";
+	rename -uid "DC283CEE-45A2-7699-C53F-44A401C02D2E";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
 	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
 	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
 	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 4.1688833837411332 1.4999999999999982 9.2704706239381647 ;
+	setAttr ".s" -type "double3" 0.025000000000000015 3 2 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "dvVR_Fpv";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b1r1wShape4" -p "b1r1w4";
+	rename -uid "4064AB3F-4DA6-BB9C-441B-C9A4BDF9DAB3";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b1r1w3" -p "|building1|room1";
+	rename -uid "B91E74B7-4620-ED1A-9B0C-BC8BEF95C830";
 	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 2.8688763393318379 4.5 3.0547517058446694 ;
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 6.1688833837411359 1.4999999999999996 10.270470623938161 ;
+	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
+	setAttr ".s" -type "double3" 0.025 3 4 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "659nz6Sy";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b1r1wShape3" -p "b1r1w3";
+	rename -uid "90C36FC9-4E19-F4E3-C6BF-4482646BA359";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b1r1w2" -p "|building1|room1";
+	rename -uid "36B74FFA-43BE-FADF-92C3-4AB656B928E7";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 6.168883383741135 1.4999999999999996 5.2704706239381611 ;
+	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
+	setAttr ".s" -type "double3" 0.025 3 4 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "GNQB5Cts";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b1r1wShape2" -p "b1r1w2";
+	rename -uid "9141FCCF-4A94-7DDC-68A1-6D96AFC644EE";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b1r1w1" -p "|building1|room1";
+	rename -uid "0FC1E965-4ABD-042F-232F-58B2892AAD0D";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 8.1688833837411341 1.4999999999999982 7.7704706239381611 ;
+	setAttr ".s" -type "double3" 0.025000000000000015 3 5 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "1pTkhOrd";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b1r1wShape1" -p "b1r1w1";
+	rename -uid "B45F8ED9-4162-23F9-50FC-1EA623B3058A";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "room2" -p "building1";
+	rename -uid "C07983AF-4715-6822-02EE-2CBF944F0E9F";
+createNode transform -n "b1r2w1" -p "|building1|room2";
+	rename -uid "82BF147B-49B1-7F78-E65D-CE8FD139F8FD";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 6.1688833837411332 4.4999999999999991 7.25 ;
+	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
+	setAttr ".s" -type "double3" 0.025 3 4 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "_20BkaA7";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b1r2wShape1" -p "b1r2w1";
+	rename -uid "081E53BE-48D8-A0D3-86D3-16B049307A00";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b1r2w2" -p "|building1|room2";
+	rename -uid "947B5ACD-47C8-0AD9-4CC6-EE8B1A2D36B0";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 6.1688833837411359 4.4999999999999991 10.270470623938161 ;
+	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
+	setAttr ".s" -type "double3" 0.025 3 4 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "hCiutS-F";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b1r2wShape2" -p "b1r2w2";
+	rename -uid "6EC9354F-497E-5D71-6D99-AA8110A44206";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b1r2w3" -p "|building1|room2";
+	rename -uid "0973070D-454D-45AD-B06D-4FB4CFB690A5";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 8.1688833837411305 4.4999999999999982 8.75 ;
+	setAttr ".s" -type "double3" 0.025000000000000015 3 3.0000000000000013 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "VVekoRLA";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b1r2wShape3" -p "b1r2w3";
+	rename -uid "C571A56B-416D-7E79-53D0-F19F4D53312D";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b1r2w4" -p "|building1|room2";
+	rename -uid "1D2726A1-4738-3C62-5925-A5AF4497A7E6";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 4.1688833837411332 4.4999999999999982 9.2704706239381647 ;
+	setAttr ".s" -type "double3" 0.025000000000000015 3 2 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "H2JLem1-";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b1r2wShape4" -p "b1r2w4";
+	rename -uid "03F9ED39-47A9-39EF-2B4A-09BD12E680ED";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b1r2d1" -p "|building1|room2";
+	rename -uid "AEBBE64C-4BB4-399F-BB4E-CBAE7E148CD3";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 4.1688833837411314 4.4999999999999982 7.7704706239381611 ;
+	setAttr ".s" -type "double3" 0.025000000000000015 3 1 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "Hi4t1v22";
+	setAttr ".DAVETAG" -type "string" "DOOR";
+	setAttr ".DAVEBUILDING" -type "string" "0";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b1r2dShape1" -p "b1r2d1";
+	rename -uid "C42F512C-4C05-A743-8963-82B90C1D8229";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "building2";
+	rename -uid "57B3C3C4-4BE3-4792-5A4C-658F091E0625";
+createNode transform -n "room1" -p "building2";
+	rename -uid "38832BC4-4471-12F1-956E-BAA49FA38CD6";
+createNode transform -n "b2r1d1" -p "|building2|room1";
+	rename -uid "7164E07A-4EBD-72F7-BDCA-BBA0F65D1847";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 5.0767354739247752 1.5 -5.4121524281899882 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
+	setAttr ".s" -type "double3" 0.025 3 1 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "aIzQFb6N";
+	setAttr ".DAVETAG" -type "string" "DOOR";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b2r1dShape1" -p "b2r1d1";
+	rename -uid "5818C639-4D1F-EDC0-DF64-D98C841B5951";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r1w5" -p "|building2|room1";
+	rename -uid "62777F00-458D-272C-7A86-178D4BA90DF6";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 4.1461690085559821 1.5 -6.5886072949532677 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
 	setAttr ".s" -type "double3" 0.025 3 2 ;
 	setAttr ".rp" -type "double3" 0 -1.5 0 ;
 	setAttr ".sp" -type "double3" 0 -0.5 0 ;
 	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "-47JPMz6";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "0";
 	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "qShape2" -p "q2";
-	rename -uid "7F5B7683-4CAE-35E2-66ED-99B9E391D105";
+	setAttr ".DAVEHASH" -type "string" "lOd5sjHg";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b2r1wShape5" -p "b2r1w5";
+	rename -uid "1D88ED96-4779-4CC3-3FC9-87BBD94CE182";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -248,26 +728,401 @@ createNode mesh -n "qShape2" -p "q2";
 	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
 	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "q3" -p "group5";
-	rename -uid "1BA363AD-4C6C-6BE8-9F38-E28E0A7F5148";
+createNode transform -n "b2r1w4" -p "|building2|room1";
+	rename -uid "560DC1E0-461E-7D4B-2F6E-509EBAD919FE";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
 	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
 	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
 	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 6.0073019392935727 1.5 -4.2356975614267043 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
+	setAttr ".s" -type "double3" 0.025 3 2 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "ROJg3o8i";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b2r1wShape4" -p "b2r1w4";
+	rename -uid "5F741021-41AC-F20E-AB53-589C9504BA43";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r1w3" -p "|building2|room1";
+	rename -uid "D9F02978-4297-BE56-0F2C-44AAD3388BA6";
 	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 5.8688763393318384 4.5 6.0547517058446667 ;
-	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 8.2139484519602064 1.5 -7.8936630025067851 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
+	setAttr ".s" -type "double3" 0.025 3 5 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "djrz14wo";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b2r1wShape3" -p "b2r1w3";
+	rename -uid "FEE0D50D-428F-E9C6-07AA-E6B05F7E6779";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r1w2" -p "|building2|room1";
+	rename -uid "5A2E570A-4164-7B07-19FD-64A59EEE39C2";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 8.1962860718904889 1.5000000000000011 -4.6921496040762474 ;
+	setAttr ".r" -type "double3" 0 128.34371725539046 0 ;
+	setAttr ".s" -type "double3" 0.025 3 4 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".rpt" -type "double3" 1.6155871338926322e-29 0 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "VvgCTavE";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b2r1wShape2" -p "b2r1w2";
+	rename -uid "54F7DE91-40E5-F2A2-569E-489F2CE5DDFD";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r1w1" -p "|building2|room1";
+	rename -uid "9DF9B342-4745-5720-B583-4F8B7EEB0594";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 5.0943978539945007 1.5000000000000011 -8.6136658266205224 ;
+	setAttr ".r" -type "double3" 0 128.34371725539046 0 ;
+	setAttr ".s" -type "double3" 0.025 3 4 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".rpt" -type "double3" 1.6155871338926322e-29 0 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "90QkuxYm";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b2r1wShape1" -p "b2r1w1";
+	rename -uid "7DD9B4D4-48D2-480C-ED11-23958C5632FD";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "room2" -p "building2";
+	rename -uid "C49EA7A8-4394-3426-E202-79B9FEEAA13F";
+createNode transform -n "b2r2w1" -p "|building2|room2";
+	rename -uid "F220EF9F-42AD-F1DD-543E-9EBD0D1139FC";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 5.0943978539945007 4.5000000000000009 -8.6136658266204176 ;
+	setAttr ".r" -type "double3" 0 128.34371725539046 0 ;
+	setAttr ".s" -type "double3" 0.025 3 4 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "0AlfecNC";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b2r2wShape1" -p "b2r2w1";
+	rename -uid "B5996BCE-46BC-3A7A-6F32-AA8F1A9A7DFB";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r2w2" -p "|building2|room2";
+	rename -uid "0EB34EF0-4381-443F-9190-C0A19904230B";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 8.1962860718904889 4.5000000000000009 -4.6921496040761426 ;
+	setAttr ".r" -type "double3" 0 128.34371725539046 0 ;
+	setAttr ".s" -type "double3" 0.025 3 4 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "kEsQtSV4";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b2r2wShape2" -p "b2r2w2";
+	rename -uid "B81DF205-48F0-FB33-C1C7-32A691E51E48";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r2w3" -p "|building2|room2";
+	rename -uid "A4E2ADFC-46E5-2360-38E3-799FE456243D";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 8.2139484519602064 4.5 -7.8936630025066803 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000008 3 5 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "9LDB8RR9";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b2r2wShape3" -p "b2r2w3";
+	rename -uid "445305A6-4ED1-C2A9-2549-8A8473FC8FB1";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r2w4" -p "|building2|room2";
+	rename -uid "F0E08C13-442D-E1F9-6FC5-94B0DFFD890E";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 6.0073019392935727 4.5 -4.2356975614266013 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
 	setAttr ".s" -type "double3" 0.025000000000000008 3 2 ;
 	setAttr ".rp" -type "double3" 0 -1.5 0 ;
 	setAttr ".sp" -type "double3" 0 -0.5 0 ;
 	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "QFUHoXbJ";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "0";
 	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "qShape3" -p "q3";
-	rename -uid "FDEFCD0F-48AB-8BC1-41DC-FBBC90A9822E";
+	setAttr ".DAVEHASH" -type "string" "q223S9aY";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b2r2wShape4" -p "b2r2w4";
+	rename -uid "97E28299-47B9-7453-115F-A2A0C6D968D4";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -301,291 +1156,507 @@ createNode mesh -n "qShape3" -p "q3";
 	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
 	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "q4" -p "group5";
-	rename -uid "F046047C-4A41-6D0F-F58C-3FB1D54F31B1";
+createNode transform -n "b2r2w5" -p "|building2|room2";
+	rename -uid "B38751D6-451A-CEF5-BC60-49808AF21C81";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
 	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
 	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
 	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 4.1461690085559821 4.5 -6.5886072949531629 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000008 3 2 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "kcfbKC3O";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b2r2wShape5" -p "b2r2w5";
+	rename -uid "288E4EAC-4039-03D0-2362-6E97E9D6A162";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r2d1" -p "|building2|room2";
+	rename -uid "396F0F51-4915-0774-3142-66995617083D";
 	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 6.8688763393318357 4.5 3.0547517058446698 ;
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 5.0767354739247752 4.5 -5.4121524281898834 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000008 3 1 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "4bz0Y8Qo";
+	setAttr ".DAVETAG" -type "string" "DOOR";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "1";
+createNode mesh -n "b2r2dShape1" -p "b2r2d1";
+	rename -uid "D20A199A-44A1-24F7-E7A4-3FB5B8264A96";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "room3" -p "building2";
+	rename -uid "97D532BC-48EA-9632-4965-77A1A86E9C9B";
+createNode transform -n "b2r3d1" -p "room3";
+	rename -uid "19C01623-41A4-3152-548B-12B86BB5386A";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 8.2383304656301295 1.4999999999999982 -1.4376657306304315 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000012 3 1 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "fjf6lwO9";
+	setAttr ".DAVETAG" -type "string" "DOOR";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "2";
+createNode mesh -n "b2r3dShape1" -p "b2r3d1";
+	rename -uid "2611569B-4238-5057-005A-57BB98C8EF5A";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r3w5" -p "room3";
+	rename -uid "B2325AED-4294-8C89-20E6-52A7DD428A5C";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 7.3077640002613382 1.4999999999999982 -2.6141205973937116 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000012 3 2 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "VMvJlxwe";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "2";
+createNode mesh -n "b2r3wShape5" -p "b2r3w5";
+	rename -uid "D38DC80E-49FF-6642-6456-0CA0B63856E6";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r3w4" -p "room3";
+	rename -uid "DEA48A09-4D8B-0D3D-8839-35A4E0132688";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 9.1688969309989243 1.4999999999999982 -0.26121086386715037 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000012 3 2 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "vXn9UnTq";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "2";
+createNode mesh -n "b2r3wShape4" -p "b2r3w4";
+	rename -uid "04BC96BB-4C80-0C02-E31D-EEB01D77C572";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r3w3" -p "room3";
+	rename -uid "30AF9088-4883-0A17-DA68-83A293B41885";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 11.375543443665556 1.4999999999999982 -3.9191763049472224 ;
+	setAttr ".r" -type "double3" 0 38.343717255390487 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000012 3 5 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
+	setAttr ".sp" -type "double3" 0 -0.5 0 ;
+	setAttr ".spt" -type "double3" 0 -1 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "8N8R0DQQ";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "2";
+createNode mesh -n "b2r3wShape3" -p "b2r3w3";
+	rename -uid "AC51D020-4AA5-3799-4BC1-F39DDF27143D";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r3w2" -p "room3";
+	rename -uid "98D57E12-450F-27DA-0A33-36A10AB08AB7";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 11.357881063595842 1.4999999999999996 -0.71766290651668729 ;
+	setAttr ".r" -type "double3" 0 128.34371725539046 0 ;
+	setAttr ".s" -type "double3" 0.025 3 4 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "UZu59e-V";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "2";
+createNode mesh -n "b2r3wShape2" -p "b2r3w2";
+	rename -uid "E38A0573-4811-C2E8-8E22-E2906FB8779D";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "b2r3w1" -p "room3";
+	rename -uid "ECEE5AC1-4367-8899-044D-8BA768E9D556";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" 8.2559928456998488 1.4999999999999996 -4.6391791290609641 ;
+	setAttr ".r" -type "double3" 0 128.34371725539046 0 ;
+	setAttr ".s" -type "double3" 0.025 3 4 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "LeLcDt-W";
+	setAttr ".DAVETAG" -type "string" "WALL";
+	setAttr ".DAVEBUILDING" -type "string" "1";
+	setAttr ".DAVEROOM" -type "string" "2";
+createNode mesh -n "b2r3wShape1" -p "b2r3w1";
+	rename -uid "66606D66-4CD9-90A3-F241-63A14B1B9216";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
+		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
+		 0.875 0.25 0.125 0 0.125 0.25;
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
+	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
+	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
+	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
+	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "building3";
+	rename -uid "8BA96E72-4AD9-F238-3DAD-29A548C721C8";
+createNode transform -n "b3r1d1" -p "building3";
+	rename -uid "7A7281B4-4170-515C-1623-2E93060746A9";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
+	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
+	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
+	setAttr ".t" -type "double3" -1.7830185700268431 1.4999999999999982 0.25128321220673799 ;
 	setAttr ".r" -type "double3" 0 179.99999999999997 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
+	setAttr ".s" -type "double3" 0.025000000000000022 3 1.0000000000000004 ;
 	setAttr ".rp" -type "double3" 0 -1.5 0 ;
 	setAttr ".sp" -type "double3" 0 -0.5 0 ;
 	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "Psm22s4q";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "0";
 	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "qShape4" -p "q4";
-	rename -uid "4B498F8D-4C75-0969-EE1F-0F8736736BC8";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "q5" -p "group5";
-	rename -uid "BD0197B5-4AF5-DD58-645C-06AD9AF69E93";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 3.8688763393318379 4.5 6.0547517058446667 ;
-	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
-	setAttr ".s" -type "double3" 0.025000000000000008 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "aPZ5hrW5";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "qShape5" -p "q5";
-	rename -uid "D0BB15DE-4512-A6C0-D134-1CA206B752AF";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "q6" -p "group5";
-	rename -uid "667642DC-4AC7-D2A1-DC46-0280EA2C5E53";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 6.8688763393318357 4.5 5.0547517058446685 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "w4AXKpow";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "qShape6" -p "q6";
-	rename -uid "4B7E1DB6-46CD-671F-5BA2-0EABB33AA04D";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "doorWayq" -p "group5";
-	rename -uid "B7761152-42E2-8EE4-366E-41B724C66E67";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 2.8688763393318379 4.5 5.0547517058446694 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "VSENFzSt";
+	setAttr ".DAVEHASH" -type "string" "wOrv9eTm";
 	setAttr ".DAVETAG" -type "string" "DOOR";
 	setAttr ".DAVEBUILDING" -type "string" "2";
 	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "doorWayqShape" -p "doorWayq";
-	rename -uid "39743EE8-49CB-B055-62D0-509911908FEA";
+createNode mesh -n "b3r1dShape1" -p "b3r1d1";
+	rename -uid "C45C6559-4112-E9F6-CAEB-EE87959869EF";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
-	setAttr ".pv" -type "double2" 0.5 1 ;
 	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 46 ".uvst[0].uvsp[0:45]" -type "float2" 0.375 0 0.625 0 0.375
+	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
 		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25 0.25 0.25 0.375 0.375 0.625 0.375 0.75 0.25 0.33749998
-		 0.25 0.375 0.28749999 0.625 0.28749999 0.66250002 0.25 0.64375001 0.48124999 0.35624999
-		 0.48124999 0.26875001 0.39375001 0.73125005 0.39375001 0.625 0.46250001 0.83750004
-		 0.25 0.16249999 0.25 0.375 0.46250001 0.375 0.2 0.625 0.2 0.83125001 0.1 0.75 0.2
-		 0.41875002 0.1 0.625 0.55000001 0.875 0.2 0.125 0.2 0.375 0.55000001 0.081249997
-		 0.60000002 0.25 0.2 0.66874999 0.60000002 0 0 0 1 1 0 1 1;
+		 0.875 0.25 0.125 0 0.125 0.25;
 	setAttr ".cuvs" -type "string" "map1";
 	setAttr ".dcc" -type "string" "Ambient+Diffuse";
 	setAttr ".covm[0]"  0 1 1;
 	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 28 ".vt[0:27]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5 -0.5 0.5 0 0.5 0.5 0 -0.5 0.5 0.34999999
-		 0.5 0.5 0.34999999 0.5 -0.5 0.34999999 -0.5 -0.5 0.34999999 -0.5 -0.5 -0.34999999
-		 0.5 -0.5 -0.34999999 0.5 0.5 -0.34999999 -0.5 0.5 -0.34999999 -0.5 0.30000001 0.5
-		 0.5 0.30000001 0.5 0.5 0.30000001 0.34999999 0.5 0.30000001 0 0.5 0.30000001 -0.34999999
-		 0.5 0.30000001 -0.5 -0.5 0.30000001 -0.5 -0.5 0.30000001 -0.34999999 -0.5 0.30000001 0
-		 -0.5 0.30000001 0.34999999;
-	setAttr -s 52 ".ed[0:51]"  0 1 0 2 3 0 4 5 0 6 7 0 0 18 0 1 19 0 2 10 0
-		 3 11 0 4 24 0 5 23 0 6 14 0 7 15 0 8 17 0 9 16 0 8 9 1 9 21 1 10 8 0 11 9 0 12 1 0
-		 13 0 0 10 11 1 11 20 1 12 13 0 13 27 0 16 5 0 17 4 0 14 15 0 15 22 0 16 17 1 17 25 1
-		 18 2 0 19 3 0 20 12 0 22 16 1 23 7 0 24 6 0 25 14 0 26 8 1 27 10 1 18 19 1 19 20 1
-		 20 21 0 21 22 0 22 23 1 23 24 1 24 25 1 25 26 0 26 27 0 27 18 1 20 27 0 21 26 0 22 25 0;
-	setAttr -s 26 -ch 104 ".fc[0:25]" -type "polyFaces" 
-		f 4 39 31 -2 -31
-		mu 0 4 30 31 3 2
-		f 4 14 13 28 -13
-		mu 0 4 15 16 26 29
-		f 4 2 9 44 -9
-		mu 0 4 4 5 35 38
-		f 4 15 42 33 -14
-		mu 0 4 17 33 34 27
-		f 4 29 46 37 12
-		mu 0 4 28 39 40 14
-		f 4 20 17 -15 -17
-		mu 0 4 19 20 16 15
-		f 4 21 41 -16 -18
-		mu 0 4 21 32 33 17
-		f 4 -38 47 38 16
-		mu 0 4 14 40 41 18
-		f 4 1 7 -21 -7
-		mu 0 4 2 3 20 19
-		f 4 40 -22 -8 -32
-		mu 0 4 31 32 21 3
-		f 4 -23 18 -1 -20
-		mu 0 4 23 22 9 8
-		f 4 -39 48 30 6
-		mu 0 4 18 41 30 2
-		f 4 3 11 -27 -11
-		mu 0 4 6 7 25 24
-		f 4 -34 43 -10 -25
-		mu 0 4 27 34 36 11
-		f 4 -29 24 -3 -26
-		mu 0 4 29 26 5 4
-		f 4 45 -30 25 8
-		mu 0 4 37 39 28 13
-		f 4 0 5 -40 -5
-		mu 0 4 0 1 31 30
-		f 4 -19 -33 -41 -6
-		mu 0 4 1 22 32 31
-		f 4 -44 -28 -12 -35
-		mu 0 4 36 34 25 10
-		f 4 -45 34 -4 -36
-		mu 0 4 38 35 7 6
-		f 4 10 -37 -46 35
-		mu 0 4 12 24 39 37
-		f 4 -49 -24 19 4
-		mu 0 4 30 41 23 0
-		f 4 -42 49 -48 -51
-		mu 0 4 42 32 41 43
-		f 4 -43 50 -47 -52
-		mu 0 4 34 44 45 39
-		f 4 27 51 36 26
-		mu 0 4 25 34 39 24
-		f 4 23 -50 32 22
-		mu 0 4 23 41 32 22;
+	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
+		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
+	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
+		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
+	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
+		f 4 0 5 -2 -5
+		mu 0 4 0 1 3 2
+		f 4 1 7 -3 -7
+		mu 0 4 2 3 5 4
+		f 4 2 9 -4 -9
+		mu 0 4 4 5 7 6
+		f 4 3 11 -1 -11
+		mu 0 4 6 7 9 8
+		f 4 -12 -10 -8 -6
+		mu 0 4 1 10 11 3
+		f 4 10 4 6 8
+		mu 0 4 12 0 2 13;
 	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
 	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
 	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
 	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "group6" -p "group1";
-	rename -uid "6F8BC4CA-4D9B-196C-A613-5D884C495617";
-createNode transform -n "w" -p "group6";
-	rename -uid "CDF4B622-423E-8CEF-A839-628AB8169200";
+createNode transform -n "b3r1w1" -p "building3";
+	rename -uid "5F7FC60B-4096-E8EB-F1F2-77BAEDF23C0E";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
 	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
 	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
 	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 6.9999999999999991 1.5 1 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
+	setAttr ".t" -type "double3" -1.7830185700268431 1.4999999999999982 1.7512832122067414 ;
+	setAttr ".r" -type "double3" 0 179.99999999999997 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000022 3 2.0000000000000009 ;
 	setAttr ".rp" -type "double3" 0 -1.5 0 ;
 	setAttr ".sp" -type "double3" 0 -0.5 0 ;
 	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "-ZkqO7kL";
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "025yVphf";
 	setAttr ".DAVETAG" -type "string" "WALL";
 	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape" -p "w";
-	rename -uid "6E18DC74-4C9D-23F4-588E-BAAEF50A584B";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b3r1wShape1" -p "b3r1w1";
+	rename -uid "ACF79BB7-4B9F-F350-9D9F-E7A1CBA63D0E";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -619,26 +1690,26 @@ createNode mesh -n "wShape" -p "w";
 	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
 	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "w1" -p "group6";
-	rename -uid "E5DB2166-4B3B-1C18-A996-8D9E8AA01304";
+createNode transform -n "b3r1w2" -p "building3";
+	rename -uid "7A49BC8D-4F13-9DFD-E9C9-3ABD6B3DED47";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
 	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
 	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
 	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 1.9999999999999989 1.5 7.105427357601002e-17 ;
-	setAttr ".r" -type "double3" 0 -89.999999999999957 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
+	setAttr ".t" -type "double3" -1.7830185700268408 1.4999999999999982 -1.2487167877932621 ;
+	setAttr ".r" -type "double3" 0 179.99999999999997 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000022 3 2.0000000000000009 ;
 	setAttr ".rp" -type "double3" 0 -1.5 0 ;
 	setAttr ".sp" -type "double3" 0 -0.5 0 ;
 	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "aEiXAKvB";
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "wB2NZAyx";
 	setAttr ".DAVETAG" -type "string" "WALL";
 	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape1" -p "w1";
-	rename -uid "50BF740A-47EA-960C-9CA6-F9AC5B011ABE";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b3r1wShape2" -p "b3r1w2";
+	rename -uid "82114D87-4602-3E8E-4B69-939ED7774B75";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -672,25 +1743,26 @@ createNode mesh -n "wShape1" -p "w1";
 	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
 	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "w2" -p "group6";
-	rename -uid "53B280A4-4456-DD0A-B6F3-7C88B77A20E7";
+createNode transform -n "b3r1w3" -p "building3";
+	rename -uid "E3A97E8D-40CB-97EB-B150-E7B7284A4792";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
 	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
 	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
 	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 6.9999999999999991 1.5 2.9999999999999996 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "nmL1V8IK";
+	setAttr ".t" -type "double3" -4.2792040965293925 1.4999999999999996 -2.2487167877932563 ;
+	setAttr ".r" -type "double3" 0 -89.999999999999986 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000036 3 5.0000000000000062 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "dVbIJzHd";
 	setAttr ".DAVETAG" -type "string" "WALL";
 	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape2" -p "w2";
-	rename -uid "035EE8FF-4EF8-730A-E8A6-3A9CF2E25D4F";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b3r1wShape3" -p "b3r1w3";
+	rename -uid "519445E7-42AC-8C72-6078-DD8601CECD42";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -724,26 +1796,26 @@ createNode mesh -n "wShape2" -p "w2";
 	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
 	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "w3" -p "group6";
-	rename -uid "CAA1EEE8-493E-9118-00E5-81A16BCEF90E";
+createNode transform -n "b3r1w4" -p "building3";
+	rename -uid "96069D4A-4FB8-45EF-8A5E-60972B61EC28";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
 	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
 	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
 	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 3.9999999999999991 1.5 6 ;
-	setAttr ".r" -type "double3" 0 -89.999999999999957 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "NKR4vwIr";
+	setAttr ".t" -type "double3" -4.2792040965293952 1.4999999999999996 2.7512832122067392 ;
+	setAttr ".r" -type "double3" 0 -89.999999999999986 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000036 3 5.0000000000000062 ;
+	setAttr ".rp" -type "double3" 0 -1.5000000000000011 0 ;
+	setAttr ".sp" -type "double3" 0 -0.50000000000000011 0 ;
+	setAttr ".spt" -type "double3" 0 -1.0000000000000002 0 ;
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "MmM0q1lg";
 	setAttr ".DAVETAG" -type "string" "WALL";
 	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape3" -p "w3";
-	rename -uid "06598131-4F21-EB19-BE6A-25BE38D62F49";
+	setAttr ".DAVEROOM" -type "string" "0";
+createNode mesh -n "b3r1wShape4" -p "b3r1w4";
+	rename -uid "1C2C2536-4E40-3F56-9204-2D9A80B82553";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -777,2098 +1849,26 @@ createNode mesh -n "wShape3" -p "w3";
 	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
 	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "w4" -p "group6";
-	rename -uid "DFF5C31A-4ED4-51C9-D08B-498FBFDC04C3";
+createNode transform -n "b3r1w5" -p "building3";
+	rename -uid "712C5A81-41DE-C655-83EB-50AE93154BE9";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
 	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
 	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
 	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 1 1.4999999999999996 0.99999999999999978 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" -2.4513724383723458e-16 -1.4999999999999996 0 ;
+	setAttr ".t" -type "double3" -6.7792040965295062 1.4999999999999982 0.2512832122067391 ;
+	setAttr ".r" -type "double3" 0 179.99999999999997 0 ;
+	setAttr ".s" -type "double3" 0.025000000000000022 3 5.0000000000000036 ;
+	setAttr ".rp" -type "double3" 0 -1.5 0 ;
 	setAttr ".sp" -type "double3" 0 -0.5 0 ;
 	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "ag62gPiL";
+	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHASH" -type "string" "R6hSmwff";
 	setAttr ".DAVETAG" -type "string" "WALL";
 	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape4" -p "w4";
-	rename -uid "70E3C759-4C12-2217-A6EE-579F04FB75F2";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "w5" -p "group6";
-	rename -uid "8D549001-48DA-5547-5B0F-02B0271D8E21";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 3.9999999999999991 1.5 6.3948846218409014e-16 ;
-	setAttr ".r" -type "double3" 0 -89.999999999999957 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "ThhUXHbv";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape5" -p "w5";
-	rename -uid "68EE1B67-4BF5-C66A-7F52-6DB2881C75CE";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "w6" -p "group6";
-	rename -uid "98CC63BC-4E90-A523-4A51-61A8B3532355";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 5.9999999999999991 1.5 7.105427357601002e-17 ;
-	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
-	setAttr ".s" -type "double3" 0.025000000000000008 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "kwyMqJeP";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape6" -p "w6";
-	rename -uid "876AA62C-4A12-C6F0-9EBD-CCAF9EA3AA25";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "w7" -p "group6";
-	rename -uid "1F1CB2BF-46A8-AAE3-FDF4-E2AA764F45C2";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 6.9999999999999991 1.5 4.9999999999999991 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "jd49gHuB";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape7" -p "w7";
-	rename -uid "70DA5B90-4671-0F94-63F3-CC8F33E398C0";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "w8" -p "group6";
-	rename -uid "CA1E6B5F-4173-5326-DAB3-80BEB38B0FCE";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 6.0000000000000009 1.5 6 ;
-	setAttr ".r" -type "double3" 0 -89.999999999999957 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "Z5o3GoS-";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape8" -p "w8";
-	rename -uid "FEEF67EA-4621-88E0-9E97-E3AE0996116E";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "doorWayw" -p "group6";
-	rename -uid "39EC9357-4E81-E4BC-E982-03ACB378A813";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 0.99999999999999889 1.5 3 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "aPSx-fEO";
-	setAttr ".DAVETAG" -type "string" "DOOR";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "doorWaywShape" -p "doorWayw";
-	rename -uid "83710792-461C-0A9C-5B88-91A68344AF3C";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".pv" -type "double2" 0.5 1 ;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 46 ".uvst[0].uvsp[0:45]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25 0.25 0.25 0.375 0.375 0.625 0.375 0.75 0.25 0.33749998
-		 0.25 0.375 0.28749999 0.625 0.28749999 0.66250002 0.25 0.64375001 0.48124999 0.35624999
-		 0.48124999 0.26875001 0.39375001 0.73125005 0.39375001 0.625 0.46250001 0.83750004
-		 0.25 0.16249999 0.25 0.375 0.46250001 0.375 0.2 0.625 0.2 0.83125001 0.1 0.75 0.2
-		 0.41875002 0.1 0.625 0.55000001 0.875 0.2 0.125 0.2 0.375 0.55000001 0.081249997
-		 0.60000002 0.25 0.2 0.66874999 0.60000002 0 0 0 1 1 0 1 1;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 28 ".vt[0:27]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5 -0.5 0.5 0 0.5 0.5 0 -0.5 0.5 0.34999999
-		 0.5 0.5 0.34999999 0.5 -0.5 0.34999999 -0.5 -0.5 0.34999999 -0.5 -0.5 -0.34999999
-		 0.5 -0.5 -0.34999999 0.5 0.5 -0.34999999 -0.5 0.5 -0.34999999 -0.5 0.30000001 0.5
-		 0.5 0.30000001 0.5 0.5 0.30000001 0.34999999 0.5 0.30000001 0 0.5 0.30000001 -0.34999999
-		 0.5 0.30000001 -0.5 -0.5 0.30000001 -0.5 -0.5 0.30000001 -0.34999999 -0.5 0.30000001 0
-		 -0.5 0.30000001 0.34999999;
-	setAttr -s 52 ".ed[0:51]"  0 1 0 2 3 0 4 5 0 6 7 0 0 18 0 1 19 0 2 10 0
-		 3 11 0 4 24 0 5 23 0 6 14 0 7 15 0 8 17 0 9 16 0 8 9 1 9 21 1 10 8 0 11 9 0 12 1 0
-		 13 0 0 10 11 1 11 20 1 12 13 0 13 27 0 16 5 0 17 4 0 14 15 0 15 22 0 16 17 1 17 25 1
-		 18 2 0 19 3 0 20 12 0 22 16 1 23 7 0 24 6 0 25 14 0 26 8 1 27 10 1 18 19 1 19 20 1
-		 20 21 0 21 22 0 22 23 1 23 24 1 24 25 1 25 26 0 26 27 0 27 18 1 20 27 0 21 26 0 22 25 0;
-	setAttr -s 26 -ch 104 ".fc[0:25]" -type "polyFaces" 
-		f 4 39 31 -2 -31
-		mu 0 4 30 31 3 2
-		f 4 14 13 28 -13
-		mu 0 4 15 16 26 29
-		f 4 2 9 44 -9
-		mu 0 4 4 5 35 38
-		f 4 15 42 33 -14
-		mu 0 4 17 33 34 27
-		f 4 29 46 37 12
-		mu 0 4 28 39 40 14
-		f 4 20 17 -15 -17
-		mu 0 4 19 20 16 15
-		f 4 21 41 -16 -18
-		mu 0 4 21 32 33 17
-		f 4 -38 47 38 16
-		mu 0 4 14 40 41 18
-		f 4 1 7 -21 -7
-		mu 0 4 2 3 20 19
-		f 4 40 -22 -8 -32
-		mu 0 4 31 32 21 3
-		f 4 -23 18 -1 -20
-		mu 0 4 23 22 9 8
-		f 4 -39 48 30 6
-		mu 0 4 18 41 30 2
-		f 4 3 11 -27 -11
-		mu 0 4 6 7 25 24
-		f 4 -34 43 -10 -25
-		mu 0 4 27 34 36 11
-		f 4 -29 24 -3 -26
-		mu 0 4 29 26 5 4
-		f 4 45 -30 25 8
-		mu 0 4 37 39 28 13
-		f 4 0 5 -40 -5
-		mu 0 4 0 1 31 30
-		f 4 -19 -33 -41 -6
-		mu 0 4 1 22 32 31
-		f 4 -44 -28 -12 -35
-		mu 0 4 36 34 25 10
-		f 4 -45 34 -4 -36
-		mu 0 4 38 35 7 6
-		f 4 10 -37 -46 35
-		mu 0 4 12 24 39 37
-		f 4 -49 -24 19 4
-		mu 0 4 30 41 23 0
-		f 4 -42 49 -48 -51
-		mu 0 4 42 32 41 43
-		f 4 -43 50 -47 -52
-		mu 0 4 34 44 45 39
-		f 4 27 51 36 26
-		mu 0 4 25 34 39 24
-		f 4 23 -50 32 22
-		mu 0 4 23 41 32 22;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "w9" -p "group6";
-	rename -uid "23538295-48A2-3472-AC60-35A8D3D20636";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 1 1.4999999999999996 4.9999999999999991 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" -2.4513724383723458e-16 -1.4999999999999996 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "cRfIQ9al";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape9" -p "w9";
-	rename -uid "E26906CC-4051-81AC-3B8F-F6B013A8957A";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "w10" -p "group6";
-	rename -uid "4247D9CC-4993-47E2-631D-D894AF34C273";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 2 1.4999999999999996 6 ;
-	setAttr ".r" -type "double3" 0 89.999999999999986 0 ;
-	setAttr ".s" -type "double3" 0.025000000000000008 3 2 ;
-	setAttr ".rp" -type "double3" -2.4513724383723463e-16 -1.4999999999999996 0 ;
-	setAttr ".rpt" -type "double3" 2.4513724383723439e-16 0 2.4513724383723463e-16 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "jLWvawwx";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "2";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "wShape10" -p "w10";
-	rename -uid "79116D46-400D-3232-221F-7B8B39B91733";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "group2";
-	rename -uid "3D81B0F6-46D5-2603-3959-0586AD686437";
-createNode transform -n "e" -p "group2";
-	rename -uid "2F50E33B-4B59-621E-238E-96B96F7E884C";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 0.9221492566869206 1.5 -3 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "tzWV5GP2";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "eShape" -p "e";
-	rename -uid "3BEE117C-498B-917F-076B-51BFABF37650";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "e1" -p "group2";
-	rename -uid "FAFDCD94-4BF2-A4F6-3F00-D8B66EFA080E";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 1.9221492566869203 1.5 -4 ;
-	setAttr ".r" -type "double3" 0 450 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "XJRz6rhJ";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "eShape1" -p "e1";
-	rename -uid "1A27E598-4205-983A-534B-1098A7A83B65";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "e2" -p "group2";
-	rename -uid "BAC8B77C-4399-F3F7-A346-01824EAFE4EC";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 3.9221492566869198 1.5 -4 ;
-	setAttr ".r" -type "double3" 0 450 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "bwfY8sF7";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "eShape2" -p "e2";
-	rename -uid "C43BB664-4505-FC1C-8CAA-3C9C22307D35";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "e3" -p "group2";
-	rename -uid "A97C66FC-4BE8-3EB6-98A2-85A7AF51F1F5";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 4.9221492566869198 1.5 -1 ;
-	setAttr ".r" -type "double3" 0 360.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "vCmx9XuJ";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "eShape3" -p "e3";
-	rename -uid "4B65901C-4724-77D4-F2E3-5C9B234B7543";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "e4" -p "group2";
-	rename -uid "DEE22CC8-4424-5EB9-5F5C-9BB4A1DA6AE4";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 4.9221492566869198 1.5 -3 ;
-	setAttr ".r" -type "double3" 0 540 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "UxS5ErIK";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "eShape4" -p "e4";
-	rename -uid "1D35B47F-4A4E-7DC6-8190-5EB4A427A853";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "e5" -p "group2";
-	rename -uid "163497B5-4DBC-2B66-AA37-07AC3B6B7B9F";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 3.9221492566869198 1.5 0 ;
-	setAttr ".r" -type "double3" 0 450 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "lAJoDRjE";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "eShape5" -p "e5";
-	rename -uid "8AD5C25B-4859-CEC9-1A6B-C78A93C365EF";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "e6" -p "group2";
-	rename -uid "A8610FD2-4D4A-2457-12BD-E3AC5DA405BC";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 1.9221492566869203 1.5 0 ;
-	setAttr ".r" -type "double3" 0 450 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "1_tCkeaY";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "eShape6" -p "e6";
-	rename -uid "9A4C8A87-4AB4-2356-D3CC-9CB00C1E04A3";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "doorWaye" -p "group2";
-	rename -uid "369D4C9A-45EC-DA08-D78E-D9B9D5261080";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 0.9221492566869206 1.5 -1 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "NO2LFqW0";
-	setAttr ".DAVETAG" -type "string" "DOOR";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "1";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "doorWayeShape" -p "doorWaye";
-	rename -uid "23145ECF-4437-12D1-CF13-AC877A1AB41F";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".pv" -type "double2" 0.5 1 ;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 46 ".uvst[0].uvsp[0:45]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25 0.25 0.25 0.375 0.375 0.625 0.375 0.75 0.25 0.33749998
-		 0.25 0.375 0.28749999 0.625 0.28749999 0.66250002 0.25 0.64375001 0.48124999 0.35624999
-		 0.48124999 0.26875001 0.39375001 0.73125005 0.39375001 0.625 0.46250001 0.83750004
-		 0.25 0.16249999 0.25 0.375 0.46250001 0.375 0.2 0.625 0.2 0.83125001 0.1 0.75 0.2
-		 0.41875002 0.1 0.625 0.55000001 0.875 0.2 0.125 0.2 0.375 0.55000001 0.081249997
-		 0.60000002 0.25 0.2 0.66874999 0.60000002 0 0 0 1 1 0 1 1;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 28 ".vt[0:27]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5 -0.5 0.5 0 0.5 0.5 0 -0.5 0.5 0.34999999
-		 0.5 0.5 0.34999999 0.5 -0.5 0.34999999 -0.5 -0.5 0.34999999 -0.5 -0.5 -0.34999999
-		 0.5 -0.5 -0.34999999 0.5 0.5 -0.34999999 -0.5 0.5 -0.34999999 -0.5 0.30000001 0.5
-		 0.5 0.30000001 0.5 0.5 0.30000001 0.34999999 0.5 0.30000001 0 0.5 0.30000001 -0.34999999
-		 0.5 0.30000001 -0.5 -0.5 0.30000001 -0.5 -0.5 0.30000001 -0.34999999 -0.5 0.30000001 0
-		 -0.5 0.30000001 0.34999999;
-	setAttr -s 52 ".ed[0:51]"  0 1 0 2 3 0 4 5 0 6 7 0 0 18 0 1 19 0 2 10 0
-		 3 11 0 4 24 0 5 23 0 6 14 0 7 15 0 8 17 0 9 16 0 8 9 1 9 21 1 10 8 0 11 9 0 12 1 0
-		 13 0 0 10 11 1 11 20 1 12 13 0 13 27 0 16 5 0 17 4 0 14 15 0 15 22 0 16 17 1 17 25 1
-		 18 2 0 19 3 0 20 12 0 22 16 1 23 7 0 24 6 0 25 14 0 26 8 1 27 10 1 18 19 1 19 20 1
-		 20 21 0 21 22 0 22 23 1 23 24 1 24 25 1 25 26 0 26 27 0 27 18 1 20 27 0 21 26 0 22 25 0;
-	setAttr -s 26 -ch 104 ".fc[0:25]" -type "polyFaces" 
-		f 4 39 31 -2 -31
-		mu 0 4 30 31 3 2
-		f 4 14 13 28 -13
-		mu 0 4 15 16 26 29
-		f 4 2 9 44 -9
-		mu 0 4 4 5 35 38
-		f 4 15 42 33 -14
-		mu 0 4 17 33 34 27
-		f 4 29 46 37 12
-		mu 0 4 28 39 40 14
-		f 4 20 17 -15 -17
-		mu 0 4 19 20 16 15
-		f 4 21 41 -16 -18
-		mu 0 4 21 32 33 17
-		f 4 -38 47 38 16
-		mu 0 4 14 40 41 18
-		f 4 1 7 -21 -7
-		mu 0 4 2 3 20 19
-		f 4 40 -22 -8 -32
-		mu 0 4 31 32 21 3
-		f 4 -23 18 -1 -20
-		mu 0 4 23 22 9 8
-		f 4 -39 48 30 6
-		mu 0 4 18 41 30 2
-		f 4 3 11 -27 -11
-		mu 0 4 6 7 25 24
-		f 4 -34 43 -10 -25
-		mu 0 4 27 34 36 11
-		f 4 -29 24 -3 -26
-		mu 0 4 29 26 5 4
-		f 4 45 -30 25 8
-		mu 0 4 37 39 28 13
-		f 4 0 5 -40 -5
-		mu 0 4 0 1 31 30
-		f 4 -19 -33 -41 -6
-		mu 0 4 1 22 32 31
-		f 4 -44 -28 -12 -35
-		mu 0 4 36 34 25 10
-		f 4 -45 34 -4 -36
-		mu 0 4 38 35 7 6
-		f 4 10 -37 -46 35
-		mu 0 4 12 24 39 37
-		f 4 -49 -24 19 4
-		mu 0 4 30 41 23 0
-		f 4 -42 49 -48 -51
-		mu 0 4 42 32 41 43
-		f 4 -43 50 -47 -52
-		mu 0 4 34 44 45 39
-		f 4 27 51 36 26
-		mu 0 4 25 34 39 24
-		f 4 23 -50 32 22
-		mu 0 4 23 41 32 22;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "group3";
-	rename -uid "1C888EC3-4FC0-DB6B-13D7-139214EE46C1";
-createNode transform -n "a" -p "group3";
-	rename -uid "8155CB14-4444-60DF-E9B1-E9B9DFE3D997";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 0.9221492566869206 4.5 -3 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "J4ap8gf_";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
 	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "aShape" -p "a";
-	rename -uid "40E0B2CF-4F3C-359A-27E9-FBB2BDC9B3F6";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "doorWaya" -p "group3";
-	rename -uid "25E50AAC-4586-97FE-B866-488E7767F021";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 0.9221492566869206 4.5 -1 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "CJxBn_xQ";
-	setAttr ".DAVETAG" -type "string" "DOOR";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "doorWayaShape" -p "doorWaya";
-	rename -uid "8B69FEA9-422E-C0C3-44A1-5BAD2A9590F2";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".pv" -type "double2" 0.5 1 ;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 46 ".uvst[0].uvsp[0:45]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25 0.25 0.25 0.375 0.375 0.625 0.375 0.75 0.25 0.33749998
-		 0.25 0.375 0.28749999 0.625 0.28749999 0.66250002 0.25 0.64375001 0.48124999 0.35624999
-		 0.48124999 0.26875001 0.39375001 0.73125005 0.39375001 0.625 0.46250001 0.83750004
-		 0.25 0.16249999 0.25 0.375 0.46250001 0.375 0.2 0.625 0.2 0.83125001 0.1 0.75 0.2
-		 0.41875002 0.1 0.625 0.55000001 0.875 0.2 0.125 0.2 0.375 0.55000001 0.081249997
-		 0.60000002 0.25 0.2 0.66874999 0.60000002 0 0 0 1 1 0 1 1;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 28 ".vt[0:27]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5 -0.5 0.5 0 0.5 0.5 0 -0.5 0.5 0.34999999
-		 0.5 0.5 0.34999999 0.5 -0.5 0.34999999 -0.5 -0.5 0.34999999 -0.5 -0.5 -0.34999999
-		 0.5 -0.5 -0.34999999 0.5 0.5 -0.34999999 -0.5 0.5 -0.34999999 -0.5 0.30000001 0.5
-		 0.5 0.30000001 0.5 0.5 0.30000001 0.34999999 0.5 0.30000001 0 0.5 0.30000001 -0.34999999
-		 0.5 0.30000001 -0.5 -0.5 0.30000001 -0.5 -0.5 0.30000001 -0.34999999 -0.5 0.30000001 0
-		 -0.5 0.30000001 0.34999999;
-	setAttr -s 52 ".ed[0:51]"  0 1 0 2 3 0 4 5 0 6 7 0 0 18 0 1 19 0 2 10 0
-		 3 11 0 4 24 0 5 23 0 6 14 0 7 15 0 8 17 0 9 16 0 8 9 1 9 21 1 10 8 0 11 9 0 12 1 0
-		 13 0 0 10 11 1 11 20 1 12 13 0 13 27 0 16 5 0 17 4 0 14 15 0 15 22 0 16 17 1 17 25 1
-		 18 2 0 19 3 0 20 12 0 22 16 1 23 7 0 24 6 0 25 14 0 26 8 1 27 10 1 18 19 1 19 20 1
-		 20 21 0 21 22 0 22 23 1 23 24 1 24 25 1 25 26 0 26 27 0 27 18 1 20 27 0 21 26 0 22 25 0;
-	setAttr -s 26 -ch 104 ".fc[0:25]" -type "polyFaces" 
-		f 4 39 31 -2 -31
-		mu 0 4 30 31 3 2
-		f 4 14 13 28 -13
-		mu 0 4 15 16 26 29
-		f 4 2 9 44 -9
-		mu 0 4 4 5 35 38
-		f 4 15 42 33 -14
-		mu 0 4 17 33 34 27
-		f 4 29 46 37 12
-		mu 0 4 28 39 40 14
-		f 4 20 17 -15 -17
-		mu 0 4 19 20 16 15
-		f 4 21 41 -16 -18
-		mu 0 4 21 32 33 17
-		f 4 -38 47 38 16
-		mu 0 4 14 40 41 18
-		f 4 1 7 -21 -7
-		mu 0 4 2 3 20 19
-		f 4 40 -22 -8 -32
-		mu 0 4 31 32 21 3
-		f 4 -23 18 -1 -20
-		mu 0 4 23 22 9 8
-		f 4 -39 48 30 6
-		mu 0 4 18 41 30 2
-		f 4 3 11 -27 -11
-		mu 0 4 6 7 25 24
-		f 4 -34 43 -10 -25
-		mu 0 4 27 34 36 11
-		f 4 -29 24 -3 -26
-		mu 0 4 29 26 5 4
-		f 4 45 -30 25 8
-		mu 0 4 37 39 28 13
-		f 4 0 5 -40 -5
-		mu 0 4 0 1 31 30
-		f 4 -19 -33 -41 -6
-		mu 0 4 1 22 32 31
-		f 4 -44 -28 -12 -35
-		mu 0 4 36 34 25 10
-		f 4 -45 34 -4 -36
-		mu 0 4 38 35 7 6
-		f 4 10 -37 -46 35
-		mu 0 4 12 24 39 37
-		f 4 -49 -24 19 4
-		mu 0 4 30 41 23 0
-		f 4 -42 49 -48 -51
-		mu 0 4 42 32 41 43
-		f 4 -43 50 -47 -52
-		mu 0 4 34 44 45 39
-		f 4 27 51 36 26
-		mu 0 4 25 34 39 24
-		f 4 23 -50 32 22
-		mu 0 4 23 41 32 22;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "a1" -p "group3";
-	rename -uid "36342696-4E0B-C1EB-81C6-CCBA51B033EF";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 4.9221492566869198 4.5 -1 ;
-	setAttr ".r" -type "double3" 0 360.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "MmCjUKPz";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "aShape1" -p "a1";
-	rename -uid "AD7D3B34-46A3-577E-9974-9AA4977F1D4F";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "a2" -p "group3";
-	rename -uid "769FC8EE-453A-8215-8B27-E9BA47A4E57A";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 4.9221492566869198 4.5 -3 ;
-	setAttr ".r" -type "double3" 0 540 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "wjrMaF1u";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "aShape2" -p "a2";
-	rename -uid "739AE244-4C16-E97E-F0D3-3399619F2A77";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "a3" -p "group3";
-	rename -uid "574848D4-434E-FACE-1287-478D1CD2C1F2";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 3.9221492566869198 4.5 -4 ;
-	setAttr ".r" -type "double3" 0 450 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "UGhQVQ_2";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "aShape3" -p "a3";
-	rename -uid "42513ACF-46A5-E70F-264E-46AB03E639A4";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "a4" -p "group3";
-	rename -uid "768FE247-4482-0C5C-D187-D2B7CC7CAA3E";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 1.9221492566869203 4.5 -4 ;
-	setAttr ".r" -type "double3" 0 450 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "bYLNOU17";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "aShape4" -p "a4";
-	rename -uid "907810A6-4435-11A2-4CEA-1B8CFB27DD77";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "a5" -p "group3";
-	rename -uid "7164D459-47BD-06B3-3BFF-9B815F9411BB";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 3.9221492566869198 4.5 0 ;
-	setAttr ".r" -type "double3" 0 450 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "xfhoAfJ7";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "aShape5" -p "a5";
-	rename -uid "0C65D3D4-4A9F-E7C3-FF77-D58688C66D99";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "a6" -p "group3";
-	rename -uid "9DFC40BF-4BB0-8814-1F47-C8A5BFE48E89";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 1.9221492566869203 4.5 0 ;
-	setAttr ".r" -type "double3" 0 450 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "10LlHZ1U";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "0";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "aShape6" -p "a6";
-	rename -uid "D3B1CF02-4BE2-851E-627E-62AB4519F382";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "group4";
-	rename -uid "4173574F-4A67-245F-8EFC-71BAAE0F98E1";
-createNode transform -n "s" -p "group4";
-	rename -uid "308E9897-439F-E008-A008-0783B59650A3";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 1.0000000000000002 1.500000000000004 1.2555634313473512 ;
-	setAttr ".r" -type "double3" 0 360.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 5.4392046422435666e-15 -1.500000000000004 0 ;
-	setAttr ".rpt" -type "double3" -5.4747317790315677e-15 0 5.7638923806519843e-15 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 5.6843418860808018e-15 -1.0000000000000047 0 ;
-	setAttr ".DAVEHASH" -type "string" "TecUjAQe";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape" -p "s";
-	rename -uid "C2C329B9-4FB4-DF5B-83FF-908CE36ECCB4";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "s1" -p "group4";
-	rename -uid "11D43602-4BD8-3CEB-C33C-4F84994E33D8";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 4 1.5 6.2555634313473574 ;
-	setAttr ".r" -type "double3" 0 270.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "CBam9Usg";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape1" -p "s1";
-	rename -uid "59784005-46E3-2F1D-F39B-78A4A7D5DC8C";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "s2" -p "group4";
-	rename -uid "EC3F805B-4B43-B2E8-6D33-62B8923731FE";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 6 1.5 0.27676771877515927 ;
-	setAttr ".r" -type "double3" 0 450 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "ezzG5zzm";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape2" -p "s2";
-	rename -uid "1CA61187-4320-4D94-A744-00BBE5E36D93";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "doorWays" -p "group4";
-	rename -uid "8543AEC8-46C8-AF7E-7C07-199208E88091";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 1 1.5 3.2555634313473569 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "rgRn_DIp";
-	setAttr ".DAVETAG" -type "string" "DOOR";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "doorWaysShape" -p "doorWays";
-	rename -uid "C5D179D3-4C0B-159A-6208-A2B485E51D5A";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".pv" -type "double2" 0.5 1 ;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 46 ".uvst[0].uvsp[0:45]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25 0.25 0.25 0.375 0.375 0.625 0.375 0.75 0.25 0.33749998
-		 0.25 0.375 0.28749999 0.625 0.28749999 0.66250002 0.25 0.64375001 0.48124999 0.35624999
-		 0.48124999 0.26875001 0.39375001 0.73125005 0.39375001 0.625 0.46250001 0.83750004
-		 0.25 0.16249999 0.25 0.375 0.46250001 0.375 0.2 0.625 0.2 0.83125001 0.1 0.75 0.2
-		 0.41875002 0.1 0.625 0.55000001 0.875 0.2 0.125 0.2 0.375 0.55000001 0.081249997
-		 0.60000002 0.25 0.2 0.66874999 0.60000002 0 0 0 1 1 0 1 1;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 28 ".vt[0:27]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5 -0.5 0.5 0 0.5 0.5 0 -0.5 0.5 0.34999999
-		 0.5 0.5 0.34999999 0.5 -0.5 0.34999999 -0.5 -0.5 0.34999999 -0.5 -0.5 -0.34999999
-		 0.5 -0.5 -0.34999999 0.5 0.5 -0.34999999 -0.5 0.5 -0.34999999 -0.5 0.30000001 0.5
-		 0.5 0.30000001 0.5 0.5 0.30000001 0.34999999 0.5 0.30000001 0 0.5 0.30000001 -0.34999999
-		 0.5 0.30000001 -0.5 -0.5 0.30000001 -0.5 -0.5 0.30000001 -0.34999999 -0.5 0.30000001 0
-		 -0.5 0.30000001 0.34999999;
-	setAttr -s 52 ".ed[0:51]"  0 1 0 2 3 0 4 5 0 6 7 0 0 18 0 1 19 0 2 10 0
-		 3 11 0 4 24 0 5 23 0 6 14 0 7 15 0 8 17 0 9 16 0 8 9 1 9 21 1 10 8 0 11 9 0 12 1 0
-		 13 0 0 10 11 1 11 20 1 12 13 0 13 27 0 16 5 0 17 4 0 14 15 0 15 22 0 16 17 1 17 25 1
-		 18 2 0 19 3 0 20 12 0 22 16 1 23 7 0 24 6 0 25 14 0 26 8 1 27 10 1 18 19 1 19 20 1
-		 20 21 0 21 22 0 22 23 1 23 24 1 24 25 1 25 26 0 26 27 0 27 18 1 20 27 0 21 26 0 22 25 0;
-	setAttr -s 26 -ch 104 ".fc[0:25]" -type "polyFaces" 
-		f 4 39 31 -2 -31
-		mu 0 4 30 31 3 2
-		f 4 14 13 28 -13
-		mu 0 4 15 16 26 29
-		f 4 2 9 44 -9
-		mu 0 4 4 5 35 38
-		f 4 15 42 33 -14
-		mu 0 4 17 33 34 27
-		f 4 29 46 37 12
-		mu 0 4 28 39 40 14
-		f 4 20 17 -15 -17
-		mu 0 4 19 20 16 15
-		f 4 21 41 -16 -18
-		mu 0 4 21 32 33 17
-		f 4 -38 47 38 16
-		mu 0 4 14 40 41 18
-		f 4 1 7 -21 -7
-		mu 0 4 2 3 20 19
-		f 4 40 -22 -8 -32
-		mu 0 4 31 32 21 3
-		f 4 -23 18 -1 -20
-		mu 0 4 23 22 9 8
-		f 4 -39 48 30 6
-		mu 0 4 18 41 30 2
-		f 4 3 11 -27 -11
-		mu 0 4 6 7 25 24
-		f 4 -34 43 -10 -25
-		mu 0 4 27 34 36 11
-		f 4 -29 24 -3 -26
-		mu 0 4 29 26 5 4
-		f 4 45 -30 25 8
-		mu 0 4 37 39 28 13
-		f 4 0 5 -40 -5
-		mu 0 4 0 1 31 30
-		f 4 -19 -33 -41 -6
-		mu 0 4 1 22 32 31
-		f 4 -44 -28 -12 -35
-		mu 0 4 36 34 25 10
-		f 4 -45 34 -4 -36
-		mu 0 4 38 35 7 6
-		f 4 10 -37 -46 35
-		mu 0 4 12 24 39 37
-		f 4 -49 -24 19 4
-		mu 0 4 30 41 23 0
-		f 4 -42 49 -48 -51
-		mu 0 4 42 32 41 43
-		f 4 -43 50 -47 -52
-		mu 0 4 34 44 45 39
-		f 4 27 51 36 26
-		mu 0 4 25 34 39 24
-		f 4 23 -50 32 22
-		mu 0 4 23 41 32 22;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "s3" -p "group4";
-	rename -uid "D65D30C9-4E90-0B2F-461D-66AC2BDE74A8";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 2 1.500000000000004 6.2555634313473512 ;
-	setAttr ".r" -type "double3" 0 450 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 5.4392046422435666e-15 -1.500000000000004 0 ;
-	setAttr ".rpt" -type "double3" -5.4747317790315677e-15 0 5.7638923806519843e-15 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 5.6843418860808018e-15 -1.0000000000000047 0 ;
-	setAttr ".DAVEHASH" -type "string" "QsFiT9Bq";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape3" -p "s3";
-	rename -uid "4AC40D77-4782-CD95-0927-82973904FBE4";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "s4" -p "group4";
-	rename -uid "EB41E943-4EF1-A707-0934-E0891AFF7479";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 1.0000000000000002 1.500000000000004 5.2555634313473512 ;
-	setAttr ".r" -type "double3" 0 360.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 5.4392046422435666e-15 -1.500000000000004 0 ;
-	setAttr ".rpt" -type "double3" -5.4747317790315677e-15 0 5.7638923806519843e-15 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 5.6843418860808018e-15 -1.0000000000000047 0 ;
-	setAttr ".DAVEHASH" -type "string" "joJ37AUu";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape4" -p "s4";
-	rename -uid "15EDEBC3-4D29-9B1E-5B3F-41A4559C9CDB";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "s5" -p "group4";
-	rename -uid "DB7DD59E-40BF-EA23-5000-B29C8208AFBE";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 7 1.5 1.2555634313473569 ;
-	setAttr ".r" -type "double3" 0 360.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "ikSmg4tb";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape5" -p "s5";
-	rename -uid "F14C6351-46C3-41BB-A377-EDA9C8ED1636";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "s6" -p "group4";
-	rename -uid "A63D8A28-43F5-6300-6636-FA971D20CBEF";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 7 1.5 3.2555634313473569 ;
-	setAttr ".r" -type "double3" 0 360.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "9aJCixCi";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape6" -p "s6";
-	rename -uid "01F2980B-4EF1-0F29-D998-0E87108C0372";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "s7" -p "group4";
-	rename -uid "3885F5E0-49DC-DFCC-8A12-719192A70B76";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 6 1.5 6.2555634313473574 ;
-	setAttr ".r" -type "double3" 0 270.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "UwdHjBio";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape7" -p "s7";
-	rename -uid "94698CAF-4070-5055-9ED7-DA882426BFF5";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "s8" -p "group4";
-	rename -uid "EC665688-4B91-B10E-01B6-CD97A30CF5F0";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 7 1.5 5.2555634313473574 ;
-	setAttr ".r" -type "double3" 0 360.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "qhu07L2J";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape8" -p "s8";
-	rename -uid "AF1A2306-4559-C53D-FDB2-8A82557ED46B";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "s9" -p "group4";
-	rename -uid "5492F3A4-4C28-83EF-4C09-5E81A80D44A5";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 4 1.5 0.32212718262889556 ;
-	setAttr ".r" -type "double3" 0 270.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "ZbePWPkC";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape9" -p "s9";
-	rename -uid "4D296735-40DB-5D49-D0BB-45B4041F65F5";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr -s 14 ".uvst[0].uvsp[0:13]" -type "float2" 0.375 0 0.625 0 0.375
-		 0.25 0.625 0.25 0.375 0.5 0.625 0.5 0.375 0.75 0.625 0.75 0.375 1 0.625 1 0.875 0
-		 0.875 0.25 0.125 0 0.125 0.25;
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 8 ".vt[0:7]"  -0.5 -0.5 0.5 0.5 -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 0.5
-		 -0.5 0.5 -0.5 0.5 0.5 -0.5 -0.5 -0.5 -0.5 0.5 -0.5 -0.5;
-	setAttr -s 12 ".ed[0:11]"  0 1 0 2 3 0 4 5 0 6 7 0 0 2 0 1 3 0 2 4 0
-		 3 5 0 4 6 0 5 7 0 6 0 0 7 1 0;
-	setAttr -s 6 -ch 24 ".fc[0:5]" -type "polyFaces" 
-		f 4 0 5 -2 -5
-		mu 0 4 0 1 3 2
-		f 4 1 7 -3 -7
-		mu 0 4 2 3 5 4
-		f 4 2 9 -4 -9
-		mu 0 4 4 5 7 6
-		f 4 3 11 -1 -11
-		mu 0 4 6 7 9 8
-		f 4 -12 -10 -8 -6
-		mu 0 4 1 10 11 3
-		f 4 10 4 6 8
-		mu 0 4 12 0 2 13;
-	setAttr ".cd" -type "dataPolyComponent" Index_Data Edge 0 ;
-	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
-	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
-	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "s10" -p "group4";
-	rename -uid "0B5EE913-4DDF-72D8-B7EA-94887B41A340";
-	addAttr -ci true -sn "DAVEHASH" -ln "DAVEHASH" -dt "string";
-	addAttr -ci true -sn "DAVETAG" -ln "DAVETAG" -dt "string";
-	addAttr -ci true -sn "DAVEBUILDING" -ln "DAVEBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEROOM" -ln "DAVEROOM" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".t" -type "double3" 2 1.5 0.31120519563133714 ;
-	setAttr ".r" -type "double3" 0 270.00000000000006 0 ;
-	setAttr ".s" -type "double3" 0.025 3 2 ;
-	setAttr ".rp" -type "double3" 0 -1.5 0 ;
-	setAttr ".sp" -type "double3" 0 -0.5 0 ;
-	setAttr ".spt" -type "double3" 0 -1 0 ;
-	setAttr ".DAVEHASH" -type "string" "cD1BJWkh";
-	setAttr ".DAVETAG" -type "string" "WALL";
-	setAttr ".DAVEBUILDING" -type "string" "1";
-	setAttr ".DAVEROOM" -type "string" "0";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
-createNode mesh -n "sShape10" -p "s10";
-	rename -uid "15343D68-47F4-7E3C-531B-96969275E3AA";
+createNode mesh -n "b3r1wShape5" -p "b3r1w5";
+	rename -uid "6B9BA321-4D97-6DEC-A678-7880C51C10AE";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -2903,7 +1903,7 @@ createNode mesh -n "sShape10" -p "s10";
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
 	setAttr ".ai_translator" -type "string" "polymesh";
 createNode transform -n "building1Room1_flr";
-	rename -uid "7AE11FBB-47F2-F6E5-FA8E-C1BCE42CC19E";
+	rename -uid "D5F1FF28-41F9-13FE-028F-B5B55A08C082";
 	addAttr -ci true -sn "DAVEPLANBUILDING" -ln "DAVEPLANBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEPLANROOM" -ln "DAVEPLANROOM" -dt "string";
 	addAttr -ci true -sn "DAVEROOMTAG" -ln "DAVEROOMTAG" -dt "string";
@@ -2911,9 +1911,9 @@ createNode transform -n "building1Room1_flr";
 	setAttr ".DAVEPLANBUILDING" -type "string" "0";
 	setAttr ".DAVEPLANROOM" -type "string" "0";
 	setAttr ".DAVEROOMTAG" -type "string" "KITCHEN";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "False";
+	setAttr ".DAVEHULLFLIPPED" -type "string" "True";
 createNode mesh -n "building1Room1_flrShape" -p "building1Room1_flr";
-	rename -uid "CE27611C-4CF7-4380-0FE9-288C468C1BE8";
+	rename -uid "BFF4D9AB-4DD0-7D64-E0B0-77BDE431C348";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -2924,7 +1924,7 @@ createNode mesh -n "building1Room1_flrShape" -p "building1Room1_flr";
 	setAttr ".cdvm[0]"  0 1 1;
 	setAttr ".ai_translator" -type "string" "polymesh";
 createNode transform -n "building1Room2_flr";
-	rename -uid "88E16DE3-4F46-10D0-09B6-2BA2BB7D41CE";
+	rename -uid "A124EDDB-45AB-A8BC-65AA-0A931B072ED2";
 	addAttr -ci true -sn "DAVEPLANBUILDING" -ln "DAVEPLANBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEPLANROOM" -ln "DAVEPLANROOM" -dt "string";
 	addAttr -ci true -sn "DAVEROOMTAG" -ln "DAVEROOMTAG" -dt "string";
@@ -2934,7 +1934,7 @@ createNode transform -n "building1Room2_flr";
 	setAttr ".DAVEROOMTAG" -type "string" "KITCHEN";
 	setAttr ".DAVEHULLFLIPPED" -type "string" "True";
 createNode mesh -n "building1Room2_flrShape" -p "building1Room2_flr";
-	rename -uid "63ED707E-4A68-8231-39BB-FAACCA13D2F9";
+	rename -uid "ED302CE9-45C7-7A84-44E2-E383A408C2FF";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -2945,7 +1945,7 @@ createNode mesh -n "building1Room2_flrShape" -p "building1Room2_flr";
 	setAttr ".cdvm[0]"  0 1 1;
 	setAttr ".ai_translator" -type "string" "polymesh";
 createNode transform -n "building2Room1_flr";
-	rename -uid "4C22A854-408A-EF9C-1372-0DB9205252A4";
+	rename -uid "D0183FE4-4A02-0C27-F776-8FBE7CA4A469";
 	addAttr -ci true -sn "DAVEPLANBUILDING" -ln "DAVEPLANBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEPLANROOM" -ln "DAVEPLANROOM" -dt "string";
 	addAttr -ci true -sn "DAVEROOMTAG" -ln "DAVEROOMTAG" -dt "string";
@@ -2955,7 +1955,49 @@ createNode transform -n "building2Room1_flr";
 	setAttr ".DAVEROOMTAG" -type "string" "KITCHEN";
 	setAttr ".DAVEHULLFLIPPED" -type "string" "True";
 createNode mesh -n "building2Room1_flrShape" -p "building2Room1_flr";
-	rename -uid "2B4EA0E7-4EEC-FF60-2CE9-BD8C45D9BCAB";
+	rename -uid "5D85528C-48AD-F39E-E8A0-50A41808EF21";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "building2Room2_flr";
+	rename -uid "7A00353F-4CE5-9F85-CB1D-2898B778AE6F";
+	addAttr -ci true -sn "DAVEPLANBUILDING" -ln "DAVEPLANBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEPLANROOM" -ln "DAVEPLANROOM" -dt "string";
+	addAttr -ci true -sn "DAVEROOMTAG" -ln "DAVEROOMTAG" -dt "string";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	setAttr ".DAVEPLANBUILDING" -type "string" "1";
+	setAttr ".DAVEPLANROOM" -type "string" "1";
+	setAttr ".DAVEROOMTAG" -type "string" "KITCHEN";
+	setAttr ".DAVEHULLFLIPPED" -type "string" "True";
+createNode mesh -n "building2Room2_flrShape" -p "building2Room2_flr";
+	rename -uid "C683F246-4758-DF13-9F7E-9B8D425D0658";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".ai_translator" -type "string" "polymesh";
+createNode transform -n "building2Room3_flr";
+	rename -uid "D49ED5B4-45DA-F246-EDCB-90BE5ED8E832";
+	addAttr -ci true -sn "DAVEPLANBUILDING" -ln "DAVEPLANBUILDING" -dt "string";
+	addAttr -ci true -sn "DAVEPLANROOM" -ln "DAVEPLANROOM" -dt "string";
+	addAttr -ci true -sn "DAVEROOMTAG" -ln "DAVEROOMTAG" -dt "string";
+	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
+	setAttr ".DAVEPLANBUILDING" -type "string" "1";
+	setAttr ".DAVEPLANROOM" -type "string" "2";
+	setAttr ".DAVEROOMTAG" -type "string" "KITCHEN";
+	setAttr ".DAVEHULLFLIPPED" -type "string" "True";
+createNode mesh -n "building2Room3_flrShape" -p "building2Room3_flr";
+	rename -uid "6EF05035-49ED-DC0C-1025-BAB9DED53A41";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -2966,7 +2008,7 @@ createNode mesh -n "building2Room1_flrShape" -p "building2Room1_flr";
 	setAttr ".cdvm[0]"  0 1 1;
 	setAttr ".ai_translator" -type "string" "polymesh";
 createNode transform -n "building3Room1_flr";
-	rename -uid "43965A13-480D-370D-6D42-5BA7D1FFBF48";
+	rename -uid "B7C58F94-4D7D-5CCD-B0AD-4A8BD94A177B";
 	addAttr -ci true -sn "DAVEPLANBUILDING" -ln "DAVEPLANBUILDING" -dt "string";
 	addAttr -ci true -sn "DAVEPLANROOM" -ln "DAVEPLANROOM" -dt "string";
 	addAttr -ci true -sn "DAVEROOMTAG" -ln "DAVEROOMTAG" -dt "string";
@@ -2976,28 +2018,7 @@ createNode transform -n "building3Room1_flr";
 	setAttr ".DAVEROOMTAG" -type "string" "KITCHEN";
 	setAttr ".DAVEHULLFLIPPED" -type "string" "True";
 createNode mesh -n "building3Room1_flrShape" -p "building3Room1_flr";
-	rename -uid "853D7F6F-4AEC-4512-0E04-DEA59059B844";
-	setAttr -k off ".v";
-	setAttr ".vir" yes;
-	setAttr ".vif" yes;
-	setAttr ".uvst[0].uvsn" -type "string" "map1";
-	setAttr ".cuvs" -type "string" "map1";
-	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr ".covm[0]"  0 1 1;
-	setAttr ".cdvm[0]"  0 1 1;
-	setAttr ".ai_translator" -type "string" "polymesh";
-createNode transform -n "building3Room2_flr";
-	rename -uid "8BC77E65-4B5E-49F2-2782-649A61DE89D5";
-	addAttr -ci true -sn "DAVEPLANBUILDING" -ln "DAVEPLANBUILDING" -dt "string";
-	addAttr -ci true -sn "DAVEPLANROOM" -ln "DAVEPLANROOM" -dt "string";
-	addAttr -ci true -sn "DAVEROOMTAG" -ln "DAVEROOMTAG" -dt "string";
-	addAttr -ci true -sn "DAVEHULLFLIPPED" -ln "DAVEHULLFLIPPED" -dt "string";
-	setAttr ".DAVEPLANBUILDING" -type "string" "2";
-	setAttr ".DAVEPLANROOM" -type "string" "1";
-	setAttr ".DAVEROOMTAG" -type "string" "KITCHEN";
-	setAttr ".DAVEHULLFLIPPED" -type "string" "True";
-createNode mesh -n "building3Room2_flrShape" -p "building3Room2_flr";
-	rename -uid "4D00D8D9-431D-DB84-1AFE-E8AD154C737C";
+	rename -uid "B98AE5B3-4A5F-E1B5-1865-879A94DB9E53";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -3008,24 +2029,62 @@ createNode mesh -n "building3Room2_flrShape" -p "building3Room2_flr";
 	setAttr ".cdvm[0]"  0 1 1;
 	setAttr ".ai_translator" -type "string" "polymesh";
 createNode lightLinker -s -n "lightLinker1";
-	rename -uid "C4FA9601-4534-DF3B-AA09-A89FAB2F856C";
-	setAttr -s 2 ".lnk";
-	setAttr -s 2 ".slnk";
+	rename -uid "A487FDE6-4C50-DE58-4E29-879378CA8C92";
+	setAttr -s 5 ".lnk";
+	setAttr -s 5 ".slnk";
 createNode shapeEditorManager -n "shapeEditorManager";
-	rename -uid "0766B6D5-46CD-D06C-BC9B-DD9447250C1A";
+	rename -uid "FFB55B99-4C69-39D1-1E6F-8E9BEF761B50";
 createNode poseInterpolatorManager -n "poseInterpolatorManager";
-	rename -uid "6C6DBAA8-4490-7CF8-B15A-76A007F8A8EF";
+	rename -uid "AC3454B6-4892-143D-E5B1-A2B260FCA9AF";
 createNode displayLayerManager -n "layerManager";
-	rename -uid "17691DCB-4038-CCA3-F0AB-A9B3CCB2E7C5";
+	rename -uid "7C2412E3-48CD-7152-7E58-5BBCB896443A";
 createNode displayLayer -n "defaultLayer";
-	rename -uid "02E5B2C9-4374-94AD-44EB-8C9F079DC08E";
+	rename -uid "CDE6678B-4723-7087-D319-84BEE1E98FDD";
 createNode renderLayerManager -n "renderLayerManager";
-	rename -uid "8155F4AF-4530-AC27-6E2F-05BA94A979F0";
+	rename -uid "B9FC063F-4BBB-01A7-9B7A-41977199D4F7";
 createNode renderLayer -n "defaultRenderLayer";
-	rename -uid "2BF7DDD8-4769-DFF6-FFE9-5FB873DBA911";
+	rename -uid "5029868F-44E7-D306-4347-3E96A5C769E1";
 	setAttr ".g" yes;
+createNode lambert -n "initialShadingGroup1";
+	rename -uid "5795FE40-4F1C-395D-9BCD-58B819420310";
+createNode shadingEngine -n "microwave_initialShadingGroup";
+	rename -uid "7D8736C1-4EF8-0318-3ADF-8998243509F2";
+	setAttr ".ihi" 0;
+	setAttr ".ro" yes;
+createNode materialInfo -n "materialInfo1";
+	rename -uid "803F854B-410D-69E3-EB43-7D8FBF6E700F";
+createNode shadingEngine -n "microwave_initialShadingGroup1";
+	rename -uid "5CD20BEE-4B39-F951-5E79-BCA44F5FB24B";
+	setAttr ".ihi" 0;
+	setAttr ".ro" yes;
+createNode materialInfo -n "microwave_materialInfo1";
+	rename -uid "F9A0FBAD-4B72-7150-FF4A-E8A2E00D515C";
+createNode lambert -n "microwave_initialShadingGroup2";
+	rename -uid "11F78857-45BF-FF1A-98CF-B6B5B673B47E";
+createNode shadingEngine -n "microwave_initialShadingGroup3";
+	rename -uid "C8890640-447E-1194-6CCF-04A6BA96212E";
+	setAttr ".ihi" 0;
+	setAttr ".ro" yes;
+createNode materialInfo -n "microwave_materialInfo2";
+	rename -uid "03DB74E3-4FE4-13C3-70D7-6586BEF61FC7";
+createNode lambert -n "microwave_initialShadingGroup4";
+	rename -uid "BD07CF90-4F91-FDD4-44D3-14A127B53F31";
+createNode polyCube -n "polyCube2";
+	rename -uid "A627E468-459C-B4B6-5949-3D8296B39CCA";
+	setAttr ".ax" -type "double3" 0 1 0 ;
+	setAttr ".w" 1;
+	setAttr ".h" 1;
+	setAttr ".d" 1;
+	setAttr ".cuv" 4;
+createNode polyCube -n "polyCube1";
+	rename -uid "EEAC0C6D-488F-2F82-D5AF-F68EA5DD6113";
+	setAttr ".ax" -type "double3" 0 1 0 ;
+	setAttr ".w" 1;
+	setAttr ".h" 1;
+	setAttr ".d" 1;
+	setAttr ".cuv" 4;
 createNode script -n "uiConfigurationScriptNode";
-	rename -uid "8632ECC2-4004-CB38-D67C-D8B5C3C0FC2F";
+	rename -uid "2D696F55-4AA5-F799-CE94-FE9DE291AF02";
 	setAttr ".b" -type "string" (
 		"// Maya Mel UI Configuration File.\n//\n//  This script is machine generated.  Edit at your own risk.\n//\n//\n\nglobal string $gMainPane;\nif (`paneLayout -exists $gMainPane`) {\n\n\tglobal int $gUseScenePanelConfig;\n\tint    $useSceneConfig = $gUseScenePanelConfig;\n\tint    $menusOkayInPanels = `optionVar -q allowMenusInPanels`;\tint    $nVisPanes = `paneLayout -q -nvp $gMainPane`;\n\tint    $nPanes = 0;\n\tstring $editorName;\n\tstring $panelName;\n\tstring $itemFilterName;\n\tstring $panelConfig;\n\n\t//\n\t//  get current state of the UI\n\t//\n\tsceneUIReplacement -update $gMainPane;\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"modelPanel\" (localizedPanelLabel(\"Top View\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tmodelPanel -edit -l (localizedPanelLabel(\"Top View\")) -mbv $menusOkayInPanels  $panelName;\n\t\t$editorName = $panelName;\n        modelEditor -e \n            -camera \"top\" \n            -useInteractiveMode 0\n            -displayLights \"default\" \n            -displayAppearance \"smoothShaded\" \n            -activeOnly 0\n"
 		+ "            -ignorePanZoom 0\n            -wireframeOnShaded 0\n            -headsUpDisplay 1\n            -holdOuts 1\n            -selectionHiliteDisplay 1\n            -useDefaultMaterial 0\n            -bufferMode \"double\" \n            -twoSidedLighting 0\n            -backfaceCulling 0\n            -xray 0\n            -jointXray 0\n            -activeComponentsXray 0\n            -displayTextures 0\n            -smoothWireframe 0\n            -lineWidth 1\n            -textureAnisotropic 0\n            -textureHilight 1\n            -textureSampling 2\n            -textureDisplay \"modulate\" \n            -textureMaxSize 32768\n            -fogging 0\n            -fogSource \"fragment\" \n            -fogMode \"linear\" \n            -fogStart 0\n            -fogEnd 100\n            -fogDensity 0.1\n            -fogColor 0.5 0.5 0.5 1 \n            -depthOfFieldPreview 1\n            -maxConstantTransparency 1\n            -rendererName \"vp2Renderer\" \n            -objectFilterShowInHUD 1\n            -isFiltered 0\n            -colorResolution 256 256 \n"
@@ -3038,7 +2097,7 @@ createNode script -n "uiConfigurationScriptNode";
 		+ "            -textureDisplay \"modulate\" \n            -textureMaxSize 32768\n            -fogging 0\n            -fogSource \"fragment\" \n            -fogMode \"linear\" \n            -fogStart 0\n            -fogEnd 100\n            -fogDensity 0.1\n            -fogColor 0.5 0.5 0.5 1 \n            -depthOfFieldPreview 1\n            -maxConstantTransparency 1\n            -rendererName \"vp2Renderer\" \n            -objectFilterShowInHUD 1\n            -isFiltered 0\n            -colorResolution 256 256 \n            -bumpResolution 512 512 \n            -textureCompression 0\n            -transparencyAlgorithm \"frontAndBackCull\" \n            -transpInShadows 0\n            -cullingOverride \"none\" \n            -lowQualityLighting 0\n            -maximumNumHardwareLights 1\n            -occlusionCulling 0\n            -shadingModel 0\n            -useBaseRenderer 0\n            -useReducedRenderer 0\n            -smallObjectCulling 0\n            -smallObjectThreshold -1 \n            -interactiveDisableShadows 0\n            -interactiveBackFaceCull 0\n"
 		+ "            -sortTransparent 1\n            -controllers 1\n            -nurbsCurves 1\n            -nurbsSurfaces 1\n            -polymeshes 1\n            -subdivSurfaces 1\n            -planes 1\n            -lights 1\n            -cameras 1\n            -controlVertices 1\n            -hulls 1\n            -grid 1\n            -imagePlane 1\n            -joints 1\n            -ikHandles 1\n            -deformers 1\n            -dynamics 1\n            -particleInstancers 1\n            -fluids 1\n            -hairSystems 1\n            -follicles 1\n            -nCloths 1\n            -nParticles 1\n            -nRigids 1\n            -dynamicConstraints 1\n            -locators 1\n            -manipulators 1\n            -pluginShapes 1\n            -dimensions 1\n            -handles 1\n            -pivots 1\n            -textures 1\n            -strokes 1\n            -motionTrails 1\n            -clipGhosts 1\n            -greasePencils 1\n            -shadows 0\n            -captureSequenceNumber -1\n            -width 1\n            -height 1\n"
 		+ "            -sceneRenderFilter 0\n            $editorName;\n        modelEditor -e -viewSelected 0 $editorName;\n        modelEditor -e \n            -pluginObjects \"gpuCacheDisplayFilter\" 1 \n            $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"modelPanel\" (localizedPanelLabel(\"Persp View\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tmodelPanel -edit -l (localizedPanelLabel(\"Persp View\")) -mbv $menusOkayInPanels  $panelName;\n\t\t$editorName = $panelName;\n        modelEditor -e \n            -camera \"persp\" \n            -useInteractiveMode 0\n            -displayLights \"default\" \n            -displayAppearance \"smoothShaded\" \n            -activeOnly 0\n            -ignorePanZoom 0\n            -wireframeOnShaded 1\n            -headsUpDisplay 1\n            -holdOuts 1\n            -selectionHiliteDisplay 1\n            -useDefaultMaterial 0\n            -bufferMode \"double\" \n            -twoSidedLighting 0\n            -backfaceCulling 0\n"
-		+ "            -xray 0\n            -jointXray 0\n            -activeComponentsXray 0\n            -displayTextures 0\n            -smoothWireframe 0\n            -lineWidth 1\n            -textureAnisotropic 0\n            -textureHilight 1\n            -textureSampling 2\n            -textureDisplay \"modulate\" \n            -textureMaxSize 32768\n            -fogging 0\n            -fogSource \"fragment\" \n            -fogMode \"linear\" \n            -fogStart 0\n            -fogEnd 100\n            -fogDensity 0.1\n            -fogColor 0.5 0.5 0.5 1 \n            -depthOfFieldPreview 1\n            -maxConstantTransparency 1\n            -rendererName \"vp2Renderer\" \n            -objectFilterShowInHUD 1\n            -isFiltered 0\n            -colorResolution 256 256 \n            -bumpResolution 512 512 \n            -textureCompression 0\n            -transparencyAlgorithm \"frontAndBackCull\" \n            -transpInShadows 0\n            -cullingOverride \"none\" \n            -lowQualityLighting 0\n            -maximumNumHardwareLights 1\n            -occlusionCulling 0\n"
+		+ "            -xray 1\n            -jointXray 0\n            -activeComponentsXray 0\n            -displayTextures 0\n            -smoothWireframe 0\n            -lineWidth 1\n            -textureAnisotropic 0\n            -textureHilight 1\n            -textureSampling 2\n            -textureDisplay \"modulate\" \n            -textureMaxSize 32768\n            -fogging 0\n            -fogSource \"fragment\" \n            -fogMode \"linear\" \n            -fogStart 0\n            -fogEnd 100\n            -fogDensity 0.1\n            -fogColor 0.5 0.5 0.5 1 \n            -depthOfFieldPreview 1\n            -maxConstantTransparency 1\n            -rendererName \"vp2Renderer\" \n            -objectFilterShowInHUD 1\n            -isFiltered 0\n            -colorResolution 256 256 \n            -bumpResolution 512 512 \n            -textureCompression 0\n            -transparencyAlgorithm \"frontAndBackCull\" \n            -transpInShadows 0\n            -cullingOverride \"none\" \n            -lowQualityLighting 0\n            -maximumNumHardwareLights 1\n            -occlusionCulling 0\n"
 		+ "            -shadingModel 0\n            -useBaseRenderer 0\n            -useReducedRenderer 0\n            -smallObjectCulling 0\n            -smallObjectThreshold -1 \n            -interactiveDisableShadows 0\n            -interactiveBackFaceCull 0\n            -sortTransparent 1\n            -controllers 1\n            -nurbsCurves 1\n            -nurbsSurfaces 1\n            -polymeshes 1\n            -subdivSurfaces 1\n            -planes 1\n            -lights 1\n            -cameras 1\n            -controlVertices 1\n            -hulls 1\n            -grid 1\n            -imagePlane 1\n            -joints 1\n            -ikHandles 1\n            -deformers 1\n            -dynamics 1\n            -particleInstancers 1\n            -fluids 1\n            -hairSystems 1\n            -follicles 1\n            -nCloths 1\n            -nParticles 1\n            -nRigids 1\n            -dynamicConstraints 1\n            -locators 1\n            -manipulators 1\n            -pluginShapes 1\n            -dimensions 1\n            -handles 1\n            -pivots 1\n"
 		+ "            -textures 1\n            -strokes 1\n            -motionTrails 1\n            -clipGhosts 1\n            -greasePencils 1\n            -shadows 0\n            -captureSequenceNumber -1\n            -width 954\n            -height 726\n            -sceneRenderFilter 0\n            $editorName;\n        modelEditor -e -viewSelected 0 $editorName;\n        modelEditor -e \n            -pluginObjects \"gpuCacheDisplayFilter\" 1 \n            $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"outlinerPanel\" (localizedPanelLabel(\"ToggledOutliner\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\toutlinerPanel -edit -l (localizedPanelLabel(\"ToggledOutliner\")) -mbv $menusOkayInPanels  $panelName;\n\t\t$editorName = $panelName;\n        outlinerEditor -e \n            -docTag \"isolOutln_fromSeln\" \n            -showShapes 0\n            -showAssignedMaterials 0\n            -showTimeEditor 1\n            -showReferenceNodes 1\n            -showReferenceMembers 1\n"
 		+ "            -showAttributes 0\n            -showConnected 0\n            -showAnimCurvesOnly 0\n            -showMuteInfo 0\n            -organizeByLayer 1\n            -organizeByClip 1\n            -showAnimLayerWeight 1\n            -autoExpandLayers 1\n            -autoExpand 0\n            -showDagOnly 1\n            -showAssets 1\n            -showContainedOnly 1\n            -showPublishedAsConnected 0\n            -showParentContainers 0\n            -showContainerContents 1\n            -ignoreDagHierarchy 0\n            -expandConnections 0\n            -showUpstreamCurves 1\n            -showUnitlessCurves 1\n            -showCompounds 1\n            -showLeafs 1\n            -showNumericAttrsOnly 0\n            -highlightActive 1\n            -autoSelectNewObjects 0\n            -doNotSelectNewObjects 0\n            -dropIsParent 1\n            -transmitFilters 0\n            -setFilter \"defaultSetFilter\" \n            -showSetMembers 1\n            -allowMultiSelection 1\n            -alwaysToggleSelect 0\n            -directSelect 0\n"
@@ -3062,72 +2121,90 @@ createNode script -n "uiConfigurationScriptNode";
 		+ "\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Script Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"profilerPanel\" (localizedPanelLabel(\"Profiler Tool\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Profiler Tool\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"contentBrowserPanel\" (localizedPanelLabel(\"Content Browser\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Content Browser\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"nodeEditorPanel\" (localizedPanelLabel(\"Node Editor\")) `;\n"
 		+ "\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Node Editor\")) -mbv $menusOkayInPanels  $panelName;\n\n\t\t\t$editorName = ($panelName+\"NodeEditorEd\");\n            nodeEditor -e \n                -allAttributes 0\n                -allNodes 0\n                -autoSizeNodes 1\n                -consistentNameSize 1\n                -createNodeCommand \"nodeEdCreateNodeCommand\" \n                -connectNodeOnCreation 0\n                -connectOnDrop 0\n                -highlightConnections 0\n                -copyConnectionsOnPaste 0\n                -defaultPinnedState 0\n                -additiveGraphingMode 0\n                -settingsChangedCallback \"nodeEdSyncControls\" \n                -traversalDepthLimit -1\n                -keyPressCommand \"nodeEdKeyPressCommand\" \n                -nodeTitleMode \"name\" \n                -gridSnap 0\n                -gridVisibility 1\n                -crosshairOnEdgeDragging 0\n                -popupMenuScript \"nodeEdBuildPanelMenus\" \n"
 		+ "                -showNamespace 1\n                -showShapes 1\n                -showSGShapes 0\n                -showTransforms 1\n                -useAssets 1\n                -syncedSelection 1\n                -extendToShapes 1\n                -activeTab -1\n                -editorMode \"default\" \n                $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\tif ($useSceneConfig) {\n        string $configName = `getPanel -cwl (localizedPanelLabel(\"Current Layout\"))`;\n        if (\"\" != $configName) {\n\t\t\tpanelConfiguration -edit -label (localizedPanelLabel(\"Current Layout\")) \n\t\t\t\t-userCreated false\n\t\t\t\t-defaultImage \"vacantCell.xP:/\"\n\t\t\t\t-image \"\"\n\t\t\t\t-sc false\n\t\t\t\t-configString \"global string $gMainPane; paneLayout -e -cn \\\"single\\\" -ps 1 100 100 $gMainPane;\"\n\t\t\t\t-removeAllPanels\n\t\t\t\t-ap false\n\t\t\t\t\t(localizedPanelLabel(\"Persp View\")) \n\t\t\t\t\t\"modelPanel\"\n"
-		+ "\t\t\t\t\t\"$panelName = `modelPanel -unParent -l (localizedPanelLabel(\\\"Persp View\\\")) -mbv $menusOkayInPanels `;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera persp` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"smoothShaded\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 1\\n    -headsUpDisplay 1\\n    -holdOuts 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 0\\n    -backfaceCulling 0\\n    -xray 0\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 32768\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -depthOfFieldPreview 1\\n    -maxConstantTransparency 1\\n    -rendererName \\\"vp2Renderer\\\" \\n    -objectFilterShowInHUD 1\\n    -isFiltered 0\\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 1\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -controllers 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -imagePlane 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -particleInstancers 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -pluginShapes 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -motionTrails 1\\n    -clipGhosts 1\\n    -greasePencils 1\\n    -shadows 0\\n    -captureSequenceNumber -1\\n    -width 954\\n    -height 726\\n    -sceneRenderFilter 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName;\\nmodelEditor -e \\n    -pluginObjects \\\"gpuCacheDisplayFilter\\\" 1 \\n    $editorName\"\n"
-		+ "\t\t\t\t\t\"modelPanel -edit -l (localizedPanelLabel(\\\"Persp View\\\")) -mbv $menusOkayInPanels  $panelName;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera persp` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"smoothShaded\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 1\\n    -headsUpDisplay 1\\n    -holdOuts 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 0\\n    -backfaceCulling 0\\n    -xray 0\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 32768\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -depthOfFieldPreview 1\\n    -maxConstantTransparency 1\\n    -rendererName \\\"vp2Renderer\\\" \\n    -objectFilterShowInHUD 1\\n    -isFiltered 0\\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 1\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -controllers 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -imagePlane 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -particleInstancers 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -pluginShapes 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -motionTrails 1\\n    -clipGhosts 1\\n    -greasePencils 1\\n    -shadows 0\\n    -captureSequenceNumber -1\\n    -width 954\\n    -height 726\\n    -sceneRenderFilter 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName;\\nmodelEditor -e \\n    -pluginObjects \\\"gpuCacheDisplayFilter\\\" 1 \\n    $editorName\"\n"
+		+ "\t\t\t\t\t\"$panelName = `modelPanel -unParent -l (localizedPanelLabel(\\\"Persp View\\\")) -mbv $menusOkayInPanels `;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera persp` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"smoothShaded\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 1\\n    -headsUpDisplay 1\\n    -holdOuts 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 0\\n    -backfaceCulling 0\\n    -xray 1\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 32768\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -depthOfFieldPreview 1\\n    -maxConstantTransparency 1\\n    -rendererName \\\"vp2Renderer\\\" \\n    -objectFilterShowInHUD 1\\n    -isFiltered 0\\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 1\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -controllers 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -imagePlane 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -particleInstancers 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -pluginShapes 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -motionTrails 1\\n    -clipGhosts 1\\n    -greasePencils 1\\n    -shadows 0\\n    -captureSequenceNumber -1\\n    -width 954\\n    -height 726\\n    -sceneRenderFilter 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName;\\nmodelEditor -e \\n    -pluginObjects \\\"gpuCacheDisplayFilter\\\" 1 \\n    $editorName\"\n"
+		+ "\t\t\t\t\t\"modelPanel -edit -l (localizedPanelLabel(\\\"Persp View\\\")) -mbv $menusOkayInPanels  $panelName;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera persp` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"smoothShaded\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 1\\n    -headsUpDisplay 1\\n    -holdOuts 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 0\\n    -backfaceCulling 0\\n    -xray 1\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 32768\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -depthOfFieldPreview 1\\n    -maxConstantTransparency 1\\n    -rendererName \\\"vp2Renderer\\\" \\n    -objectFilterShowInHUD 1\\n    -isFiltered 0\\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 1\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -controllers 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -imagePlane 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -particleInstancers 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -pluginShapes 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -motionTrails 1\\n    -clipGhosts 1\\n    -greasePencils 1\\n    -shadows 0\\n    -captureSequenceNumber -1\\n    -width 954\\n    -height 726\\n    -sceneRenderFilter 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName;\\nmodelEditor -e \\n    -pluginObjects \\\"gpuCacheDisplayFilter\\\" 1 \\n    $editorName\"\n"
 		+ "\t\t\t\t$configName;\n\n            setNamedPanelLayout (localizedPanelLabel(\"Current Layout\"));\n        }\n\n        panelHistory -e -clear mainPanelHistory;\n        sceneUIReplacement -clear;\n\t}\n\n\ngrid -spacing 5 -size 12 -divisions 5 -displayAxes yes -displayGridLines yes -displayDivisionLines yes -displayPerspectiveLabels no -displayOrthographicLabels no -displayAxesBold yes -perspectiveLabelPosition axis -orthographicLabelPosition edge;\nviewManip -drawCompass 0 -compassAngle 0 -frontParameters \"\" -homeParameters \"\" -selectionLockParameters \"\";\n}\n");
 	setAttr ".st" 3;
 createNode script -n "sceneConfigurationScriptNode";
-	rename -uid "63E68E78-419A-CD26-F192-55A8324B5C64";
+	rename -uid "936B2E1C-4324-2BA9-99CD-56A2E41EE576";
 	setAttr ".b" -type "string" "playbackOptions -min 1 -max 120 -ast 1 -aet 200 ";
 	setAttr ".st" 6;
 createNode polyCreateFace -n "polyCreateFace1";
-	rename -uid "49327006-41B2-6924-09BA-B8BB62468403";
-	setAttr -s 5 ".v[0:4]" -type "float3"  4.9096494 3 0 4.9221492 3 
-		-3.9875 0.92214918 3 -3.9875 0.93464929 3 -2 0.92214918 3 -0.0125;
-	setAttr ".l[0]"  5;
+	rename -uid "1867F3F9-4DA8-97A6-2C21-C2928D52BCFA";
+	setAttr -s 6 ".v[0:5]" -type "float3"  8.1688833 0 10.257971 4.1688838 
+		0 10.257971 4.1813831 0 8.2704706 4.1813831 0 7.2704706 4.1688838 0 5.2829704 8.1688833 
+		0 5.2829704;
+	setAttr ".l[0]"  6;
 	setAttr ".tx" 1;
 createNode polyCreateFace -n "polyCreateFace2";
-	rename -uid "BD49D469-43A3-5186-1456-9DB7C652DFD2";
-	setAttr -s 5 ".v[0:4]" -type "float3"  0.93464929 0 -4 4.9346495 
-		0 -4 4.9221492 0 -0.0125 0.93464929 0 0 0.93464929 0 -2;
+	rename -uid "99C419FA-4DF9-967F-8B26-6FB1A0569F7B";
+	setAttr -s 5 ".v[0:4]" -type "float3"  8.1563835 3 7.25 8.1813841 
+		3 10.25 4.1688838 3 10.257971 4.1813831 3 8.2704706 4.1813831 3 7.2704706;
 	setAttr ".l[0]"  5;
 	setAttr ".tx" 1;
 createNode polyCreateFace -n "polyCreateFace3";
-	rename -uid "119472AA-4F0C-0F82-EE76-F39600FA85B7";
-	setAttr -s 6 ".v[0:5]" -type "float3"  1.0125 0 6.2555633 1.0125 
-		0 4.2555633 1.0125 0 2.2555633 1 0 0.32370523 6.9875002 0 0.25556344 7 0 6.2430634;
+	rename -uid "7069B1A6-4C6E-EA58-8FD0-1FAD39B635BD";
+	setAttr -s 6 ".v[0:5]" -type "float3"  3.5355952 0 -7.3806653 6.6707592 
+		0 -9.8446169 9.7550888 0 -5.9251499 6.619925 0 -3.4611981 5.396728 0 -5.0277557 4.7763505 
+		0 -5.8120589;
 	setAttr ".l[0]"  6;
 	setAttr ".tx" 1;
 createNode polyCreateFace -n "polyCreateFace4";
-	rename -uid "88676CF7-4918-1862-4CDE-FEB541AC1097";
-	setAttr -s 6 ".v[0:5]" -type "float3"  -6.3397937 3 4.0166035 -9.132638 
-		3 6.8801713 -11.978529 3 4.0871062 -9.2031403 3 1.2414355 -8.9883728 3 1.4508988 
-		-7.7713561 3 2.6378577;
+	rename -uid "8A0BBCA2-4273-F54F-6951-EA95EAED75A4";
+	setAttr -s 6 ".v[0:5]" -type "float3"  6.619925 3 -3.4611981 5.396728 
+		3 -5.0277557 4.7763505 3 -5.8120594 3.5355952 3 -7.3806653 6.6707592 3 -9.8446169 
+		9.7550888 3 -5.9251499;
 	setAttr ".l[0]"  6;
 	setAttr ".tx" 1;
 createNode polyCreateFace -n "polyCreateFace5";
-	rename -uid "BA824873-4504-0C25-4177-638C280CAF51";
-	setAttr -s 6 ".v[0:5]" -type "float3"  -3.5637219 0 4.1310167 -7.7532091 
-		0 8.4086924 -12.030664 0 4.2368813 -7.8413978 0 -0.058470841 -6.42729 0 1.3381724 
-		-4.9955058 0 2.7345948;
+	rename -uid "CB4D0E7F-4A9C-9286-A26B-C5BE9008FAE3";
+	setAttr -s 6 ".v[0:5]" -type "float3"  12.916683 0 -1.9506636 9.7815199 
+		0 0.51328868 8.5583229 0 -1.0532688 7.9379454 0 -1.837572 6.6971908 0 -3.4061785 
+		9.8323545 0 -5.8701305;
+	setAttr ".l[0]"  6;
+	setAttr ".tx" 1;
+createNode polyCreateFace -n "polyCreateFace6";
+	rename -uid "49F83F15-4E21-3962-092F-C0BD5DAF9C85";
+	setAttr -s 6 ".v[0:5]" -type "float3"  -1.7970144 0 -2.2216182 -1.7955186 
+		0 -0.24871682 -1.7955186 0 0.75128329 -1.7955186 0 2.7512832 -6.7667041 0 2.7512832 
+		-6.7667041 0 -2.2487168;
 	setAttr ".l[0]"  6;
 	setAttr ".tx" 1;
 createNode polyTriangulate -n "polyTriangulate1";
-	rename -uid "740FAF8B-4B00-8270-8A85-1CB264E4AFFB";
-	setAttr ".ics" -type "componentList" 1 "f[*]";
-createNode polyTriangulate -n "polyTriangulate2";
-	rename -uid "3E606F9C-4DC8-EC62-CAF8-E19C559957F2";
+	rename -uid "27865017-4C77-3343-FB3F-1CB6390B9CAE";
 	setAttr ".ics" -type "componentList" 1 "f[*]";
 createNode polyNormal -n "polyNormal1";
-	rename -uid "F15E28B5-4B37-2BB6-400F-788960DE39E4";
-	setAttr ".ics" -type "componentList" 1 "f[0:2]";
-createNode polyTriangulate -n "polyTriangulate3";
-	rename -uid "0B49B113-49F0-5032-2539-699F70D07703";
+	rename -uid "798D7B1E-497C-CBF6-D2A0-7D854692F1B2";
+	setAttr ".ics" -type "componentList" 1 "f[0:3]";
+createNode polyTriangulate -n "polyTriangulate2";
+	rename -uid "BD65E50A-41A5-ACE1-32D4-83BA483CEB45";
 	setAttr ".ics" -type "componentList" 1 "f[*]";
 createNode polyNormal -n "polyNormal2";
-	rename -uid "8B3011B8-4417-A28F-7502-7E875328AC2F";
-	setAttr ".ics" -type "componentList" 1 "f[0:3]";
-createNode polyTriangulate -n "polyTriangulate4";
-	rename -uid "EC898B2B-469C-58BF-EB14-8A9B250C87A5";
+	rename -uid "2539C2DD-4D59-F7FC-2E7E-CA974F6655FA";
+	setAttr ".ics" -type "componentList" 1 "f[0:2]";
+createNode polyTriangulate -n "polyTriangulate3";
+	rename -uid "0D14A3F4-4310-C928-1EC3-12A77BBC89B2";
 	setAttr ".ics" -type "componentList" 1 "f[*]";
 createNode polyNormal -n "polyNormal3";
-	rename -uid "D52F832F-45CF-C266-A9AC-9286AE794EBF";
+	rename -uid "7DD726D6-48E7-18AC-7B91-BE98674091D0";
 	setAttr ".ics" -type "componentList" 1 "f[0:3]";
-createNode polyTriangulate -n "polyTriangulate5";
-	rename -uid "EC2EFC88-4861-3EF3-87DC-28950DB94306";
+createNode polyTriangulate -n "polyTriangulate4";
+	rename -uid "F36A13AB-467C-2A17-D064-3CB3A1C27AA7";
 	setAttr ".ics" -type "componentList" 1 "f[*]";
 createNode polyNormal -n "polyNormal4";
-	rename -uid "6224BEF4-4B7F-3AA6-21C8-5393BB705716";
+	rename -uid "1656CE64-4732-8D67-A584-3E93F68A83D9";
+	setAttr ".ics" -type "componentList" 1 "f[0:3]";
+createNode polyTriangulate -n "polyTriangulate5";
+	rename -uid "EC16F558-4999-53B6-4E4F-CD9A2DBC9850";
+	setAttr ".ics" -type "componentList" 1 "f[*]";
+createNode polyNormal -n "polyNormal5";
+	rename -uid "397BAFD5-4A28-8CE5-3410-92A139E8F3E8";
+	setAttr ".ics" -type "componentList" 1 "f[0:3]";
+createNode polyTriangulate -n "polyTriangulate6";
+	rename -uid "640F7C7C-4D5C-2A46-A446-EC9E2D001E30";
+	setAttr ".ics" -type "componentList" 1 "f[*]";
+createNode polyNormal -n "polyNormal6";
+	rename -uid "3DBD47ED-458F-0EB3-200D-24A8B2EA216D";
 	setAttr ".ics" -type "componentList" 1 "f[0:3]";
 select -ne :time1;
 	setAttr ".o" 1;
@@ -3140,15 +2217,15 @@ select -ne :hardwareRenderingGlobals;
 	setAttr ".msaa" yes;
 	setAttr ".fprt" yes;
 select -ne :renderPartition;
-	setAttr -s 2 ".st";
+	setAttr -s 5 ".st";
 select -ne :renderGlobalsList1;
 select -ne :defaultShaderList1;
-	setAttr -s 4 ".s";
+	setAttr -s 7 ".s";
 select -ne :postProcessList1;
 	setAttr -s 2 ".p";
 select -ne :defaultRenderingList1;
 select -ne :initialShadingGroup;
-	setAttr -s 53 ".dsm";
+	setAttr -s 41 ".dsm";
 	setAttr ".ro" yes;
 select -ne :initialParticleSE;
 	setAttr ".ro" yes;
@@ -3159,78 +2236,95 @@ select -ne :defaultResolution;
 select -ne :hardwareRenderGlobals;
 	setAttr ".ctrs" 256;
 	setAttr ".btrs" 512;
-connectAttr "polyTriangulate1.out" "building1Room1_flrShape.i";
-connectAttr "polyNormal1.out" "building1Room2_flrShape.i";
-connectAttr "polyNormal2.out" "building2Room1_flrShape.i";
-connectAttr "polyNormal3.out" "building3Room1_flrShape.i";
-connectAttr "polyNormal4.out" "building3Room2_flrShape.i";
+connectAttr "polyCube2.out" "b1r1wShape2.i";
+connectAttr "polyCube1.out" "b1r1wShape1.i";
+connectAttr "polyNormal1.out" "building1Room1_flrShape.i";
+connectAttr "polyNormal2.out" "building1Room2_flrShape.i";
+connectAttr "polyNormal3.out" "building2Room1_flrShape.i";
+connectAttr "polyNormal4.out" "building2Room2_flrShape.i";
+connectAttr "polyNormal5.out" "building2Room3_flrShape.i";
+connectAttr "polyNormal6.out" "building3Room1_flrShape.i";
 relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
 relationship "link" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "microwave_initialShadingGroup1.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "microwave_initialShadingGroup3.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" "microwave_initialShadingGroup.message" ":defaultLightSet.message";
 relationship "shadowLink" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
 relationship "shadowLink" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "microwave_initialShadingGroup1.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "microwave_initialShadingGroup3.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" "microwave_initialShadingGroup.message" ":defaultLightSet.message";
 connectAttr "layerManager.dli[0]" "defaultLayer.id";
 connectAttr "renderLayerManager.rlmi[0]" "defaultRenderLayer.rlid";
+connectAttr "initialShadingGroup1.oc" "microwave_initialShadingGroup.ss";
+connectAttr "microwave_initialShadingGroup.msg" "materialInfo1.sg";
+connectAttr "initialShadingGroup1.msg" "materialInfo1.m";
+connectAttr "microwave_initialShadingGroup2.oc" "microwave_initialShadingGroup1.ss"
+		;
+connectAttr "microwave_initialShadingGroup1.msg" "microwave_materialInfo1.sg";
+connectAttr "microwave_initialShadingGroup2.msg" "microwave_materialInfo1.m";
+connectAttr "microwave_initialShadingGroup4.oc" "microwave_initialShadingGroup3.ss"
+		;
+connectAttr "microwave_initialShadingGroup3.msg" "microwave_materialInfo2.sg";
+connectAttr "microwave_initialShadingGroup4.msg" "microwave_materialInfo2.m";
 connectAttr "polyCreateFace1.out" "polyTriangulate1.ip";
+connectAttr "polyTriangulate1.out" "polyNormal1.ip";
 connectAttr "polyCreateFace2.out" "polyTriangulate2.ip";
-connectAttr "polyTriangulate2.out" "polyNormal1.ip";
+connectAttr "polyTriangulate2.out" "polyNormal2.ip";
 connectAttr "polyCreateFace3.out" "polyTriangulate3.ip";
-connectAttr "polyTriangulate3.out" "polyNormal2.ip";
+connectAttr "polyTriangulate3.out" "polyNormal3.ip";
 connectAttr "polyCreateFace4.out" "polyTriangulate4.ip";
-connectAttr "polyTriangulate4.out" "polyNormal3.ip";
+connectAttr "polyTriangulate4.out" "polyNormal4.ip";
 connectAttr "polyCreateFace5.out" "polyTriangulate5.ip";
-connectAttr "polyTriangulate5.out" "polyNormal4.ip";
+connectAttr "polyTriangulate5.out" "polyNormal5.ip";
+connectAttr "polyCreateFace6.out" "polyTriangulate6.ip";
+connectAttr "polyTriangulate6.out" "polyNormal6.ip";
+connectAttr "microwave_initialShadingGroup.pa" ":renderPartition.st" -na;
+connectAttr "microwave_initialShadingGroup1.pa" ":renderPartition.st" -na;
+connectAttr "microwave_initialShadingGroup3.pa" ":renderPartition.st" -na;
+connectAttr "initialShadingGroup1.msg" ":defaultShaderList1.s" -na;
+connectAttr "microwave_initialShadingGroup2.msg" ":defaultShaderList1.s" -na;
+connectAttr "microwave_initialShadingGroup4.msg" ":defaultShaderList1.s" -na;
 connectAttr "defaultRenderLayer.msg" ":defaultRenderingList1.r" -na;
-connectAttr "eShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "doorWayeShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape7.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape8.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape6.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape5.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "eShape5.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "eShape3.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "eShape4.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "eShape2.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "eShape1.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "eShape6.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape2.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape1.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape9.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape10.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape4.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "sShape3.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "doorWaysShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "aShape4.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "aShape3.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "aShape2.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "aShape1.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "doorWayaShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "aShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "aShape6.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "aShape5.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape4.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape3.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "doorWaywShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "qShape3.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape10.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape9.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "qShape5.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "qShape2.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "doorWayqShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "qShape6.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "qShape4.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "qShape1.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "qShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape2.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape8.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape7.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape6.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape5.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "wShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r1wShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r1wShape2.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r1wShape3.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r1wShape4.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r1wShape5.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r1dShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r1wShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r1wShape2.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r1wShape3.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r1dShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r1wShape4.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r1wShape5.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r2wShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r2wShape2.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r2wShape3.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r2dShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r2wShape4.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r2wShape5.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r3wShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r3wShape2.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r3wShape3.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r3wShape4.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r3wShape5.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b2r3dShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r2wShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r2wShape2.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r2wShape3.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r2dShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b1r2wShape4.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b3r1dShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b3r1wShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b3r1wShape2.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b3r1wShape3.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b3r1wShape4.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "b3r1wShape5.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "building1Room1_flrShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "building1Room2_flrShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "building2Room1_flrShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "building2Room2_flrShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "building2Room3_flrShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "building3Room1_flrShape.iog" ":initialShadingGroup.dsm" -na;
-connectAttr "building3Room2_flrShape.iog" ":initialShadingGroup.dsm" -na;
-// End of testScene.ma
+// End of sceneUsedInDemo.0001.ma
