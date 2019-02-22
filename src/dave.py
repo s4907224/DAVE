@@ -188,31 +188,49 @@ daveObject:
 class daveObject:
     def __init__(self, transform, id):
         print "Object added with name "+str(transform)+" and ID "+str(id)
-        self.transform = transform #Object's transform name (THIS MEANS THAT THE TOOL NEEDS EVERY KNOWN OBJECT TO HAVE A UNIQUE NAME,
-                                   #THIS CAN BE CHANGED TO BE INDEPENDANT AND WORK WITH HEIRARCHIES)
-        self.index = id            #The object's position in DAVE's 'sessionObjects' list.
-        self.imported = False
+        #Object's transform name (THIS MEANS THAT THE TOOL NEEDS EVERY KNOWN OBJECT TO HAVE A UNIQUE NAME, THIS CAN BE CHANGED TO BE INDEPENDANT AND WORK WITH HEIRARCHIES)
+        self.transform = transform
+        #The object's position in DAVE's 'sessionObjects' list.
+        self.index = id
+        #Dictionary to store properties for the object's hull (if needed)
         self.hull = {
-            "tris": [],
-            "outer": [],
-            "placementVerts": [],
-            "height": 0,
-            "transform": ""
+            "tris": [], #The triangular convex hulls that make up this hull's mesh
+            "outer": [], #The vertices in order (either clockwise or anticlockwise) around the hull's edge
+            "placementVerts": [], #The vertices that form 'edges' of at least the correct length for this object type
+            "height": 0.0, #Vertical pos of the hull
+            "transform": "" #The hull mesh's transform name
         }
+        #Generally unused flag that is true when the hull is generated incorrectly.  Could be used to prompt user to give correct hull but as of all tests has not been required.
         self.wrongBox = False
+        #Hash used to store object in databases relevant to DAVE.  Can be expanded to be used in possible output file that can be interpreted by other scripts.
         self.hash = 0
+        #What the object's type is (e.g, WALL, DOOR, TABLE etc)
         self.tag = None
+        #Initialised to false signifying the object has not yet been successfully and fully imported to the session.  Remains false until it is imported, and 
+        # then is set to false if it is then deleted.
         self.enabled = False
+        #Whether any processing (e.g, decorating if it is a table) has been performed to stop double processing.
         self.processed = False
+        #Whether it even is processable, e.g a wall cannot (at least currently) be decorated, so it is not 'processable'.
         self.processable = True
+
+        #We should look for any hulls that may have been supplied by either the user or older sessions.
         self.searchForHull()
+
+        #Due to the way angles are calculated, we need to know whether the hull was initially specified as clockwise or anticlockwise.
+        # For reference, clockwise hulls are 'Flipped' and thus require no fixing.
         if cmds.listAttr(self.transform, st = "DAVEHULLFLIPPED") == None:
             cmds.addAttr(self.transform, longName = "DAVEHULLFLIPPED", dataType = "string", hidden = False)
             cmds.setAttr(self.transform+".DAVEHULLFLIPPED", "False", type = "string")
 
+    '''
+    grabVerts:
+        Used to 'grab' the topmost 10% of verts of an object, as we assume that's there the placable surface is
+    '''
     def grabVerts(self):
         self.topVerts = []
         allVPos = []
+        #Use maxint as a stupidly large magnitude float to make later code tidier (if you could call it tidy)
         maxVPos = -sys.maxint
         minVPos = sys.maxint
         numVerts = cmds.polyEvaluate(self.transform, v = True)
@@ -233,18 +251,27 @@ class daveObject:
             for j in range(len(self.topVerts)):
                 if i == j:
                     continue
+                #If vert I and J are on top of each other in the XZ plane (unlikely)
                 if upperVerts[i][0] == upperVerts[j][0] and upperVerts[i][2] == upperVerts[j][2]:
+                    #Keep the higher one
                     if upperVerts[i][1] > upperVerts[j][1]:
                         delIndices.append(j)
                     else:
                         delIndices.append(i)
+        #This is required to ensure we're deleting the correct index and we don't access non-existant elements
         for i in range(len(delIndices)):
             del upperVerts[delIndices[i] - i]
             del upperVertsIndex[delIndices[i] - i]
         self.topVerts = upperVerts
 
+    '''
+    searchForHull:
+        Function to look for any hulls that may already exist for the object before we either ask the user for one or generate one
+    '''
     def searchForHull(self):
+        #Re-grab the verts to ENSURE we have a height for this hull
         self.grabVerts()
+        #First look for user generated hulls
         if cmds.objExists("*_usrHull"):
             cmds.select(d = True)
             cmds.select("*_usrHull")
@@ -261,6 +288,7 @@ class daveObject:
                             verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
                             self.hull["tris"].append(verts)
                         return True
+        #If not look for convex hulls generated by the tool
         elif cmds.objExists("*_cvxHull"):
             cmds.select(d = True)
             cmds.select("*_cvxHull")
@@ -279,15 +307,23 @@ class daveObject:
                         return True
         return False
 
+    '''
+    genConvexHull:
+        Generates a convex hull using a graham scan algorithm (modified from https://en.wikipedia.org/wiki/Graham_scan#Pseudocode)
+    '''
     def genConvexHull(self):
+        #Again ENSURE we have the verts for this
         self.grabVerts()
+        #Make sure we don't have both the data and hull for this object still
         if self.hull["tris"] != [] and cmds.objExists(self.hull["transform"]):
             return
+        #We need at least 3 verts for this
         if len(self.topVerts) < 3:
             self.hull["outer"] = []
             print "Not enough verts to construct BBox"
             self.wrongBox = True
             return
+        #Local function to check if going from p1 -> p2 -> p3 is clockwise, anticlockwise or colinear
         def ccw(p1, p2, p3):
             for d in p1:
                 d = round(d, 2)
@@ -296,6 +332,7 @@ class daveObject:
             for d in p3:
                 d = round(d, 2)
             return (p2[0] - p1[0]) * (p3[2] - p1[2]) - (p2[2] - p1[2]) * (p3[0] - p1[0])
+        #Another local function to find the polar angle between two points a and b
         def polarAngle(a, b):
             x = a[0] - b[0]
             y = a[2] - b[2]
@@ -312,14 +349,17 @@ class daveObject:
             elif (x < 0 and y == 0):
                 return math.pi
             elif (x == 0 and y < 0):
+                #Order of operations is correct
                 return math.pi / 2.0 + math.pi
             else:
-                return 0
+                return 0.0
         points = self.topVerts
         pointsIndex =[]
         for i in range(len(points)):
             pointsIndex.append(i)
+        #Sort the points by how left they are first
         pointsIndex = [x for y, x in sorted(zip(self.topVerts, pointsIndex), key = lambda var: var[0][2])]
+        #Then by their polar angle to the leftmost point
         pointsIndex = sorted(pointsIndex, key = lambda var: polarAngle(self.topVerts[var], self.topVerts[pointsIndex[0]]))
         stack = []
         stack.append(pointsIndex[0])
@@ -328,15 +368,18 @@ class daveObject:
             while len(stack) >= 2 and ccw(points[stack[len(stack) - 2]], points[stack[len(stack) - 1]], points[pointsIndex[i]]) <= 0:
                 stack.pop()
             stack.append(pointsIndex[i])
+        #Create a polygonal surface to represent the hull
         facetList = []
-        self.cvxHVerts = stack
         for i in range(len(stack)):
             pos = self.topVerts[stack[i]]
             facetList.append((pos[0], self.hull["height"], pos[2]))
+        #Double check we got at least a triangle from the verts
         if len(facetList) < 3:
             self.hull["outer"] = []
             self.wrongBox = True
             return
+        #Create and scale the hull to be correct for Maya's current units (DAVE is reccomended to run on meters)
+        #There is no built in support for imperial units currently.
         cmds.polyCreateFacet(name = self.transform+"_cvxHull", p = facetList)
         sf = 100
         currentUnit = cmds.currentUnit(q = True, linear = True)
@@ -345,9 +388,11 @@ class daveObject:
         elif currentUnit == "mm" or currentUnit == "millimeter":
             sf = 0.1
         cmds.scale(sf, sf, sf)
+        #As the hull is defined in a clockwise manner, we should flip the normals so that it looks correct in Maya
         cmds.polyNormal(nm = 0)
         cmds.setAttr(self.transform+".DAVEHULLFLIPPED", "True", type = "string")
         cmds.polyTriangulate(self.transform+"_cvxHull")
+        #Send the relevant data to the object's hull storage
         cmds.select(self.transform+"_cvxHull.vtx[0:]")
         self.hull["outer"] = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
         numFaces = cmds.getAttr(self.transform+"_cvxHull.face", size=1)
@@ -356,9 +401,11 @@ class daveObject:
             cmds.select(self.transform+"_cvxHull.f["+str(j)+"]")
             verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
             self.hull["tris"].append(verts)
+        #This should never evaluate to true as we test it earlier, but JUST IN CASE CHECK AGAIN
         if len(facetList) == 3:
             print "Hull has only 3 verts, may be incorrect."
             self.wrongBox = True
+        #No verts of the hull should lie outside of the AABB formed by 'topVerts'
         elif (max(facetList, key = lambda x: x[0])[0] > max(self.topVerts, key = lambda x: x[0])[0] or
             max(facetList, key = lambda x: x[2])[2] > max(self.topVerts, key = lambda x: x[2])[2] or
             min(facetList, key = lambda x: x[0])[0] < min(self.topVerts, key = lambda x: x[0])[0] or
@@ -371,23 +418,31 @@ class daveObject:
         cmds.addAttr(self.hull["transform"], longName = "DAVEHULL", dataType = "string", hidden = False)
         cmds.setAttr(self.hull["transform"]+".DAVEHULL", self.transform, type = "string")
 
+'''
+daveManager:
+    Class data structure consisting of the bulk of the tool.
+'''
 class daveManager:
     def __init__(self, path):
         print "DAVE is starting..."
+        #Where the tool's files are contained
         self.path = path
         self.dbpath = path + "assets/assets.davedb"
+        #We should first import the database into this session
         self.parseDAVEDB()
+        #These are the DAVEOBJECTS the tool has for this session.  Objects in this list have an enabled flag to allow them to be skipped if they are no longer/are not yet active
         self.sessionObjects = []
-        self.hash = None
+        #List contianing indices of objects in the session that are walls
         self.walls = []
-        self.buildingStates = []
+        #List indicating which buildings have 'dirty' hulls (i.e, hulls that are likely incorrect)
         self.roomStates = []
+        #Dictionary structure that holds relevant data for each room (e.g, hull data, its style and so on)
         self.roomData = []
         for i in range(100):
-            self.buildingStates.append(False)
             self.roomStates.append([])
             self.roomData.append([])
             for j in range(100):
+                #Dictstructure must be defined each loop to ensure the list does not comprise of references to one single dictionary
                 dictStructure = {
                     "transform": "",
                     "tag": "NONE",
@@ -398,10 +453,10 @@ class daveManager:
                     "id": [i, j],
                     "processed": False,
                     "upperBound": -sys.maxint,
-                    "exclusionVols": [],
                     "walls": [],
                     "doors": [],
                     "spawnKeys": {},
+                    #Spice is a term used by the tool to essentially mean some sort of 'niknak' or random item added to 'spice up' the scene or make it more seemingly random
                     "spice": [],
                     "styleNumA": random.randint(1, 4),
                     "styleNumB": random.randint(1, 4),
@@ -409,6 +464,7 @@ class daveManager:
                 }
                 self.roomStates[i].append(False)
                 self.roomData[i].append(dictStructure)
+        #This defines how long an edge is in metres for each object
         self.masterSpacingDict = {
             "WALL": 0.5,
             "DININGTABLE": 0.6,
@@ -417,17 +473,27 @@ class daveManager:
             "COUNTERTOP": 0.2,
             "DEFAULT": 0.1
         }
+        #This list is accessed at random to place props along countertops
         self.kitchenSpiceProps = ["MICROWAVE", "KETTLE", "TOASTER", "SUGAR", "SUGAR", "GLASS", "SPICE4", "SPICE3"]
+        #Custom tool context for polycreatefacet for hull creation
         self.hullTool = cmds.polyCreateFacetCtx(i1 = self.dbpath+"fetch/hull.png")
+        #These are the transforms the tool is checking to see if they are deleted
         self.delTransforms = []
+        #And these are the openMaya check events for said deletions
         self.omDeleteChecks = []
+        #We want to setup a clean import queue to begin with
         self.cleanImport()
+
         '''
         python is simple
         makes programming fast and slick
         but no pointer type
         '''
 
+    '''
+    cleanImport:
+        Reinitialises the import queue, thus clearing it
+    '''
     def cleanImport(self):
         self.importQueue = {
             "models": [],
@@ -439,6 +505,10 @@ class daveManager:
             "tags": []
         }
 
+    '''
+    cleanup:
+        This is called when the main window is closed to destroy the tool and its events to prevent anything from lingering after the user is done with DAVE
+    '''
     def cleanup(self):
         if hasattr(self, "secondaryWindow"):
             if (cmds.window(self.secondaryWindow, exists=True)):
@@ -448,9 +518,18 @@ class daveManager:
         print "Exiting DAVE..."
         del self
 
+    '''
+    empty destructor:
+        Not used currently
+    '''
     def __del__(self):
         pass
         
+    '''
+    parseDAVEDB:
+        This is the oldest part of DAVE and appears incredibly messy as it reads in my custom ".davedb" format.
+        In short it reads the assets.davedb file and stores the various names, hashes and tags for the objects stored inside it for use later.
+    '''
     def parseDAVEDB(self):
         names = []
         hashes = []
@@ -493,6 +572,10 @@ class daveManager:
                 i +=1
         self.db = [hashes, names, tags]
 
+    '''
+    UI:
+        Initialises the UI.  Creates the scriptjob that checks for when the window is deleted.
+    '''
     def UI(self):
         self.window = cmds.window(title='DAVE: Main Window')
         col = cmds.columnLayout()
@@ -526,18 +609,28 @@ class daveManager:
         cmds.showWindow()
         self.mainWindowCloseJob = cmds.scriptJob(uiDeleted = [self.window, self.cleanup], ro = True)
 
+    '''
+    checkForDeletions:
+        Adds an openMaya check to trigger 'searchSessionForObject' when 'transform' is deleted.  Called whenever an item is added to sessionObjects.
+    '''
     def checkForDeletions(self, transform):
-        if str(cmds.ls(sl = True)) == "[]":
-            return
+        #If somehow nothing is selected, exit the check (or Maya WILL crash)
         if cmds.objExists(transform):
             cmds.select(transform)
+            if str(cmds.ls(sl = True)) == "[]":
+                return
             node = pm.selected()[0]
+            #No duplicate checks please
             if node in self.delTransforms:
                 return
             mObj = node.__apimobject__()
             self.omDeleteChecks.append(om.MNodeMessage.addNodePreRemovalCallback(mObj, self.searchSessionForObject, node))
             self.delTransforms.append(node)
 
+    '''
+    searchSessionForObject:
+        Searches sessionObjects for a given transform and tags it as disabled if it exists.  Does nothing if either multiple or no matches are found.
+    '''
     def searchSessionForObject(self, *args):
         transform = args[1]
         matches = []
@@ -557,6 +650,10 @@ class daveManager:
                 cmds.select(args[1]+"*flr", add = True)
             cmds.delete()
 
+    '''
+    checkAgainstDatabase:
+        Checks if a given object matches anything in assets.davedb.  If it does, grab that data and overwrite this object's properties.
+    '''
     def checkAgainstDatabase(self, objIndex):
         if self.sessionObjects[objIndex].hash in self.db[0]:
             index = self.db[0].index(self.sessionObjects[objIndex].hash)
@@ -570,10 +667,17 @@ class daveManager:
         else:
             return False
 
+    '''
+    checkDAVECompliance:
+        Checks if an object is already 'compliant' with DAVE.  I.E, Does its name begin or end in a DAVEHASH? Does it have DAVE attributes that can identify it already?
+        Essentially stops DAVE from importing an object that is already in the database again.
+    '''
     def checkDAVECompliance(self, obj):
-        if cmds.listAttr(self.sessionObjects[obj].transform, st = "DAVEHASH"):
+        #First check for attributes
+        if cmds.listAttr(self.sessionObjects[obj].transform, st = "DAVEHASH") != None:
             self.sessionObjects[obj].hash = cmds.getAttr(str(self.sessionObjects[obj].transform) + ".DAVEHASH")
             return True
+        #Otherwise check its name
         elif (len(self.sessionObjects[obj].transform) < 9):
             return False
         endIndex = len(self.sessionObjects[obj].transform) - 1
@@ -594,17 +698,31 @@ class daveManager:
         else:
             return False
 
+    '''
+    createHash:
+        Create a hash for DAVE to use (it is shortened somewhat to be only 8 characters long)
+    '''
     def createHash(self, string):
         hasher = hashlib.sha1(string)
         return base64.urlsafe_b64encode(hasher.digest()[:6])
 
+    '''
+    scanSceneAndImport:
+        Essentially the same as selecting all geometry manually and then clicking 'import selection'
+    '''
     def scanSceneAndImport(self):
         geometry = cmds.ls(geometry=True)
         transforms = cmds.listRelatives(geometry, p=True, pa = True)
         cmds.select(transforms)
         self.importSelectedObjects()
 
+    '''
+    importSelectedObjects:
+        Deselects any items that DAVE shouldn't bother with (e.g, Hulls, floorplans, objects DAVE itself placed), then looks for floorplans/hulls
+        that may exist already and passes them to their rooms/objects.  Passes 'new' items to the user to tag.
+    '''
     def importSelectedObjects(self):
+        #Deselect hulls and floorplans
         if cmds.objExists("*_usrHull"):
             cmds.select("*_usrHull", d = True)
         if cmds.objExists("*_cvxHull"):
@@ -615,7 +733,9 @@ class daveManager:
             if cmds.listAttr(item, st = "DAVEIMPORTED") != None:
                 if cmds.getAttr(item+".DAVEIMPORTED") == "True":
                     cmds.select(item, d = True)
+        #Anything still selected is ok for import, so put them in a list
         selection = cmds.ls(sl = True)
+        #Now check for any floors and send them to the rooms
         if cmds.objExists("*_flr"):
             cmds.select("*_flr")
             for s in cmds.ls(sl = True):
@@ -653,16 +773,16 @@ class daveManager:
                         self.roomStates[building][room] = False
                     else:
                         self.roomData[building][room]["tag"] = cmds.getAttr(s+".DAVEROOMTAG")
-
+        #Then do the same for any objects with missing hulls.
         for ob in self.sessionObjects:
             if len(ob.hull["outer"]) and not ob.wrongBox and not cmds.objExists(ob.hull["transform"]) and ob.enabled:
                 if not ob.searchForHull():
+                    #If it's missing, autogenerate a new one
                     ob.genConvexHull()
-
-
         toBeImported = []
         self.newObjects = []
         for i in range(len(selection)):
+            #This is likely always false due to the previous checks
             if cmds.listAttr(selection[i], st='DAVEHULL') != None:
                 continue
             currentIndex = len(self.sessionObjects)
@@ -670,20 +790,29 @@ class daveManager:
                 self.sessionObjects.append(daveObject(selection[i], currentIndex))
                 self.newObjects.append(currentIndex)
                 self.checkForDeletions(self.sessionObjects[currentIndex].transform)
+                #This might be true if we're doing the first scan of a session and there have been previous sessions
                 if cmds.listAttr(self.sessionObjects[currentIndex].transform, st='DAVEBUILDING') != None:
                     self.walls.append(currentIndex)
             else:
+                #The rest of the loop should be skipped in this case
                 continue
+            #Do these checks first and separately to ensure both are evaluated
             compliantObject = self.checkDAVECompliance(currentIndex)
             inDB = self.checkAgainstDatabase(currentIndex)
             if (not compliantObject) or (not inDB):
                 toBeImported.append(currentIndex)
+        #Should probably clear any selection
         cmds.select(d = True)
         if len(toBeImported) != 0:
             self.importSelection(toBeImported)
         elif len(self.sessionObjects) != 0:
+            #We need this as a passthrough in case nothing new was found per se, but maybe objects from previous sessions were found.
             self.tagWalls()
 
+    '''
+    importSelection:
+        Creates a UI for the user to import new objects with their respective tags.  Relatively cumbersome but mundane function.
+    '''
     def importSelection(self, objects):
         if hasattr(self, "secondaryWindow"):
             if (cmds.window(self.secondaryWindow, exists=True)):
@@ -703,10 +832,12 @@ class daveManager:
         userHullTextFields = []
         nameFields = []
 
+        #Toggles the state of the given button in args[0] to be the bool of that in args[1]
         def toggleHullButton(*args):
             cmds.button(hullButtons[args[0]], e = True, en = args[1])
             cmds.textField(userHullTextFields[args[0]], e = True, en = args[1])
 
+        #Toggles the state of an entire object in the ui
         def toggleWholeItem(*args):
             cmds.text(text[args[0]], e = True, en = args[1])
             cmds.radioButtonGrp(hullRadButtons[args[0]], e = True, en = args[1])
@@ -720,6 +851,7 @@ class daveManager:
             cmds.button(focusButtons[args[0]], e = True, en = args[1])
             cmds.textField(nameFields[args[0]], e = True, en = args[1])
 
+        #Called when the user clicks the "Create Hull" button
         def attachUserHull(*args):
             selectAndViewObject(self.sessionObjects[objects[args[0]]].transform)
             def checkNewHulls(*args):
@@ -733,10 +865,12 @@ class daveManager:
             comm = partial(checkNewHulls, args[1], args[0])
             self.hullJob = cmds.scriptJob(runOnce = True, event = ["ToolChanged", comm])
 
+        #First create the tabs
         for i in range(int(numTabs)):
             cols.append(cmds.columnLayout())
             cmds.setParent(tabs)
             cmds.tabLayout(tabs, e=True, tabLabel=((cols[i], str(i + 1))))
+        #Then fill them
         for i in range(len(objects)):
             cmds.setParent(cols[i / 5])
             row = cmds.rowLayout(nc = 4)
@@ -767,6 +901,7 @@ class daveManager:
             cmds.setParent(cols[i / 5])   
             cmds.separator(height=20)
             prv = partial(navTab, tabs, cols[(i / 5) - 1])
+            #Create the previous, next and done buttons but only when necessary
             if i == len(objects) - 1:
                 cmds.setParent(cols[i / 5])
                 row = cmds.rowLayout(nc = 4)
@@ -795,9 +930,15 @@ class daveManager:
                 label = "Next"
                 cmds.button(label = label, command = nxt, width = 80)
                 cmds.setParent(cols[i / 5])
+        #Now show that
         cmds.showWindow()
 
+    '''
+    completeTagging:
+        Adds the data from the UI in the previous function to the objects they correlate to
+    '''
     def completeTagging(self, nameFields, opMenus, userHullTextFields, objects, force):
+        #Check for any non provided hulls, allow the user to go back and provide them or just auto gen them instead
         if not force:
             for hullText in userHullTextFields:
                 if cmds.textField(hullText, q = True, en = True):
@@ -809,8 +950,11 @@ class daveManager:
                             if hasattr(self, "hullJob"):
                                 cmds.scriptJob(kill = self.hullJob)
                         return
+        
         anyImported = False
+        #Open the DB to write to it later
         db = open(self.dbpath, "a+")
+        #This allows us to remove some items from the newObjects list if the user disabled them
         delList = []
         for i in range(len(nameFields)):
             if not cmds.textField(nameFields[i], q = True, en = True):
@@ -834,10 +978,12 @@ class daveManager:
                 cmds.addAttr(self.sessionObjects[objects[i]].transform, longName = "DAVETAG", dataType = "string", hidden = False)
             cmds.setAttr(self.sessionObjects[objects[i]].transform+".DAVETAG", tag, type = "string")
             cmds.setAttr(self.sessionObjects[objects[i]].transform+".DAVETAG", tag, type = "string")
+            #Check for a user hull, if it isn't there, make one automatically
             if self.sessionObjects[objects[i]].hull["outer"] == [] and tag != "WALL" and tag != "DOOR":
                 if userSpecifiedHull == '':
                     self.sessionObjects[objects[i]].genConvexHull()
                 else:
+                    #There was a user hull, so process it
                     hullName = userSpecifiedHull
                     self.sessionObjects[objects[i]].hullTransform = hullName
                     cmds.select(hullName+".vtx[0:]")
@@ -850,12 +996,15 @@ class daveManager:
                         cmds.setAttr(hullName+".DAVEHULLFLIPPED", "False", type = "string")
                     if (sum(yNormals)/float(len(yNormals))) < 0:
                         cmds.polyNormal(nm = 0)
+                        #This is neccesary to ensure rotations are corrected if the user specified the hull in an anticlockwise manner (although if 
+                        # this line is being evaluated it was clockwise)
                         cmds.setAttr(hullName+".DAVEHULLFLIPPED", "True", type = "string")
                     numFaces = cmds.getAttr(hullName+".face", size=1)
                     for j in range(numFaces):
                         cmds.select(hullName+".f["+str(j)+"]")
                         verts = cmds.ls(cmds.polyListComponentConversion(tv = True), fl = True)
                         self.sessionObjects[objects[i]].hull["tris"].append(verts)
+            #Only write to the DB if this object is new
             if objectHash in self.db[0]:
                 continue
             if not self.checkAgainstDatabase(objects[i]):
@@ -863,7 +1012,7 @@ class daveManager:
                     db.write("\n!\n")
                     anyImported = True
                 db.write("$\nNAME=%s\nTAG=%s\nHASH=%s\n$\n" % (name, tag, objectHash))
-            self.sessionObjects[objects[i]].imported = True
+        #Remove disabled objects from newObjects as previously mentioned
         for di in range(len(delList)):
             del self.newObjects[delList[di] - di]
         if anyImported:
@@ -871,17 +1020,24 @@ class daveManager:
         db.close()
         cmds.select(d = True)
         cmds.deleteUI(self.secondaryWindow)
+        #Continue progression through tagging process
         self.tagWalls()
 
+    '''
+    tagWalls:
+        Creates a UI in a similar manner as 'importSelection' to tag walls/doors with building identifiers
+    '''
     def tagWalls(self):
         newWalls = []
         for i in self.newObjects:
             if (self.sessionObjects[i].tag == "WALL" or self.sessionObjects[i].tag == "DOOR") and cmds.listAttr(self.sessionObjects[i].transform, st='DAVEBUILDING') == None:
+                #We only need to tag untagged walls/doors
                 self.walls.append(i)
                 newWalls.append(i)
         if len(newWalls) != 0:
             numTabs = math.ceil(float(len(newWalls)) / 5.0)
             if hasattr(self, "secondaryWindow"):
+                #Delete any UI elements using this window if somehow they exist (they shouldn't)
                 if (cmds.window(self.secondaryWindow, exists=True)):
                     cmds.deleteUI(self.secondaryWindow)
             self.secondaryWindow = cmds.window(title="DAVE: Set buildings")
@@ -938,8 +1094,13 @@ class daveManager:
                     cmds.setParent(cols[i / 5])
             cmds.showWindow()
         else:
+            #Another passthrough in case of no walls/objects to ensure the whole process is evaluated
             self.processWalls([], [])
 
+    '''
+        processWalls:
+
+    '''
     def processWalls(self, fields, newWalls):
         self.wallCollections = []
         for i in range(100):
@@ -948,7 +1109,6 @@ class daveManager:
             for i in range(len(fields)):
                 activeBuilding = int(cmds.optionMenu(fields[i], q = True, v = True)) - 1
                 wallNo = newWalls[i]
-                self.buildingStates[activeBuilding] = False
                 if cmds.listAttr(self.sessionObjects[wallNo].transform, st='DAVEBUILDING') == None:
                     cmds.addAttr(self.sessionObjects[wallNo].transform, longName = "DAVEBUILDING", dataType = "string", hidden = False)
                 cmds.setAttr(self.sessionObjects[wallNo].transform+".DAVEBUILDING", activeBuilding, type = "string")
@@ -1434,6 +1594,8 @@ class daveManager:
         for ob in self.sessionObjects:
             nearestRoom = [101, 101]
             smallestYDiff = sys.maxint
+            backup = [x for x in nearestRoom]
+            smallestDist = sys.maxint
             if not ob.enabled or ob.tag == "WALL" or ob.tag == "DOOR":
                 continue
             bbox = cmds.exactWorldBoundingBox(ob.transform)
@@ -1443,19 +1605,25 @@ class daveManager:
                 for room in building:
                     if len(room["outer"]):
                         dist = vectorLength(vectorDifference(centre, room["centre"]))
+                        if dist < smallestDist:
+                            smallestDist = dist
+                            backup = room["id"]
                         yDiff = math.fabs(bbox[1] - room["centre"][1])
                         if dist > room["radius"]:
+                            if dist < room["radius"] * 1.1:
+                                nearestRoom = backup
+                                print "USING BACKUP"
                             continue
                         if (self.pointCmplxHullTest([centre[0], centre[2]], room["tris"]) and yDiff < smallestYDiff) and (bbox[1] < room["upperBound"] + 0.5 * obHeight):
                             smallestYDiff = yDiff
                             nearestRoom = room["id"]
+                        else:
+                            nearestRoom = backup
             if cmds.listAttr(ob.transform, st = "DAVENEARBUILDING") == None:
                 cmds.addAttr(ob.transform, longName = "DAVENEARBUILDING", dataType = "string", hidden = False)
                 cmds.addAttr(ob.transform, longName = "DAVENEARROOM", dataType = "string", hidden = False)
             cmds.setAttr(ob.transform+".DAVENEARBUILDING", nearestRoom[0], type = "string")
             cmds.setAttr(ob.transform+".DAVENEARROOM", nearestRoom[1], type = "string")
-            if nearestRoom[0] != 101 and nearestRoom[1] != 101 and ob.tag == "EXCLUSION VOLUME":
-                self.roomData[nearestRoom[0]][nearestRoom[1]]["exclusionVols"].append(ob.index)
 
     def sendWallsToRooms(self):
         for building in self.roomData:
